@@ -1,0 +1,351 @@
+@import "reset";
+@import "colors";
+
+
+body{
+    display:flex;
+    flex-direction:column;    
+}
+
+header{
+    display:flex;
+    flex-direction:column;
+    padding:10px 40px;
+    position:relative;
+    .site-logo{
+        float:right;
+        width:200px;
+        position:absolute;
+        right:30px;
+
+        top:10px;
+    }
+}
+
+header .menu{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    color: $green;
+    gap:20px;
+}
+
+header .menu > * {
+    display:flex;
+    align-items:center;
+}
+
+.item-hoverable{
+
+    div{
+        color:$green;
+    }
+
+    h1{
+        color:$textGrey;
+    }
+
+}
+
+.item-hoverable:hover{
+
+        div{
+            color:$textGrey;
+        }
+
+        h1{
+            color:$green;
+        }
+    
+}
+
+nav ul{
+    display:flex;
+    background-color:$green;
+    margin-left:-40px;
+    gap:25px;
+    color:$textWhite;
+    clip-path:polygon(0  0,90% 0, 100% 100%, 0 100%);
+    width:70%;
+    li{
+        border-top:4px solid transparent ;
+        padding:20px 5px;
+    }
+
+    li:hover{
+        border-top-color:$itemHoverDark
+    }
+    
+    li:last-child{
+        border-top-color:$itemHoverDark
+
+    }
+}
+
+.banner{
+    height:700px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    // background-color:$textGrey;
+    margin-top:-40px;
+    position: relative;
+    color:$textWhite;
+    video{
+        // margin-top: 100px;
+        z-index:-1;
+        max-height:700px;
+        position: absolute;
+        top:0;
+    }
+}
+
+main{
+    display:flex;
+    flex-direction:column;
+
+    .know-more{
+        padding:30px;
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        align-self:center;
+        width:90%;
+        margin-top: -150px;
+        background-color:$textWhite;
+        border-radius:30px;
+        text-align:center;
+        direction:rtl;
+        color:$textGrey;
+
+        .desc{
+            padding:0px 150px;
+        }
+
+        button{
+            background-color:$green;
+            padding:10px 30px;
+            border:none;
+            font-size:1.3em;
+            border-radius:200px;
+            color:$textWhite;
+            margin-top:20px;
+        }
+    }
+
+
+    .services{
+        display:flex;
+        flex-wrap:wrap;
+        justify-content:center;
+        font-size:14px;
+        .item{
+            color:$textGrey;
+            width:400px;
+            text-align:center;
+            display:flex;
+            flex-direction:column;
+            gap:30px;
+            padding:20px;
+            font-size:10px;
+            align-items:center;
+
+            img{
+                width:150px;
+            }
+
+            .fa{
+                font-size:22px;
+                color:$green;
+                display:block;
+                margin-bottom:20px;
+            }
+
+            .desc{
+                font-size:18px;
+
+            }
+
+            button{
+                background-color:transparent;
+                border:1px solid $green;
+                color:$green;
+                align-self:center;
+                padding:0px 20px;
+                height:50px;
+                border-radius:200px;
+            }
+        }
+    }
+
+
+    .meeting-services{
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        justify-content:center;
+        color:$textWhite;
+        height:700px;
+        padding:0px 200px;
+        direction:rtl;
+        text-align:center;
+        background-image: url(https://www.greenweb.ir/inc/uploads/2021/03/moshvereh.jpg?id=1693);
+        background-position:center;
+
+        .skew{
+            transform: skew(-45deg) rotate(45deg) translate(-50%);
+            width:25px;
+            height:17px;
+            background-color:$green;
+        }
+
+        h1{
+            font-size:3em;
+            margin:20px 0px;
+        }
+
+        h3{
+            margin:20px 0px;
+            font-size:2em;
+        }
+
+        *{
+            line-height:30px;
+            font-size:larger;
+        }
+        button{
+            background-color:$green;
+            padding:10px 30px;
+            border:none;
+            font-size:1.3em;
+            border-radius:200px;
+            color:$textWhite;
+            margin-top:20px;
+        }
+    }
+}
+
+footer{
+    
+    .greenweb-customers{
+
+        margin-left:auto;
+        margin-right:auto;
+
+        margin-top:-120px;
+        display:flex;
+        flex-direction:row-reverse;
+        height:fit-content;
+        width:95%;
+        flex-wrap:wrap;
+        background-color:$textWhite;
+        box-shadow:0 0 50px #151515;
+
+        .customers{
+            flex-grow:1;
+            display:flex;
+            flex-wrap:wrap;
+            display:flex;
+            flex-wrap:wrap;
+            justify-content:space-around;
+            align-items:center;
+            
+        }
+
+        .desc{
+            text-align:center;
+            background-color:$green;
+            color:$textWhite;
+            width:320px;
+            height:320px;
+            display:flex;
+            flex-direction:column;
+            justify-content:center;
+            align-items:center;
+
+        }
+    }
+
+    .join-no-other{
+        
+        height:200px;
+        display:flex;
+        padding:120px 20.5px;
+        flex-direction:row-reverse;
+        flex-wrap:wrap;
+        margin-left:auto;
+        margin-right:auto;
+
+        .desc{
+            height:100%;
+            background-color:#1c1c1c;
+            display:flex;
+            justify-content:center;
+            align-items: center;
+            color:$textWhite;
+            padding:0px 20px;
+            flex-grow:1;
+            font-size:2.5em;
+        }
+
+        .logo{
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            width:300px;
+            padding:20px;
+            background-color:$green;
+        }
+    }
+
+    .info{
+
+        .ground{
+            background-color: #333333;
+            height:690px;
+            width:100%;
+
+            .desc{
+                box-sizing: border-box;
+                margin-top:-70px;
+                margin-right:30px;
+                padding:60px 60px 100px;
+                background-image: url(https://greenweb.ir/wp-content/uploads/2019/09/bg4.jpg);
+                background-position-x:center;
+                background-position-y:bottom;
+
+                background-repeat: no-repeat;
+
+                float:right;
+                width:580px;
+                height:820px;
+
+                background-color:#151515;
+                border-radius:5px 5px 0px 0px;
+                direction:rtl;
+
+                display:flex;
+                flex-direction:column;
+                align-items:flex-start;
+                color:$textWhite;
+
+            }
+        }
+    }
+
+    .bottom{
+        padding:0px 20px;
+        display:flex;
+        direction: rtl;
+        align-items:center;
+        gap:10px;
+
+        .skew {
+            background-color: rgba(58,58,58,.3);
+            width: 1px;
+            height:32px;
+            transform: skew(-20deg);
+        }
+    }
+}
