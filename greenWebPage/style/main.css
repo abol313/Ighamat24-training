@@ -42,6 +42,7 @@ header .menu {
   align-items: center;
   color: #79a342;
   gap: 20px;
+  margin-bottom: 10px;
 }
 
 header .menu > * {
@@ -53,6 +54,8 @@ header .menu > * {
   color: #79a342;
 }
 .item-hoverable h1 {
+  margin-left: 5px;
+  font-size: 16px;
   color: rgba(58, 58, 58, 0.7);
 }
 
