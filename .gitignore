@@ -1,2 +1,3 @@
 node_modules
-greenWebPage/dist
+package-lock.json
+dist
