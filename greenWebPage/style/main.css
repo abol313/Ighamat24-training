@@ -14,7 +14,7 @@ ul {
 }
 
 * {
-  font-family: "iranyekan";
+  font-family: "Yekan";
 }
 
 body {
@@ -83,6 +83,24 @@ nav ul li:last-child {
   border-top-color: #3a3a3a;
 }
 
+@media screen and (max-width: 1000px) {
+  nav {
+    display: none;
+  }
+  header .menu {
+    display: none;
+  }
+  .info .ground .desc {
+    margin-top: -70px;
+    margin-right: 0px;
+  }
+  .know-more {
+    padding: 10px;
+  }
+  .know-more .desc {
+    padding: 0px 10px;
+  }
+}
 .banner {
   height: 700px;
   display: flex;
@@ -92,12 +110,25 @@ nav ul li:last-child {
   margin-top: -40px;
   position: relative;
   color: white;
+  text-align: center;
+}
+.banner h1 {
+  margin-top: -150px;
+  font-size: 80px;
 }
 .banner video {
-  z-index: -1;
+  z-index: -2;
   max-height: 700px;
+  max-width: 100%;
   position: absolute;
   top: 0;
+}
+.banner .twoxtwo {
+  z-index: -1;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: url(https://greenweb.ir/wp-content/plugins/revslider/public/assets/assets/gridtile.png);
 }
 
 main {
@@ -117,6 +148,19 @@ main .know-more {
   text-align: center;
   direction: rtl;
   color: rgba(58, 58, 58, 0.7);
+}
+main .know-more .items {
+  display: flex;
+  align-self: stretch;
+  overflow: hidden;
+}
+main .know-more .items .item {
+  flex-shrink: 0;
+  height: 100px;
+  flex-grow: 1;
+}
+main .know-more .items .item img {
+  height: 100%;
 }
 main .know-more .desc {
   padding: 0px 150px;
@@ -150,11 +194,12 @@ main .services .item {
 main .services .item img {
   width: 150px;
 }
-main .services .item .fa {
+main .services .item .my-fa {
   font-size: 22px;
   color: #79a342;
   display: block;
   margin-bottom: 20px;
+  font-family: Yekan;
 }
 main .services .item .desc {
   font-size: 18px;
@@ -174,8 +219,8 @@ main .meeting-services {
   align-items: center;
   justify-content: center;
   color: white;
-  height: 700px;
-  padding: 0px 200px;
+  padding: 100px 200px 200px;
+  min-height: 700px;
   direction: rtl;
   text-align: center;
   background-image: url(https://www.greenweb.ir/inc/uploads/2021/03/moshvereh.jpg?id=1693);
@@ -224,13 +269,19 @@ footer .greenweb-customers {
 footer .greenweb-customers .customers {
   flex-grow: 1;
   display: flex;
-  flex-wrap: wrap;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
+  overflow: hidden;
+  justify-content: flex-start;
   align-items: center;
 }
+footer .greenweb-customers .customers .customer {
+  flex-grow: 1;
+  transition: transform 5s linear;
+}
+footer .greenweb-customers .customers .customer :hover {
+  transform: scale(101%);
+}
 footer .greenweb-customers .desc {
+  flex-grow: 1;
   text-align: center;
   background-color: #79a342;
   color: white;
@@ -249,6 +300,7 @@ footer .join-no-other {
   flex-wrap: wrap;
   margin-left: auto;
   margin-right: auto;
+  padding-bottom: 300px;
 }
 footer .join-no-other .desc {
   height: 100%;
@@ -262,6 +314,7 @@ footer .join-no-other .desc {
   font-size: 2.5em;
 }
 footer .join-no-other .logo {
+  flex-grow: 1;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -306,6 +359,10 @@ footer .bottom .skew {
   width: 1px;
   height: 32px;
   transform: skew(-20deg);
+}
+
+body * {
+  font-family: Yekan;
 }
 
 /*# sourceMappingURL=main.css.map */
