@@ -9,11 +9,49 @@ const datepickers = []
 
 //render for every element that has passed to its class `abol-date-picker`
 function renderDatepicker(element){
+    datepickers.push({
+        element: element,
+        date: new Date()
+    })
 
+    
 }
 
-function getTemplate(){
+function getTemplate(itemsNo){
+    // <div class="abol-date-picker">
+    //     <div class="tabs">
+    //         <div class="tab year">
+    //             <p>Year</p>
+    //         </div>
+    //         <div class="tab month">
+    //             <p>Month</p>
+    //         </div>
+    //         <div class="tab day">
+    //             <p>Day</p>
+    //         </div>
+    //     </div>
 
+    //     <div class="items">
+    //         <div class="item"></div>*n
+    //     </div>
+    // </div>
+    return `
+        <div class="tabs">
+            <div class="tab year">
+                <p>Year</p>
+            </div>
+            <div class="tab month">
+                <p>Month</p>
+            </div>
+            <div class="tab day">
+                <p>Day</p>
+            </div>
+        </div>
+
+        <div class="items">
+            ${ '<div class="item"></div>'.repeat(itemsNo) }
+        </div>
+    `;
 }
 
 
