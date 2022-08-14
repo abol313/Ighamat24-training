@@ -40,14 +40,14 @@
 
     .items
         @extend .custom-scroll
-        height: 200px
+        height: 318px
         box-shadow:0px 0px 10px $greyDark inset
         overflow: auto
         flex-wrap: wrap
         display: flex
         justify-content: center
         gap: 5px
-        width: 300px
+        width: 310px
         padding: 4px
 
         .item
@@ -71,4 +71,13 @@
             background-color: $cyan
             color: $greyDark
 
-
+    .items-day
+        justify-content: flex-start
+        align-content: flex-start
+        .item
+            box-sizing: border-box
+            min-width: none
+            min-height: none
+            flex-grow: 0
+            width: 40px
+            height: 40px
