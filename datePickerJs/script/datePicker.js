@@ -74,6 +74,8 @@ function renderContent(datepicker, items = null, refresh = true){
             }
         }
 
+        datepicker.contentElement.classList.remove('items-year', 'items-month', 'items-day')
+        datepicker.contentElement.classList.add('items-'+datepicker.mode)
 
         console.log(datepicker)
 
