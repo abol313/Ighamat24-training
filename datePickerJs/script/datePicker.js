@@ -36,6 +36,7 @@ function bootDatepicker(inputElement, index = null){
     datepicker.monthElement.addEventListener('click', ()=>chooseMonthTab(datepicker))
     datepicker.dayElement.addEventListener('click', ()=>chooseDayTab(datepicker))
 
+    datepicker.contentElement.addEventListener('click', e => chooseItem(e.target.innerText ,datepicker))
     renderContent(datepicker)
 }
 
@@ -140,7 +141,7 @@ function chooseMonth(month, datepicker){
 }
 
 function chooseDay(day, datepicker){
-    datepicker.date.setDate(datepicker)
+    datepicker.date.setDate(day)
 }
 
 
@@ -159,3 +160,14 @@ function chooseDayTab(datepicker){
     renderContent(datepicker)
 }
 
+function chooseItem(item, datepicker){
+    const choose = {
+        year: chooseYear,
+        month: chooseMonth,
+        day: chooseDay,
+    }
+
+    // debugger
+    choose[datepicker.mode](item, datepicker)
+    renderContent(datepicker)
+}
