@@ -10,8 +10,14 @@ document.querySelectorAll('.abol-date-picker')
 
 // every datepicker known as one object literal
 // {
-//     element: //the element of date picker (abol-date-picker)
-//     date: //the date of that
+    // inputElement: inputElement,
+    // tempElement: tempElement,
+    // yearElement: tempElement.querySelector('.tabs .year'),
+    // monthElement: tempElement.querySelector('.tabs .month'),
+    // dayElement: tempElement.querySelector('.tabs .day'),
+    // contentElement: tempElement.querySelector('.items'),
+    // mode: 'year',
+    // date: new Date()
 // }
 
 
