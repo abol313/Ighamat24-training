@@ -42,40 +42,53 @@ function bootDatepicker(inputElement, index = null){
     datepicker.monthElement.addEventListener('click', ()=>chooseMonthTab(datepicker))
     datepicker.dayElement.addEventListener('click', ()=>chooseDayTab(datepicker))
 
-    datepicker.contentElement.addEventListener('click', e => !isNaN(e.target.innerText) && chooseItem(e.target.innerText ,datepicker))
+
     renderContent(datepicker)
+
+
+    chooseDayTab(datepicker)
 }
 
-function renderContent(datepicker, items = null){
-    datepicker.contentElement.innerHTML = ""
-    if(!items){
-        switch(datepicker.mode){
-            case 'year':
-                items = [];
-                for(let i=2000; i<=2040; i++)
-                    items.push(i)
-                break;
-                
-            case 'month':
-                items = [1,2,3,4,5,6,7,8,9,10,11,12];
-                break;
-                
-            case 'day':
-                items = [];
-                for(let i=1; i<=31; i++)
-                    items.push(i)
+function renderContent(datepicker, items = null, refresh = true){
+    if(refresh){
+        datepicker.contentElement.innerHTML = ""
+        if(!items){
+            switch(datepicker.mode){
+                case 'year':
+                    items = [];
+                    for(let i=2000; i<=2040; i++)
+                        items.push(i)
+                    break;
+                    
+                case 'month':
+                    items = [1,2,3,4,5,6,7,8,9,10,11,12];
+                    break;
+                    
+                case 'day':
+                    items = [];
+                    for(let i=1; i<=31; i++)
+                        items.push(i)
 
-                break;
-                
+                    break;
+                    
+            }
         }
+
+
+        console.log(datepicker)
+
+        datepicker.yearElement.classList.remove('selected')
+        datepicker.monthElement.classList.remove('selected')
+        datepicker.dayElement.classList.remove('selected')
+
+        
+        datepicker.contentElement.innerHTML = items.map(v => getItemTemp(v)).join('')
+        
+        listenItemsToClick(datepicker)
+        bootItem(datepicker)
     }
-
-
-    console.log(datepicker)
-
     passDateOnInput(datepicker.inputElement, datepicker.date)
-
-    return datepicker.contentElement.innerHTML = items.map(v => getItemTemp(v)).join('')
+    return datepicker.contentElement.innerHTML
 
 }
 
@@ -83,8 +96,8 @@ function passDateOnInput(input, date){
     input.value = `${date.getUTCFullYear()} / ${date.getUTCMonth()} / ${date.getUTCDate()}`
 }
 
-function getItemTemp(innerText){
-    return `<div class="item">${innerText}</div>`
+function getItemTemp(innerText, isSelected=false){
+    return `<div class="item ${isSelected?'selected':''}">${innerText}</div>`
 }
 
 function getTemplateElement(itemsNo){
@@ -140,6 +153,7 @@ function getDaysNo(date, datepicker){
 
 function chooseYear(year, datepicker){
     datepicker.date.setYear(year)
+    
 }
 
 function chooseMonth(month, datepicker){
@@ -154,16 +168,51 @@ function chooseDay(day, datepicker){
 function chooseYearTab(datepicker){
     datepicker.mode = 'year'
     renderContent(datepicker)
+    datepicker.yearElement.classList.add('selected')
 }
 
 function chooseMonthTab(datepicker){
     datepicker.mode = 'month'
     renderContent(datepicker)
+    datepicker.monthElement.classList.add('selected')
+
 }    
 
 function chooseDayTab(datepicker){
     datepicker.mode = 'day'
     renderContent(datepicker)
+    datepicker.dayElement.classList.add('selected')
+
+}
+
+function listenItemsToClick(datepicker){
+    datepicker.contentElement.querySelectorAll('.item')
+    .forEach(e=>{
+        e.addEventListener('click',()=>{
+            unselectItems(datepicker)
+            chooseItem(e, datepicker)
+
+        })
+    })
+}
+function unselectItems(datepicker){
+    datepicker.contentElement.querySelectorAll('.item')
+        .forEach( e => e.classList.remove('selected'))
+}
+
+function bootItem(datepicker){
+    const value = {
+        year: datepicker.date.getUTCFullYear(),
+        month: datepicker.date.getUTCMonth(),
+        day: datepicker.date.getUTCDate(),
+
+    }
+    datepicker.contentElement.querySelectorAll('.item')
+        .forEach(e=>{
+                if(e.innerText==value[datepicker.mode])
+                    chooseItem(e, datepicker)
+            }
+        )
 }
 
 function chooseItem(item, datepicker){
@@ -174,6 +223,8 @@ function chooseItem(item, datepicker){
     }
 
     // debugger
-    choose[datepicker.mode](item, datepicker)
-    renderContent(datepicker)
+    console.log(item)
+    choose[datepicker.mode](item.innerText, datepicker)
+    renderContent(datepicker, null,false);
+    item.classList.add('selected')
 }
