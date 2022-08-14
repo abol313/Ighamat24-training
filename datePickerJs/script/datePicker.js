@@ -1,11 +1,12 @@
-alert("hello!")
+// alert("hello!")
+
+const datepickers = []
 
 document.querySelectorAll('.abol-date-picker')
     .forEach(e => {
-        bootDatepicker()
+        bootDatepicker(e)
     })
 
-const datepickers = []
 
 // every datepicker known as one object literal
 // {
@@ -16,26 +17,26 @@ const datepickers = []
 
 //render for every element [input] that has passed to its class `abol-date-picker`
 function bootDatepicker(inputElement, index = null){
-    const tempElement = getTemplateElement(20)
+    const tempElement = getTemplateElement()
     inputElement.before(tempElement)
     const datepicker = {
         inputElement: inputElement,
         tempElement: tempElement,
-        yearElement: element.querySelector('.tabs .year'),
-        monthElement: element.querySelector('.tabs .month'),
-        dayElement: element.querySelector('.tabs .day'),
-        contentElement: element.querySelector('.items'),
+        yearElement: tempElement.querySelector('.tabs .year'),
+        monthElement: tempElement.querySelector('.tabs .month'),
+        dayElement: tempElement.querySelector('.tabs .day'),
+        contentElement: tempElement.querySelector('.items'),
         mode: 'year',
         date: new Date()
     }
 
-    const index = index || datepickers.push(datepicker)
+    index = index || datepickers.push(datepicker)
 
     datepicker.yearElement.addEventListener('click', ()=>chooseYearTab(datepicker))
-    datepicker.MonthElement.addEventListener('click', ()=>chooseMonthTab(datepicker))
+    datepicker.monthElement.addEventListener('click', ()=>chooseMonthTab(datepicker))
     datepicker.dayElement.addEventListener('click', ()=>chooseDayTab(datepicker))
 
-
+    renderContent(datepicker)
 }
 
 function renderContent(datepicker, items = null){
@@ -62,7 +63,8 @@ function renderContent(datepicker, items = null){
         }
     }
 
-    return datepicker.contentElement.innerHTML = items.map(v => getItemTemp(v)).join()
+
+    return datepicker.contentElement.innerHTML = items.map(v => getItemTemp(v)).join('')
 
 }
 
@@ -83,7 +85,6 @@ function getTemplateElement(itemsNo){
     //             <p>Day</p>
     //         </div>
     //     </div>
-
     //     <div class="items">
     //         <div class="item"></div>*n
     //     </div>
