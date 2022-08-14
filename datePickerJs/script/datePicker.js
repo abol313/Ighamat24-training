@@ -64,8 +64,16 @@ function renderContent(datepicker, items = null){
     }
 
 
+    console.log(datepicker)
+
+    passDateOnInput(datepicker.inputElement, datepicker.date)
+
     return datepicker.contentElement.innerHTML = items.map(v => getItemTemp(v)).join('')
 
+}
+
+function passDateOnInput(input, date){
+    input.value = `${date.getUTCFullYear()} / ${date.getUTCMonth()} / ${date.getUTCDate()}`
 }
 
 function getItemTemp(innerText){
