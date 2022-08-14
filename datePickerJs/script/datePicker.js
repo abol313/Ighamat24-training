@@ -42,7 +42,7 @@ function bootDatepicker(inputElement, index = null){
     datepicker.monthElement.addEventListener('click', ()=>chooseMonthTab(datepicker))
     datepicker.dayElement.addEventListener('click', ()=>chooseDayTab(datepicker))
 
-    datepicker.contentElement.addEventListener('click', e => chooseItem(e.target.innerText ,datepicker))
+    datepicker.contentElement.addEventListener('click', e => !isNaN(e.target.innerText) && chooseItem(e.target.innerText ,datepicker))
     renderContent(datepicker)
 }
 
