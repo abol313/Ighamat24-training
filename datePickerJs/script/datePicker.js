@@ -2,6 +2,16 @@
 
 const datepickers = []
 
+const weekDays = [
+    'Sat',
+    'Sun',
+    'Mon',
+    'Tue',
+    'Wen',
+    'Thu',
+    'Fri',
+]
+
 document.querySelectorAll('.abol-date-picker')
     .forEach(e => {
         bootDatepicker(e)
@@ -83,8 +93,17 @@ function renderContent(datepicker, items = null, refresh = true){
         datepicker.monthElement.classList.remove('selected')
         datepicker.dayElement.classList.remove('selected')
 
-        
-        datepicker.contentElement.innerHTML = items.map(v => getItemTemp(v)).join('')
+        if(datepicker.mode === "day"){
+            let weekDaysEl = document.createElement('div')
+            weekDaysEl.classList.add('week-days')
+
+            for(let weekDay of weekDays)
+                weekDaysEl.innerHTML += `<div class="week-day">${weekDay}</div>`
+            
+            datepicker.contentElement.appendChild(weekDaysEl)
+        }
+
+        datepicker.contentElement.innerHTML += items.map(v => getItemTemp(v)).join('')
         
         listenItemsToClick(datepicker)
         bootItem(datepicker)
