@@ -76,7 +76,8 @@ function renderContent(datepicker, items = null, refresh = true){
                     
                 case 'day':
                     items = [];
-                    for(let i=1; i<=31; i++)
+                    
+                    for(let i = -getFirstWeekDayOfMonth(datepicker.date, datepicker)+1; i<=getDaysNo(datepicker.date, datepicker); i++)
                         items.push(i)
 
                     break;
@@ -103,7 +104,7 @@ function renderContent(datepicker, items = null, refresh = true){
             datepicker.contentElement.appendChild(weekDaysEl)
         }
 
-        datepicker.contentElement.innerHTML += items.map(v => getItemTemp(v)).join('')
+        datepicker.contentElement.innerHTML += items.map(v => getItemTemp(v, false, datepicker)).join('')
         
         listenItemsToClick(datepicker)
         bootItem(datepicker)
@@ -117,8 +118,8 @@ function passDateOnInput(input, date){
     input.value = `${date.getUTCFullYear()} / ${date.getUTCMonth()} / ${date.getUTCDate()}`
 }
 
-function getItemTemp(innerText, isSelected=false){
-    return `<div class="item ${isSelected?'selected':''}">${innerText}</div>`
+function getItemTemp(innerText, isSelected=false, datepicker = null){
+    return `<div class="item ${isSelected?'selected':''} ${datepicker.mode=="day" && innerText<=0 ? 'invisible':''}">${innerText}</div>`
 }
 
 function getTemplateElement(itemsNo){
@@ -169,7 +170,15 @@ function getTemplateElement(itemsNo){
 
 //return the number of days of now month
 function getDaysNo(date, datepicker){
+    let m = moment(`${date.getUTCFullYear()}/${date.getUTCMonth()}/${date.getUTCDate()}`, 'YYYY/M/D')
+    console.log('days no:',moment.jDaysInMonth(m.jYear(), m.jMonth()))
+    return moment.jDaysInMonth(m.jYear(), m.jMonth())
+}
 
+function getFirstWeekDayOfMonth(date, datepicker){
+    let m = moment(date)
+    m.locale('fa')
+    return m.startOf('month').weekday()
 }
 
 function chooseYear(year, datepicker){
