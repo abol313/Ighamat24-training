@@ -18,10 +18,28 @@ class PresentTime{
     get enterTime(){
         return this.enterTime
     }
+    set enterTime(value){
+        this.enterTime = value
+        this.enterElement.innerText = this.enterTime
+    }
     
     get exitTime(){
         return this.exitTime
     }
+    set exitTime(value){
+        this.exitTime = value
+        this.exitElement.innerText = this.exitTime
+    }
+
+    
+    get submitTime(){
+        return this.submitTime
+    }
+    set submitTime(value){
+        this.submitTime = value
+        this.submitElement.innerText = this.submitTime
+    }
+
 
     makeElement(ulElement){
         // <li class="present-time">
