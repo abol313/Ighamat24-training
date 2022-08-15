@@ -270,7 +270,9 @@ function chooseDay(day, datepicker, isBasedOnJalali){
         datepicker.date.setDate(m.date())
         return
     }
-    datepicker.date.setDate(day)
+    datepicker.date.setMonth(m.month())
+    datepicker.date.setDate(m.date())
+    datepicker.date.setYear(m.year())
 }
 
 function getDatepickerMoment(datepicker){
