@@ -2,34 +2,60 @@
 
 const datepickers = []
 
+// const weekDays = [
+//     'Sat',
+//     'Sun',
+//     'Mon',
+//     'Tue',
+//     'Wen',
+//     'Thu',
+//     'Fri',
+// ]
 const weekDays = [
-    'Sat',
-    'Sun',
-    'Mon',
-    'Tue',
-    'Wen',
-    'Thu',
-    'Fri',
+    'ش',
+    'ی',
+    'د',
+    'س',
+    'چ',
+    'پ',
+    'ج',
 ]
+
+// const months = [
+//     'January',
+//     'February',
+//     'March',
+    
+//     'April',
+//     'May',
+//     'June',
+
+//     'July',
+//     'August',
+//     'Sepetember',
+
+//     'October',
+//     'November',
+//     'December',
+// ]
 
 const months = [
-    'January',
-    'February',
-    'March',
+    'فروردین',
+    'اردیبهشت',
+    'خرداد',
     
-    'April',
-    'May',
-    'June',
+    'تیر',
+    'مرداد',
+    'شهریور',
 
-    'July',
-    'August',
-    'Sepetember',
+    'مهر',
+    'آبان',
+    'آذر',
 
-    'October',
-    'November',
-    'December',
+    'دی',
+    'بهمن',
+    'اسفند',
 ]
-
 document.querySelectorAll('.abol-date-picker')
     .forEach(e => {
         bootDatepicker(e)
@@ -169,13 +195,13 @@ function getTemplateElement(itemsNo){
     temp.innerHTML = `
         <div class="tabs">
             <div class="tab year">
-                <p>Year</p>
+                <p>سال</p>
             </div>
             <div class="tab month">
-                <p>Month</p>
+                <p>ماه</p>
             </div>
             <div class="tab day">
-                <p>Day</p>
+                <p>روز</p>
             </div>
         </div>
 
