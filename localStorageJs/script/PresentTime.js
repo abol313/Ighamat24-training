@@ -17,31 +17,31 @@ export default class PresentTime{
         PresentTime.presentTimes.push(this)
     }
 
-    static get presentTimes(){
+    static getPresentTimes(){
         return presentTimes
     }
 
-    get enterTime(){
+    getEnterTime(){
         return this.enterTime
     }
-    set enterTime(value){
+    setEnterTime(value){
         this.enterTime = value
         this.enterElement.innerText = this.enterTime
     }
     
-    get exitTime(){
+    getExitTime(){
         return this.exitTime
     }
-    set exitTime(value){
+    setExitTime(value){
         this.exitTime = value
         this.exitElement.innerText = this.exitTime
     }
 
     
-    get submitTime(){
+    getSubmitTime(){
         return this.submitTime
     }
-    set submitTime(value){
+    setSubmitTime(value){
         this.submitTime = value
         this.submitElement.innerText = this.submitTime
     }
@@ -81,7 +81,7 @@ export default class PresentTime{
         ulElement.appendChild( this.tempElement )
     }
 
-    get tempElement(){
+    getTempElement(){
         return this.tempElement
     }
 
