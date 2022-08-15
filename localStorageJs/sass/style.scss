@@ -16,9 +16,15 @@ form {
     flex-wrap: wrap;
     gap: 10px;
 
+    position:sticky;
+    top:5px;
+
+    z-index: 2;
+    backdrop-filter: blur(10px);
+
     padding: 10px;
     border-radius: 10px;
-    background-color: rgba($cyan, .1);
+    background-color: rgba($cyan, .2);
     box-shadow: 0 0 200px  rgba($cyan, .3);
     margin-bottom: 20px;
 
@@ -82,7 +88,7 @@ main{
         .present-time-ul{
             width: 100%;
             display: flex;
-            flex-direction: column;
+            flex-direction: column-reverse;
             gap: 10px;
             .present-time{
                 // filter: drop-shadow(0 0 3px $green);
