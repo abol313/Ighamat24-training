@@ -12,6 +12,24 @@ const weekDays = [
     'Fri',
 ]
 
+const months = [
+    'January',
+    'February',
+    'March',
+    
+    'April',
+    'May',
+    'June',
+
+    'July',
+    'August',
+    'Sepetember',
+
+    'October',
+    'November',
+    'December',
+]
+
 document.querySelectorAll('.abol-date-picker')
     .forEach(e => {
         bootDatepicker(e)
@@ -63,22 +81,23 @@ function renderContent(datepicker, items = null, refresh = true){
     if(refresh){
         datepicker.contentElement.innerHTML = ""
         if(!items){
+            items = [];
+
             switch(datepicker.mode){
                 case 'year':
-                    items = [];
                     for(let i=2000; i<=2040; i++)
-                        items.push(i)
+                        items.push([i,i])
                     break;
                     
                 case 'month':
-                    items = [1,2,3,4,5,6,7,8,9,10,11,12];
+                    for(let i=0; i<months.length; i++)
+                        items.push([months[i], i])
                     break;
                     
                 case 'day':
-                    items = [];
                     
                     for(let i = -getFirstWeekDayOfMonth(datepicker.date, datepicker)+1; i<=getDaysNo(datepicker.date, datepicker); i++)
-                        items.push(i)
+                        items.push([i,i])
 
                     break;
                     
@@ -104,7 +123,7 @@ function renderContent(datepicker, items = null, refresh = true){
             datepicker.contentElement.appendChild(weekDaysEl)
         }
 
-        datepicker.contentElement.innerHTML += items.map(v => getItemTemp(v, false, datepicker)).join('')
+        datepicker.contentElement.innerHTML += items.map(v => getItemTemp(v[0], v[1], false, datepicker)).join('')
         
         listenItemsToClick(datepicker)
         bootItem(datepicker)
@@ -118,8 +137,8 @@ function passDateOnInput(input, date){
     input.value = `${date.getUTCFullYear()} / ${date.getUTCMonth()} / ${date.getUTCDate()}`
 }
 
-function getItemTemp(innerText, isSelected=false, datepicker = null){
-    return `<div class="item ${isSelected?'selected':''} ${datepicker.mode=="day" && innerText<=0 ? 'invisible':''}">${innerText}</div>`
+function getItemTemp(content, value, isSelected=false, datepicker = null){
+    return `<div class="item ${isSelected?'selected':''} ${datepicker.mode=="day" && content<=0 ? 'invisible':''}" value="${value}">${content}</div>`
 }
 
 function getTemplateElement(itemsNo){
@@ -142,7 +161,7 @@ function getTemplateElement(itemsNo){
 
     let itemsTemp = ''
     for(let i=0; i<itemsNo; i++)
-        itemsTemp += getItemTemp(i)
+        itemsTemp += getItemTemp(i,i)
 
     const temp = document.createElement('div')
     temp.classList.add('abol-date-picker-temp')
@@ -170,12 +189,13 @@ function getTemplateElement(itemsNo){
 
 //return the number of days of now month
 function getDaysNo(date, datepicker){
-    let m = moment(`${date.getUTCFullYear()}/${date.getUTCMonth()}/${date.getUTCDate()}`, 'YYYY/M/D')
+    let m = moment(date)
     console.log('days no:',moment.jDaysInMonth(m.jYear(), m.jMonth()))
     return moment.jDaysInMonth(m.jYear(), m.jMonth())
 }
 
 function getFirstWeekDayOfMonth(date, datepicker){
+    // debugger
     let m = moment(date)
     m.locale('fa')
     return m.startOf('month').weekday()
@@ -254,7 +274,7 @@ function chooseItem(item, datepicker){
 
     // debugger
     console.log(item)
-    choose[datepicker.mode](item.innerText, datepicker)
+    choose[datepicker.mode](item.getAttribute('value'), datepicker)
     renderContent(datepicker, null,false);
     item.classList.add('selected')
 }
