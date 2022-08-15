@@ -51,6 +51,7 @@
         padding: 4px
 
         .item
+            box-sizing: border-box
             flex-grow: 1
             display: flex
             justify-content: center
@@ -92,8 +93,7 @@
     
     .items-month
         .item
-            width: 20%
-
+            width: 30%
             &:nth-child(n+0)
                 background-color: rgba($springColor, .2)
                 border-color: $springColor
@@ -121,3 +121,11 @@
                 color: $winterColor
                 &:hover
                     box-shadow: inset 0 -5px 0px $winterColor
+        .selected
+            background-color: $cyan !important
+            color: $greyDark !important
+
+
+    .items-year
+        .item
+            min-width: 50%
