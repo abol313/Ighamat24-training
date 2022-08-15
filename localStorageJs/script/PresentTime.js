@@ -70,7 +70,7 @@ export default class PresentTime{
         //Fill the time elements
         this.enterElement.innerText = this.enterTime
         this.exitElement.innerText = this.exitTime
-        this.submitElement.innerText = this.submitTime
+        this.submitElement.innerText = this.submitDate.getFullYear()+'/'+this.submitDate.getMonth()+'/'+this.submitDate.getDate()
 
         //Pass children on the template element
         this.tempElement.appendChild( this.enterElement )
