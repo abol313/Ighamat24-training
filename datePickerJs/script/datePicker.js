@@ -254,6 +254,7 @@ function chooseMonth(month, datepicker, isBasedOnJalali){
         m.locale('en')
         datepicker.date.setMonth(m.month())
         datepicker.date.setDate(m.date())
+        datepicker.date.setYear(m.year())
         return
     }
     datepicker.date.setMonth(month)
