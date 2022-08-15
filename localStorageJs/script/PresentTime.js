@@ -1,5 +1,6 @@
-class PresentTime{
-    
+export default class PresentTime{
+    static presentTimes = []
+
     enterTime
     exitTime
     submitDate
@@ -13,6 +14,11 @@ class PresentTime{
         this.enterTime = enterTime
         this.exitTime = exitTime
         this.submitDate = new Date()
+        PresentTime.presentTimes.push(this)
+    }
+
+    static get presentTimes(){
+        return presentTimes
     }
 
     get enterTime(){
@@ -79,5 +85,4 @@ class PresentTime{
         return this.tempElement
     }
 
-    
 }
