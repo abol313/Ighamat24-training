@@ -326,8 +326,14 @@ function bootItem(datepicker){
     }
     datepicker.contentElement.querySelectorAll('.item')
         .forEach(e=>{
-                if(e.getAttribute('value')==value[datepicker.mode])
+                if(e.getAttribute('value')==value[datepicker.mode]){
+                    // e.scrollIntoView()
+                    console.log(e)
+                    let parent = e.parentElement
+                    let toY = e.getBoundingClientRect().y - parent.getBoundingClientRect().y - 10
+                    parent.scroll(0,toY)
                     chooseItem(e, datepicker, true)
+                }
             }
         )
 }
