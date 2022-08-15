@@ -1,0 +1,64 @@
+@import "colors";
+@import "reset";
+
+form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+
+    padding: 10px;
+    border-radius: 10px;
+    background-color: rgba($cyan, .1);
+    box-shadow: 0 0 200px  rgba($cyan, .3);
+
+    input {
+        background-color: rgba($pink, .2);
+        border: 1px solid $pink;
+        padding: 10px;
+        width: 298px;;
+        border-radius: 5px;
+        color: $pink;
+        flex-grow: 1;
+    }
+    input::placeholder{
+        color: rgba($pink, .7);
+    }
+    input:focus{
+        outline: none;
+        box-shadow: 0 0 10px $pink;
+    }
+
+    #enter_time {
+        background-color: rgba($green, .2);
+        border: 1px solid $green;
+        color: $green;
+    }
+    #enter_time::placeholder{
+        color: rgba($green, .7);
+    }
+    #enter_time:focus{
+        outline: none;
+        box-shadow: 0 0 10px $green;
+    }
+
+    button{
+        border-radius: 5px;
+        font-size: 3em;
+        font-weight: bolder;
+        width: 100%;
+        flex-grow: 1;
+        border: none;
+        background-color: rgba($pink,.8);
+        color: $darkGrey;
+        cursor: pointer;
+    }
+
+    button:hover{
+        background-color: $pink;
+    }
+
+    button:active{
+        background-color: rgba($pink,.2);
+        color: $pink;
+    }
+}
