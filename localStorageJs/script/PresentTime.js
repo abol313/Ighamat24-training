@@ -27,6 +27,7 @@ export default class PresentTime{
     setEnterTime(value){
         this.enterTime = value
         this.enterElement.innerText = this.enterTime
+        return this
     }
     
     getExitTime(){
@@ -35,15 +36,17 @@ export default class PresentTime{
     setExitTime(value){
         this.exitTime = value
         this.exitElement.innerText = this.exitTime
+        return this
     }
 
     
-    getSubmitTime(){
+    getSubmitDate(){
         return this.submitTime
     }
-    setSubmitTime(value){
-        this.submitTime = value
-        this.submitElement.innerText = this.submitTime
+    setSubmitDate(date){
+        this.submitDate = date
+        this.submitElement.innerText = this.submitDate.getFullYear()+'/'+this.submitDate.getMonth()+'/'+this.submitDate.getDate()+' '+this.submitDate.getHours()+':'+this.submitDate.getMinutes()+':'+this.submitDate.getSeconds()
+        return this
     }
 
 
@@ -68,9 +71,9 @@ export default class PresentTime{
         this.submitElement.classList.add('submit-time')
 
         //Fill the time elements
-        this.enterElement.innerText = this.enterTime
-        this.exitElement.innerText = this.exitTime
-        this.submitElement.innerText = this.submitDate.getFullYear()+'/'+this.submitDate.getMonth()+'/'+this.submitDate.getDate()
+        this.setEnterTime(this.enterTime)
+        this.setExitTime(this.exitTime)
+        this.setSubmitDate(this.submitDate)
 
         //Pass children on the template element
         this.tempElement.appendChild( this.enterElement )
@@ -79,6 +82,8 @@ export default class PresentTime{
 
         //Append the create <li> to the given <ul>
         ulElement.appendChild( this.tempElement )
+
+        return this
     }
 
     getTempElement(){
