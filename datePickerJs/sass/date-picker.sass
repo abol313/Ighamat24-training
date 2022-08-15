@@ -89,3 +89,35 @@
                 text-align: center
                 width: 40px
                 flex-grow: 1
+    
+    .items-month
+        .item
+            width: 20%
+
+            &:nth-child(n+0)
+                background-color: rgba($springColor, .2)
+                border-color: $springColor
+                color: $springColor
+                &:hover
+                    box-shadow: inset 0 -5px 0px $springColor
+
+            &:nth-child(n+4)
+                background-color: rgba($summerColor, .2)
+                border-color: $summerColor
+                color: $summerColor
+                &:hover
+                    box-shadow: inset 0 -5px 0px $summerColor
+
+            &:nth-child(n+7)
+                background-color: rgba($fallColor, .2)
+                border-color: $fallColor
+                color: $fallColor
+                &:hover
+                    box-shadow: inset 0 -5px 0px $fallColor
+
+            &:nth-child(n+10)
+                background-color: rgba($winterColor, .2)
+                border-color: $winterColor
+                color: $winterColor
+                &:hover
+                    box-shadow: inset 0 -5px 0px $winterColor
