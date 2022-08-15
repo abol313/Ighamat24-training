@@ -221,11 +221,17 @@ function getDaysNo(date, datepicker){
     return moment.jDaysInMonth(m.jYear(), m.jMonth())
 }
 
+/**
+ * returns n, the day of week base of its index
+ * n : 0 -> Saturday (شنبه)
+ * n : 1 -> Sunday (یک شنبه)
+ * n : 2 -> Monday (دو شنبه)
+ * ...
+ * n : 6 -> Friday (جمعه)
+ */
 function getFirstWeekDayOfMonth(date, datepicker){
-    // debugger
-    let m = moment(date)
-    m.locale('fa')
-    return m.startOf('month').weekday()
+
+    return moment(date).locale('fa').startOf('month').weekday()
 }
 
 function chooseYear(year, datepicker, isBasedOnJalali){
