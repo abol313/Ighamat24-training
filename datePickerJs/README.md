@@ -16,12 +16,12 @@ just pass to your html and use 😄 input
 > Note! : you must exactly the same name of class in your inputs!
 
 ## Customize style
-You can customize your custom style assass in the path [*sass/date-picker.sass*](sass/date-picker.sass) aor colors in path [*sass/colors.sass*](sass/colors.sass)
+You can customize your custom style sass-es in the path [*sass/date-picker.sass*](sass/date-picker.sass) aor colors in path [*sass/colors.sass*](sass/colors.sass)
 
 ## Fonts
 > fa : Yekan font used from [github](https://github.com/ParsMizban/Yekan-Font.git)
 
-> en : Quicksan
+> en : Quicksand
 
 ## Vite
 The project uses the Vite build system for now 
