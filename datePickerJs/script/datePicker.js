@@ -85,7 +85,7 @@ function renderContent(datepicker, items = null, refresh = true){
 
             switch(datepicker.mode){
                 case 'year':
-                    for(let i=2000; i<=2040; i++)
+                    for(let i=1300; i<=1500; i++)
                         items.push([i,i])
                     break;
                     
@@ -134,7 +134,8 @@ function renderContent(datepicker, items = null, refresh = true){
 }
 
 function passDateOnInput(input, date){
-    input.value = `${date.getUTCFullYear()} / ${date.getUTCMonth()} / ${date.getUTCDate()}`
+    let m = moment(date)
+    input.value = `${m.jYear()} / ${m.jMonth()+1} / ${m.jDate()}`
 }
 
 function getItemTemp(content, value, isSelected=false, datepicker = null){
@@ -201,19 +202,57 @@ function getFirstWeekDayOfMonth(date, datepicker){
     return m.startOf('month').weekday()
 }
 
-function chooseYear(year, datepicker){
+function chooseYear(year, datepicker, isBasedOnJalali){
+    if(isBasedOnJalali){
+        // debugger
+
+        let m = getDatepickerMoment(datepicker)
+        m.locale('fa')
+        m.year(+year)
+        m.locale('en')
+        datepicker.date.setYear(m.year())
+        datepicker.date.setMonth(m.month())
+        datepicker.date.setDate(m.date())
+        return
+    }
     datepicker.date.setYear(year)
     
 }
 
-function chooseMonth(month, datepicker){
+function chooseMonth(month, datepicker, isBasedOnJalali){
+    if(isBasedOnJalali){
+        // debugger
+        let m = getDatepickerMoment(datepicker)
+        m.locale('fa')
+        m.month(+month)
+        m.locale('en')
+        datepicker.date.setMonth(m.month())
+        datepicker.date.setDate(m.date())
+        return
+    }
     datepicker.date.setMonth(month)
 }
 
-function chooseDay(day, datepicker){
+function chooseDay(day, datepicker, isBasedOnJalali){
+    // debugger
+    if(isBasedOnJalali){
+        let m = getDatepickerMoment(datepicker)
+        m.locale('fa')
+        m.date(+day)
+        m.locale('en')
+        datepicker.date.setDate(m.date())
+        return
+    }
     datepicker.date.setDate(day)
 }
 
+function getDatepickerMoment(datepicker){
+    let m = moment()
+    m.year(datepicker.date.getFullYear())
+    m.month(datepicker.date.getMonth())
+    m.date(datepicker.date.getDate())
+    return m
+}
 
 function chooseYearTab(datepicker){
     datepicker.mode = 'year'
@@ -240,7 +279,7 @@ function listenItemsToClick(datepicker){
     .forEach(e=>{
         e.addEventListener('click',()=>{
             unselectItems(datepicker)
-            chooseItem(e, datepicker)
+            chooseItem(e, datepicker, true)
 
         })
     })
@@ -251,21 +290,23 @@ function unselectItems(datepicker){
 }
 
 function bootItem(datepicker){
+    let m = getDatepickerMoment(datepicker)
+    m.locale('fa')
     const value = {
-        year: datepicker.date.getUTCFullYear(),
-        month: datepicker.date.getUTCMonth(),
-        day: datepicker.date.getUTCDate(),
+        year: m.year(),
+        month: m.month(),
+        day: m.date(),
 
     }
     datepicker.contentElement.querySelectorAll('.item')
         .forEach(e=>{
-                if(e.innerText==value[datepicker.mode])
-                    chooseItem(e, datepicker)
+                if(e.getAttribute('value')==value[datepicker.mode])
+                    chooseItem(e, datepicker, true)
             }
         )
 }
 
-function chooseItem(item, datepicker){
+function chooseItem(item, datepicker, isBaseOnJalali){
     const choose = {
         year: chooseYear,
         month: chooseMonth,
@@ -274,7 +315,7 @@ function chooseItem(item, datepicker){
 
     // debugger
     console.log(item)
-    choose[datepicker.mode](item.getAttribute('value'), datepicker)
+    choose[datepicker.mode](item.getAttribute('value'), datepicker, isBaseOnJalali)
     renderContent(datepicker, null,false);
     item.classList.add('selected')
 }
