@@ -50,19 +50,18 @@ export default class PresentTime{
     }
 
 
-    makeElement(ulElement){
-        // <li class="present-time">
-        //     <p id="enter-time"></p>
-        //     <p id="exit-time"></p>
-        //     <p id="submit-time"></p>
-        // </li>
-
+    makeElement(tableElement){
+        // <tr class="present-time">
+        //     <td id="enter-time"></td>
+        //     <td id="exit-time"></td>
+        //     <td id="submit-time"></td>
+        // </tr>
 
         //Create elements
-        this.tempElement = document.createElement('li')
-        this.enterElement = document.createElement('p')
-        this.exitElement = document.createElement('p')
-        this.submitElement = document.createElement('p')
+        this.tempElement = document.createElement('tr')
+        this.enterElement = document.createElement('td')
+        this.exitElement = document.createElement('td')
+        this.submitElement = document.createElement('td')
 
         //Name styles the elements
         this.tempElement.classList.add('present-time')
@@ -81,7 +80,7 @@ export default class PresentTime{
         this.tempElement.appendChild( this.submitElement )
 
         //Append the create <li> to the given <ul>
-        ulElement.appendChild( this.tempElement )
+        tableElement.appendChild( this.tempElement )
 
         return this
     }
