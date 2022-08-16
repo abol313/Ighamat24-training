@@ -1,6 +1,7 @@
 @import "colors";
 @import "reset";
 @import 'https://fonts.googleapis.com/css2?family=Quicksand&display=swap';
+@import "https://use.fontawesome.com/releases/v6.1.2/css/all.css";
 
 * {
     font-family: Quicksand;
@@ -14,6 +15,7 @@ header {
 form {
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
     gap: 10px;
 
     position:sticky;
@@ -28,15 +30,66 @@ form {
     box-shadow: 0 0 200px  rgba($cyan, .3);
     margin-bottom: 20px;
 
+
+    .enter-time-box{
+        position: relative;
+        flex-grow: 1;
+        width:100%;
+        display:flex;
+        align-items: center;
+        .fa-person-arrow-down-to-line{
+            box-sizing: border-box;
+            width:60px;
+            text-align: center;
+            position: absolute;
+            color: $green;
+            transition: all 200ms;
+        }
+
+        #enter_time:focus{
+            box-shadow:inset 55px 0px 0px $green;
+
+            & + .fa-person-arrow-down-to-line{
+                color: $darkGrey;
+            }
+        }
+    }
+    .exit-time-box{
+        position: relative;
+        flex-grow: 1;
+        width:100%;
+        display:flex;
+        align-items: center;
+        
+        .fa-person-arrow-up-from-line{
+            box-sizing: border-box;
+            width:60px;
+            text-align: center;
+            position: absolute;
+            color: $pink;
+            transition: all 200ms ease-in;
+        }
+
+        #exit_time:focus{
+            box-shadow:inset 55px 0px 0px $pink;
+
+            & + .fa-person-arrow-up-from-line{
+                color: $darkGrey;
+            }
+        }
+    }
     input {
+        box-sizing: border-box;
         font-size: 1.4em;
         background-color: rgba($pink, .2);
         border: 1px solid $pink;
         padding: 10px;
-        width: 298px;;
+        width: 100%;
         border-radius: 5px;
         color: $pink;
         flex-grow: 1;
+        transition: box-shadow 200ms;
+        padding-left: 60px;
     }
     input::placeholder{
         color: rgba($pink, .7);
