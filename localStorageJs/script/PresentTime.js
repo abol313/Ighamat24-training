@@ -45,7 +45,10 @@ export default class PresentTime{
     }
     setSubmitDate(date){
         this.submitDate = date
-        this.submitElement.innerText = this.submitDate.getFullYear()+'/'+this.submitDate.getMonth()+'/'+this.submitDate.getDate()+' '+this.submitDate.getHours()+':'+this.submitDate.getMinutes()+':'+this.submitDate.getSeconds()
+        this.submitElement.innerHTML= `
+        <i class="fa-solid fa-calendar-check"></i>
+        `
+        this.submitElement.innerHTML += this.submitDate.getFullYear()+'/'+this.submitDate.getMonth()+'/'+this.submitDate.getDate()+' '+this.submitDate.getHours()+':'+this.submitDate.getMinutes()+':'+this.submitDate.getSeconds()
         return this
     }
 
@@ -73,6 +76,7 @@ export default class PresentTime{
         this.setEnterTime(this.enterTime)
         this.setExitTime(this.exitTime)
         this.setSubmitDate(this.submitDate)
+
 
         //Pass children on the template element
         this.tempElement.appendChild( this.enterElement )
