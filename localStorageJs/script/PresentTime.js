@@ -80,7 +80,8 @@ export default class PresentTime{
         this.tempElement.appendChild( this.submitElement )
 
         //Append the create <li> to the given <ul>
-        tableElement.appendChild( this.tempElement )
+        let firstPresentTimeEl = tableElement.querySelector('.present-time')
+        firstPresentTimeEl? firstPresentTimeEl.before( this.tempElement ) : tableElement.appendChild( this.tempElement )
 
         return this
     }
