@@ -1,4 +1,5 @@
-import PresentTime from './PresentTime'
+import PresentTime from './PresentTime.js'
+import Alert from './Alert.js'
 
 const presentTimeTableEl = document.querySelector('main .present-time-container .present-time-table')
 const inputEnterTimeEl = document.querySelector('form #enter_time')
@@ -63,3 +64,4 @@ function makeNRandomlyPresentTimes(number){
 function makeRandomlyDate(){
     return new Date(parseInt(Math.random()*1000+1970), parseInt(Math.random()*12), parseInt(Math.random()*29))
 }
+
