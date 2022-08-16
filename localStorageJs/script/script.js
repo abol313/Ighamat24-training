@@ -1,6 +1,6 @@
 import PresentTime from './PresentTime'
 
-const presentTimeUlEl = document.querySelector('main .present-time-container .present-time-ul')
+const presentTimeTableEl = document.querySelector('main .present-time-container .present-time-table')
 const inputEnterTimeEl = document.querySelector('form #enter_time')
 const inputExitTimeEl = document.querySelector('form #exit_time')
 const submitButton = document.querySelector('form #submit_present_time')
@@ -15,7 +15,7 @@ function submitPresentTime(){
         inputExitTimeEl.value
     )
 
-    presentTime.makeElement(presentTimeUlEl)
+    presentTime.makeElement(presentTimeTableEl)
 
     storagePushPresentTime(presentTime)
     console.log(presentTime)
@@ -30,7 +30,7 @@ function storagePreparePresentTimes(){
 
     for(let presentTime of presentTimes)
         new PresentTime(presentTime.enterTime, presentTime.exitTime)
-            .makeElement(presentTimeUlEl)
+            .makeElement(presentTimeTableEl)
             .setSubmitDate(new Date(presentTime.submitDate))
 }
 
