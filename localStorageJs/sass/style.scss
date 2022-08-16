@@ -85,76 +85,89 @@ main{
     width: 100%;
     .present-time-container{
         width: 100%;
-        .present-time-ul{
-            width: 100%;
-            display: flex;
-            flex-direction: column-reverse;
-            gap: 10px;
-            .present-time{
-                // filter: drop-shadow(0 0 3px $green);
-                position: relative;
-                padding: 10px;
-                background-color: rgba($green, .1);
-                border-top: 1px solid $green;
-                border-radius: 0 0 3px 3px;
-                color: $green;
-                font-size: 2em;
 
-                display: flex;
-                flex-wrap: wrap;
-                margin-bottom: 5px;
-                .enter-time{
-                    width:50%;
-                    box-sizing: border-box;
-                    flex-grow: 1;
-                    border:1px solid $green;
-                    // background-color: $green;
-                    color: $green;
-                    padding:0px 10px 0px 0px;
-                    
-                    &::before{
-                        margin-right: 10px;
-                        background-color: $green;
-                        content:'Entered at';
-                        padding:0px 10px;
-                        color: $darkGrey;
+        table{
+            width: 100%;
+
+            .present-time-table{
+
+                tr{
+                    display: flex;
+                    flex-wrap: wrap;
+                    min-height: 40px;
+                    th{
+                        flex-grow: 1;
+                        font-size: 2em;
+                    }
+
+                    // .enter-tim
+                }
+
+                .table-header{
+                    .enter-time{
+                        color: $green;
+                    }
+                    .exit-time{
+                        color: $pink;
                     }
                 }
-                .exit-time{
-                    width:50%;
-                    flex-grow: 1;
-                    border: 1px solid $pink;
-                    color: $pink;
-                    box-sizing: border-box;
-                    
-                    &::before{
-                        margin-right: 10px;
-                        color: $darkGrey;
-                        background-color: $pink;
-                        content:'Exited at';
-                        padding:0px 10px;                    }
-                }
-                .submit-time{
-                    // opacity: .3;
-                    box-shadow:0 0 10px rgba($darkGrey, .3);
-                    font-weight: bolder;
-                    box-sizing: border-box;
-                    width:200px;
-                    padding:10px;
-                    border-radius:4px;
-                    font-size:1rem;
-                    background-color: rgba($green, .3);
-                    color: $darkGrey;
-                    padding:10px;
-                    position: absolute;
-                    right:-5px;
-                    bottom:-5px;
-                    text-align: center;
-                }
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                .present-time{
+                    // filter: drop-shadow(0 0 3px $green);
+                    position: relative;
+                    padding: 10px;
+                    background-color: rgba($green, .1);
+                    border-top: 1px solid $green;
+                    border-radius: 0 0 3px 3px;
+                    color: $green;
+                    font-size: 2em;
 
-                &:hover{
+                    display: flex;
+                    flex-wrap: wrap;
+                    margin-bottom: 5px;
+                    .enter-time{
+                        width:50%;
+                        box-sizing: border-box;
+                        flex-grow: 1;
+                        // border:1px solid $green;
+                        // background-color: $green;
+                        color: $green;
+                        padding:0px 10px 0px 0px;
+                        
+                    }
+                    .exit-time{
+                        width:50%;
+                        flex-grow: 1;
+                        // border: 1px solid $pink;
+                        color: $pink;
+                        box-sizing: border-box;
+                        
+                    }
                     .submit-time{
-                        background-color: $green;
+                        // opacity: .3;
+                        box-shadow:0 0 10px rgba($darkGrey, .3);
+                        font-weight: bolder;
+                        box-sizing: border-box;
+                        width:200px;
+                        padding:10px;
+                        border-radius:4px;
+                        font-size:1rem;
+                        background-color: rgba($green, .3);
+                        color: $darkGrey;
+                        padding:10px;
+                        position: absolute;
+                        right:-5px;
+                        bottom:-5px;
+                        text-align: center;
+                    }
+
+                    &:hover{
+                        .submit-time{
+                            background-color: $green;
+                        }
                     }
                 }
             }
