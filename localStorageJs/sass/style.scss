@@ -171,9 +171,9 @@ main{
                 .present-time{
                     // filter: drop-shadow(0 0 3px $green);
                     position: relative;
-                    padding: 10px;
-                    background-color: rgba($green, .1);
-                    border-top: 1px solid $green;
+                    // padding: 10px;
+                    // background-color: rgba($green, .1);
+                    // border-top: 1px solid $green;
                     border-radius: 0 0 3px 3px;
                     color: $green;
                     font-size: 2em;
@@ -189,7 +189,9 @@ main{
                         // background-color: $green;
                         color: $green;
                         padding:0px 10px 0px 0px;
-                        
+                        border-top: 1px solid $green;
+                        background-color: rgba($green, .1);
+
                     }
                     .exit-time{
                         width:50%;
@@ -197,7 +199,9 @@ main{
                         // border: 1px solid $pink;
                         color: $pink;
                         box-sizing: border-box;
-                        
+                        border-top: 1px solid $pink;
+                        background-color: rgba($pink, .1);
+
                     }
                     .submit-time{
                         // opacity: .3;
@@ -214,13 +218,21 @@ main{
                         position: absolute;
                         right:-5px;
                         bottom:-5px;
-                        text-align: center;
+                        display:flex;
+                        align-items:center;
+                        justify-content: space-around;
+                        height:35px;
                     }
 
                     &:hover{
                         .submit-time{
                             background-color: $green;
                         }
+                    }
+
+                    & > *{
+                        padding:10px !important;
+                        height: 50px;
                     }
                 }
             }
