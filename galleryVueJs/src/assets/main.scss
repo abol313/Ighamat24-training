@@ -1,2 +1,27 @@
+@import "./colors.scss";
 @import "./base.css";
+
+body {
+    background-color: $bgImage;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    justify-content: center;
+    box-sizing: border-box;
+    padding:10px;
+    color: $darkBlack;
+    margin:0;
+    text-align: center;
+
+    .go-on-gallery{
+        background-color: $bgImage;
+        color: $darkBlack;
+        transition: transform 200ms;
+
+        &:hover{
+            transform: scale(102%);
+        }
+    }
+}
 
