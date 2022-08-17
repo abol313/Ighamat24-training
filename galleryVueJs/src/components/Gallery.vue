@@ -1,7 +1,24 @@
+<script>
+import CustomButton from './CustomButton.vue';
+
+export default {
+    components:{
+        CustomButton
+    }
+}
+</script>
+
 <template>
     <h1>
         Welcome To Your Gallery !
     </h1>
+
+    <router-link to="/home">
+        <CustomButton class="go-on-gallery">
+            Back To Home
+        </CustomButton>
+    </router-link>
+
     <div class="images-box">
         <div class="image"><img src="../assets/images/abol_roocket_profile.png" alt=""></div>
         <div class="image"><img src="../assets/images/abstract_example_shot.png" alt=""></div>
@@ -40,6 +57,7 @@
 <style scoped>
 
     .images-box{
+        margin-top:20px; 
         display:flex;
         flex-wrap:wrap;
         gap:20px;
