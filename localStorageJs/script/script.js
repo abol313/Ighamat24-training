@@ -12,7 +12,8 @@ clearButton.addEventListener('click', clearPresentTimes)
 
 storagePreparePresentTimes()
 
-makeNRandomlyPresentTimes(1000)
+// clearPresentTimes()
+// makeNRandomlyPresentTimes(1000)
 
 function submitPresentTime(){
     let presentTime = new PresentTime(
@@ -58,6 +59,8 @@ function makeNRandomlyPresentTimes(number){
 
         let presentTime = new PresentTime(entryTime, exitTime)
         presentTime.makeElement(presentTimeTableEl)
+
+        storagePushPresentTime(presentTime)
     } 
 }
 
@@ -65,3 +68,4 @@ function makeRandomlyDate(){
     return new Date(parseInt(Math.random()*1000+1970), parseInt(Math.random()*12), parseInt(Math.random()*29))
 }
 
+// new Alert('title', 'description', 'danger').make().show()

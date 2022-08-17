@@ -11,29 +11,37 @@
     background-color: darken($green, 20%);
     border: 1px solid $green;
     box-shadow: 0 0 10px $green;
+    z-index: 3;
+
+    .title{
+        
+    }
 }
 
 .abol-alert-box-ok {
     @extend .abol-alert-box;
 
-    background-color: darken($green, 20%);
+    background-color: darken($green, 40%);
     border: 1px solid $green;
-    box-shadow: 0 0 10px $green;
+    box-shadow: 0 0 100px $green;
+    color: $green;
 }
 
 .abol-alert-box-warning {
     @extend .abol-alert-box;
 
-    background-color: darken($yellow, 20%);
+    background-color: darken($yellow, 40%);
     border: 1px solid $yellow;
-    box-shadow: 0 0 10px $yellow;
+    box-shadow: 0 0 100px $yellow;
+    color: $yellow;
 }
 
 .abol-alert-box-danger {
     @extend .abol-alert-box;
 
-    background-color: darken($pink, 20%);
-    border: 1px solid $pink;
-    box-shadow: 0 0 10px $pink;
+    background-color: darken($red, 40%);
+    border: 1px solid $red;
+    box-shadow: 0 0 100px $red,0 0 200px $red,0 0 300px $red,0 0 400px $red,0 0 500px $red;
+    color: $red;
 }
 

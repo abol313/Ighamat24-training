@@ -18,19 +18,20 @@ export default class Alert{
 
     setTitle(title){
         this.title = title
-        this.titleElement.innerTEXT = this.title
+        this.titleElement.innerHTML = '<i class="icon fa-solid fa-circle-info"></i>'
+        this.titleElement.innerHTML += this.title
         return this
     }
 
     setDescription(decription){
         this.description = this.description
-        this.descriptionElement.innerTEXT = this.description
+        this.descriptionElement.innerText = this.description
         return this
     }
 
     make(){
         this.tempElement = document.createElement('div')
-        this.titleElement = document.createElement('h2')
+        this.titleElement = document.createElement('p')
         this.descriptionElement = document.createElement('p')
 
         this.tempElement.classList.add('abol-alert-box'+'-'+this.mode)
