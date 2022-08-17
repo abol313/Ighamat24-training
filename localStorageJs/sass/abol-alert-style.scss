@@ -1,47 +1,91 @@
 @import "colors";
 
-.abol-alert-box {
+.abol-alert-ground {
     position: fixed;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    padding: 20px;
-    border-radius: 10px;
+    width: 100%;
+    height: 100%;
+    background-color: rgba($darkGrey, .5);
+    backdrop-filter: blur(5px);
+    z-index: 100;
 
-    background-color: darken($green, 20%);
-    border: 1px solid $green;
-    box-shadow: 0 0 10px $green;
-    z-index: 3;
+    .abol-alert-box {
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        padding: 10px;
+        border-radius: 10px;
 
-    .title{
-        
+        background-color: darken($success, 20%);
+        border: 1px solid $success;
+        box-shadow: 0 0 10px $success;
+        z-index: 3;
+
+        .title {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+            font-size: 2em;
+        }
+
+        .description {
+            padding: 10px 0px;
+            font-size: 1.2em;
+        }
+
+        .cancel {
+            color: darken($success, 90%);
+            background-color: $success;
+
+            text-align: center;
+            border-radius: 5px;
+            padding: 10px;
+            cursor: pointer;
+        }
     }
+
+    .abol-alert-box-success {
+        @extend .abol-alert-box;
+
+        background-color: darken($success, 40%);
+        border: 1px solid $success;
+        box-shadow: 0 0 100px $success;
+        box-shadow: 0 0 100px #a8f5b4;
+        color: $success;
+
+        .cancel {
+            color: darken($success, 90%);
+            background-color: $success;
+        }
+    }
+
+    .abol-alert-box-warning {
+        @extend .abol-alert-box;
+
+        background-color: darken($warning, 40%);
+        border: 1px solid $warning;
+        box-shadow: 0 0 100px $warning;
+        color: $warning;
+
+        .cancel {
+            color: darken($warning, 80%);
+            background-color: $warning;
+        }
+    }
+
+    .abol-alert-box-danger {
+        @extend .abol-alert-box;
+
+        background-color: darken($danger, 40%);
+        border: 1px solid $danger;
+        box-shadow: 0 0 100px $danger;
+        color: $danger;
+
+        .cancel {
+            color: darken($danger, 90%);
+            background-color: $danger;
+        }
+    }
+
 }
-
-.abol-alert-box-ok {
-    @extend .abol-alert-box;
-
-    background-color: darken($green, 40%);
-    border: 1px solid $green;
-    box-shadow: 0 0 100px $green;
-    color: $green;
-}
-
-.abol-alert-box-warning {
-    @extend .abol-alert-box;
-
-    background-color: darken($yellow, 40%);
-    border: 1px solid $yellow;
-    box-shadow: 0 0 100px $yellow;
-    color: $yellow;
-}
-
-.abol-alert-box-danger {
-    @extend .abol-alert-box;
-
-    background-color: darken($red, 40%);
-    border: 1px solid $red;
-    box-shadow: 0 0 100px $red,0 0 200px $red,0 0 300px $red,0 0 400px $red,0 0 500px $red;
-    color: $red;
-}
-
