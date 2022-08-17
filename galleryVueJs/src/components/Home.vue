@@ -14,8 +14,4 @@ export default {
             Go To Gallery
         </CustomButton>
     </router-link>
-<!-- 
-    <router-view>
-        
-    </router-view> -->
 </template>
