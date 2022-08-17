@@ -57,6 +57,9 @@ export default class Alert{
         this.cancelElement.addEventListener('click',()=>{
             this.remove();
         },{once:true})
+        this.groundElement.addEventListener('click',()=>{
+            this.remove();
+        },{once:true})
 
 
         this.groundElement.classList.add('abol-alert-ground')
