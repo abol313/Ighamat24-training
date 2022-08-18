@@ -67,6 +67,10 @@ export default class LocalStorageDB {
 
     }
 
+    useTable(tableName){
+        return this.tables[tableName];
+    }
+
 }
 
 export class LocalStorageTable {
