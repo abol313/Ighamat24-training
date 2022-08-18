@@ -11,10 +11,13 @@ export default class PresentTime{
     submitElement
 
     constructor(enterTime, exitTime){
-        this.enterTime = enterTime
-        this.exitTime = exitTime
-        this.submitDate = new Date()
-        PresentTime.presentTimes.push(this)
+        enterTime = enterTime.trim()
+        exitTime = exitTime.trim()
+        this.enterTime = enterTime;
+        this.exitTime = exitTime;
+        this.submitDate = new Date();
+        if(this.isTrueTime(enterTime) && this.isTrueTime(exitTime))
+            PresentTime.presentTimes.push(this);
     }
 
     static getPresentTimes(){
@@ -94,4 +97,72 @@ export default class PresentTime{
         return this.tempElement
     }
 
+    /**
+     * callback(
+     *     succes: bool,
+     *     msg: object
+     * )
+     * 
+     * msg : {
+     *     title: string,
+     *     description: string
+     * }
+     */
+    validateTimes(callback){
+        if(this.enterTime=="" && this.exitTime==""){
+            callback(
+                false,
+                {
+                    title: 'Empty Input',
+                    description: `You must pass your times in format: hour:minute
+                    such as 13:5
+                    `,
+                }
+            )
+            return null
+        }
+
+        if(!this.isTrueTime(this.enterTime)){
+            callback(
+                false,
+                {
+                    title: 'Wrong Input [Enter Time]',
+                    description: `You must pass your times in format: hour:minute
+                    such as 13:5
+                    `,
+                }
+            )
+            return null
+        }else if(!this.isTrueTime(this.exitTime)){
+            callback(
+                false,
+                {
+                    mode: 'danger',
+                    title: 'Wrong Input [Exit Time]',
+                    description: `You must pass your times in format: hour:minutes
+                    such as 13:50
+                    `,
+                }
+            )
+            return null
+        }
+
+        callback(
+            true,
+            {
+                title: 'Well Done',
+                description: `Your times added`,
+            }
+        )
+
+
+        return this
+    }
+
+    isTrueTime(time){
+        if(/^\d{,2}:\d{,2}$/.test(time))return true;
+        
+
+        return false
+    }
 }
