@@ -16,10 +16,22 @@ storagePreparePresentTimes()
 // makeNRandomlyPresentTimes(1000)
 
 function submitPresentTime(){
+    let enterTime = inputEnterTimeEl.value
+    let exitTime = inputExitTimeEl.value
+
     let presentTime = new PresentTime(
-        inputEnterTimeEl.value,
-        inputExitTimeEl.value
+        enterTime,
+        exitTime
     )
+
+    if(!presentTime.validateTimes((success, msg)=>{
+        new Alert(
+            msg.title,
+            msg.description,
+            'Ok',
+            success? 'success':'danger'
+        ).make().show();
+    })) return ;
 
     presentTime.makeElement(presentTimeTableEl)
 
@@ -68,4 +80,4 @@ function makeRandomlyDate(){
     return new Date(parseInt(Math.random()*1000+1970), parseInt(Math.random()*12), parseInt(Math.random()*29))
 }
 
-// new Alert('title', 'description', 'danger').make().show()
+// new Alert('The Danger Region', 'be sure bee sure besure!!!!!', 'Got it !', 'warning').make().show()
