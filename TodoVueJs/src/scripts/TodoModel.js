@@ -8,12 +8,12 @@ export default class TodoModel {
     static fields = [
         'id',
         'title',
-        'description',
+        // 'description',
 
-        'due_at',
-        'done_at',
-        'created_at',
-        'updated_at',
+        // 'due_at',
+        // 'done_at',
+        // 'created_at',
+        // 'updated_at',
     ];
     
     /**
@@ -62,9 +62,7 @@ export default class TodoModel {
         let tableModel = this.connect();
         tableModel.getDB()
             .useTable('todos')
-            .insert({
-
-            });
+            .insert(record);
         
         return tableModel;
     }
