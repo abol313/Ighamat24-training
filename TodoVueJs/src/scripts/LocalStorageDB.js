@@ -16,7 +16,7 @@ export default class LocalStorageDB {
         this.name = dBName;
         this.storage = storage;
         this.storageKey = storageKey + '_' +this.dBName;
-        this.tables = [];
+        this.tables = {};
         this.prepareStorage();
     }
 
@@ -56,7 +56,7 @@ export default class LocalStorageDB {
         }else{
             let jsonData = JSON.parse(rawJsonData);
             for(let jsonTableKey of Object.keys(jsonData.tables)){
-                let jsonTable = jsonData[jsonTableKey];
+                let jsonTable = jsonData.tables[jsonTableKey];
                 let table = new LocalStorageTable(jsonTable.name, jsonTable.fields, jsonTable.data);
 
                 this.tables[jsonTableKey]=table;
@@ -66,7 +66,7 @@ export default class LocalStorageDB {
     }
 
     storeStorage(){
-        this.storage.setItem(JSON.stringify(this.getSecretStorageKey()));
+        this.storage.setItem(this.getSecretStorageKey(), JSON.stringify(this));
         
         return this;
     }
