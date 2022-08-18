@@ -17,6 +17,7 @@ export default class LocalStorageDB {
         this.storage = storage;
         this.storageKey = storageKey + '_' +this.dBName;
         this.tables = [];
+        this.prepareStorage();
     }
 
     getSecretStorageKey(){
@@ -62,6 +63,12 @@ export default class LocalStorageDB {
             }
         }
 
+    }
+
+    storeStorage(){
+        this.storage.setItem(JSON.stringify(this.getSecretStorageKey()));
+        
+        return this;
     }
 
     createTable(tableName, tableFields){
