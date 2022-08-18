@@ -78,6 +78,11 @@ export default class StorageDB {
         return this.tables[tableName] = new StorageTable(tableName, tableFields);
     }
 
+    /**
+     * 
+     * @param {string} tableName pass your table name
+     * @returns {StorageTable}
+     */
     useTable(tableName){
         return this.tables[tableName];
     }
