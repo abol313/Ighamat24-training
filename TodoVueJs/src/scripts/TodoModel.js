@@ -38,9 +38,9 @@ export default class TodoModel {
      */
     useTable(){
         if(this.getDB().useTable(this.table) === undefined)
-            this.getDB().createTable(this.table, this.fields);
+            this.getDB().createTable(TodoModel.table, TodoModel.fields);
 
-        return this.getDB().useTable(this.table);
+        return this.getDB().useTable(TodoModel.table);
     }
 
     /**
@@ -48,7 +48,7 @@ export default class TodoModel {
      * @returns {TodoModel} connects to the db and table then returns itself instance
      */
     static connect(){
-        let tableModel = new TodoModel(new StorageDB(window.localStorage, this.db, this.password));
+        let tableModel = new TodoModel(new StorageDB(window.localStorage, TodoModel.db, TodoModel.password));
         
         return tableModel;
     }
@@ -60,10 +60,10 @@ export default class TodoModel {
      */
     static create(record){
         let tableModel = this.connect();
-        tableModel.getDB()
-            .useTable('todos')
+        tableModel.useTable()
             .insert(record);
         
+        tableModel.getDB().storeStorage();
         return tableModel;
     }
 
