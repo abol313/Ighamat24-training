@@ -16,6 +16,7 @@ export default class LocalStorageDB {
         this.name = dBName;
         this.storage = storage;
         this.storageKey = storageKey + '_' +this.dBName;
+        this.tables = [];
     }
 
     getSecretStorageKey(){
@@ -104,7 +105,7 @@ export class LocalStorageTable {
     }
 
     validateRecord(record){
-        if(typeof record == "object")
+        if(typeof record != "object")
             return false;
         
         let filteredRecord = {};
@@ -128,7 +129,7 @@ export class LocalStorageTable {
 }
 
 export class QueryBuilder {
-
+    table;
     queryData;
 
     /**
@@ -140,8 +141,14 @@ export class QueryBuilder {
         this.queryData = this.table.all();
     }
 
+    requery(){
+        this.queryData = this.table.all();
+
+        return this;
+    }
+
     get(){
-        return this.queryData()
+        return this.queryData;
     }
 
 
