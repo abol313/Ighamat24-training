@@ -24,10 +24,10 @@ export default class LocalStorageDB {
 
     /**
      * 
-     * @param {string} chiphertext Pass the cipher text to validate the db key that stored on its storage
+     * @param {string} ciphertext Pass the cipher text to validate the db key that stored on its storage
      */
-    checkSecretStorageKey(chiphertext){
-        
+    checkSecretStorageKey(ciphertext){
+        return ciphertext === this.getSecretStorageKey();
     }
     
     /**
