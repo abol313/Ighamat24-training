@@ -53,10 +53,11 @@ export default class LocalStorageDB {
             this.storage.setItem(this.getSecretStorageKey(), JSON.stringify(this));
         }else{
             let jsonData = JSON.parse(rawJsonData);
-            for(let jsonTable of jsonData.tables){
+            for(let jsonTableKey of Object.keys(jsonData.tables)){
+                let jsonTable = jsonData[jsonTableKey];
                 let table = new LocalStorageTable(jsonTable.name, jsonTable.fields, jsonTable.data);
 
-                this.tables.push(table);
+                this.tables[jsonTableKey]=table;
             }
         }
 
