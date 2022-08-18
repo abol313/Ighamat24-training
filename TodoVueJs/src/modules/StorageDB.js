@@ -65,12 +65,22 @@ export default class StorageDB {
 
     }
 
+    /**
+     * this method stores db information on the storage 
+     * @returns {StorageDB}
+     */
     storeStorage(){
         this.storage.setItem(this.getSecretStorageKey(), JSON.stringify(this));
         
         return this;
     }
 
+    /**
+     * 
+     * @param {string} tableName the name of table you want to create
+     * @param {array} tableFields the names of fields as an array of strings
+     * @returns {StorageTable|boolean} returns the found table or false if not found
+     */
     createTable(tableName, tableFields){
         if(tableName in this.tables)
             return false;
@@ -106,6 +116,11 @@ export class StorageTable {
         this.data = data;
     }
 
+    /**
+     * 
+     * @param {object} record gets object of keys as fields of table and relevant values
+     * @returns {StorageTable} returns this
+     */
     insert(record){
         let filteredRecord = this.validateRecord(record);
         if(!filteredRecord)
@@ -116,6 +131,12 @@ export class StorageTable {
         return this;
     }
 
+    /**
+     * validates records
+     * @param {object} record gets object of keys as fields of table and relevant values
+     * @returns {object} returns a sanitized object that matches all fields of table if all 
+     * did not match then returns false
+     */
     validateRecord(record){
         if(typeof record != "object")
             return false;
@@ -131,10 +152,18 @@ export class StorageTable {
         return filteredRecord;
     }
 
+    /**
+     * returns queryBuilder
+     * @returns {QueryBuilder}
+     */
     query(){
         return new QueryBuilder(this);
     }
 
+    /**
+     * returns array of records/rows as objects
+     * @returns {array}
+     */
     all(){
         return this.data;
     }
@@ -153,17 +182,31 @@ export class QueryBuilder {
         this.queryData = this.table.all();
     }
 
+    /**
+     * refreshes data from table 
+     * @returns {QueryBuilder}
+     */
     requery(){
         this.queryData = this.table.all();
 
         return this;
     }
 
+    /**
+     * returns built query data as an array of objects(rows/records)
+     * @returns {array}
+     */
     get(){
         return this.queryData;
     }
 
 
+    /**
+     * queries rows those have column equal to value
+     * @param {string} column the column name of table
+     * @param {any} value the value to be checked
+     * @returns {QueryBuilder}
+     */
     where(column, value){
         this.queryData = this.queryData.filter( (record) => {
             return record[column] == value;
@@ -172,6 +215,12 @@ export class QueryBuilder {
         return this;
     }
 
+    /**
+     * queries rows those have column un-equal to value
+     * @param {string} column the column name of table
+     * @param {any} value the value to be checked
+     * @returns {QueryBuilder}
+     */
     whereNot(column, value){
         this.queryData = this.queryData.filter( (record) => {
             return record[column] != value;
@@ -180,6 +229,12 @@ export class QueryBuilder {
         return this;
     }
 
+    /**
+     * queries rows those have column and its value is equal to at least one of the values
+     * @param {string} column the column name of table
+     * @param {array} values the values to check
+     * @returns {QueryBuilder}
+     */
     whereIn(column, values){
         this.queryData = this.queryData.filter( (record) => {
             return values.includes(record[column]);
@@ -188,6 +243,12 @@ export class QueryBuilder {
         return this;
     }
 
+    /**
+     * queries rows those have column and its value is equal to no one of the values
+     * @param {string} column the column name of table
+     * @param {array} values the values to check
+     * @returns {QueryBuilder}
+     */
     whereNotIn(column, values){
         this.queryData = this.queryData.filter( (record) => {
             return !values.includes(record[column]);
