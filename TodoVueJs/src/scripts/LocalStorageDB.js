@@ -52,7 +52,12 @@ export default class LocalStorageDB {
         if(rawJsonData === null){
             this.storage.setItem(this.getSecretStorageKey(), JSON.stringify(this));
         }else{
-            this.storage.getItem(this.getSecretStorageKey());
+            let jsonData = JSON.parse(rawJsonData);
+            for(let jsonTable of jsonData.tables){
+                let table = new LocalStorageTable(jsonTable.name, jsonTable.fields, jsonTable.data);
+
+                this.tables.push(table);
+            }
         }
 
     }
@@ -72,11 +77,12 @@ export class LocalStorageTable {
      * 
      * @param {string} name 
      * @param {array} fieldNames 
+     * @param {array} data
      */
-    constructor(name, fieldNames){
+    constructor(name, fieldNames, data=[]){
         this.name = name;
         this.fields = fieldNames;
-        this.data = [];
+        this.data = data;
     }
 
     insert(record){
