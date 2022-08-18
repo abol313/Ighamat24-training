@@ -1,4 +1,4 @@
-export default class LocalStorageDB {
+export default class StorageDB {
     name;
     tables;
     storage;
@@ -57,7 +57,7 @@ export default class LocalStorageDB {
             let jsonData = JSON.parse(rawJsonData);
             for(let jsonTableKey of Object.keys(jsonData.tables)){
                 let jsonTable = jsonData.tables[jsonTableKey];
-                let table = new LocalStorageTable(jsonTable.name, jsonTable.fields, jsonTable.data);
+                let table = new StorageTable(jsonTable.name, jsonTable.fields, jsonTable.data);
 
                 this.tables[jsonTableKey]=table;
             }
@@ -75,7 +75,7 @@ export default class LocalStorageDB {
         if(tableName in this.tables)
             return false;
     
-        return this.tables[tableName] = new LocalStorageTable(tableName, tableFields);
+        return this.tables[tableName] = new StorageTable(tableName, tableFields);
     }
 
     useTable(tableName){
@@ -84,7 +84,7 @@ export default class LocalStorageDB {
 
 }
 
-export class LocalStorageTable {
+export class StorageTable {
     name;
     fields;
     data;
@@ -141,7 +141,7 @@ export class QueryBuilder {
 
     /**
      * 
-     * @param {LocalStorageTable} table - The table
+     * @param {StorageTable} table - The table
      */
     constructor(table){
         this.table = table;
@@ -191,6 +191,6 @@ export class QueryBuilder {
         return this;
     }
 }
-export class LocalStorageModel {
+export class StorageModel {
 
 }
