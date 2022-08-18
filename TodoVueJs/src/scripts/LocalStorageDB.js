@@ -7,12 +7,12 @@ export default class LocalStorageDB {
 
     /**
      * 
-     * @param {string} dBName 
      * @param {Storage} storage 
+     * @param {string} dBName 
      * @param {password} password
      * @param {string} storageKey
      */
-    constructor(dBName, storage, password='', storageKey = 'local_storage_db'){
+    constructor(storage, dBName, password='', storageKey = 'local_storage_db'){
         this.name = dBName;
         this.storage = storage;
         this.storageKey = storageKey + '_' +this.dBName;
@@ -64,7 +64,10 @@ export default class LocalStorageDB {
     }
 
     createTable(tableName, tableFields){
-
+        if(tableName in this.tables)
+            return false;
+    
+        return this.tables[tableName] = new LocalStorageTable(tableName, tableFields);
     }
 
     useTable(tableName){
