@@ -70,11 +70,22 @@ export default class TodoModel {
     }
 
     /**
-     * 
+     * returns query builder of the table
      * @returns {QueryBuilder} returns the query builder to pass queries conditions and etc.
      */
     static query(){
-        return this.useTable().query();
+        return this.connect()
+            .useTable()
+            .query();
     }
 
+    /**
+     * returns all of records of the table
+     * @returns {array} returns an array of objects each one as row/record
+     */
+    static all(){
+        return this.connect()
+            .useTable()
+            .all();
+    }
 }
