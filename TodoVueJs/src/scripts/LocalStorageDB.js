@@ -177,7 +177,7 @@ export class QueryBuilder {
 
     whereIn(column, values){
         this.queryData = this.queryData.filter( (record) => {
-            retvalues.includes(record[column]);
+            return values.includes(record[column]);
         });
 
         return this;
