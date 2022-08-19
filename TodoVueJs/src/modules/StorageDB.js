@@ -57,7 +57,7 @@ export default class StorageDB {
             let jsonData = JSON.parse(rawJsonData);
             for(let jsonTableKey of Object.keys(jsonData.tables)){
                 let jsonTable = jsonData.tables[jsonTableKey];
-                let table = new StorageTable(jsonTable.name, jsonTable.fields, jsonTable.data);
+                let table = new StorageTable(jsonTable.name, jsonTable.fields, jsonTable.data, jsonTable.id);
 
                 this.tables[jsonTableKey]=table;
             }
@@ -101,20 +101,23 @@ export default class StorageDB {
 }
 
 export class StorageTable {
+    id;
     name;
     fields;
     data;
 
     /**
-     * 
+     * Make your own table
      * @param {string} name 
      * @param {array} fieldNames 
      * @param {array} data
+     * @param {number} id the id of last created row
      */
-    constructor(name, fieldNames, data=[]){
+    constructor(name, fieldNames, data=[], id=0){
         this.name = name;
         this.fields = fieldNames;
         this.data = data;
+        this.id = id;
     }
 
     /**
@@ -127,6 +130,8 @@ export class StorageTable {
         if(!filteredRecord)
             return false;
     
+        filteredRecord.id = this.id+=1;
+
         this.data.push(filteredRecord);
 
         return this;
