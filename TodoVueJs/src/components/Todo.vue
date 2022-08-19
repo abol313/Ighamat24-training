@@ -3,30 +3,20 @@
 export default {
 
 
-    // data(){
-    //     return {
-    //         id: 1,
-    //         title: 'Todo title',
-    //         description: 'Todo description..',
-    //         created_at: new Date('2022-08-10T12:37:36.110Z'),
-    //         updated_at: new Date('2022-08-16T12:37:36.110Z'),
-    //         done_at: null,
-    //         status: false,
-    //     };
-    // },
+    props: {
+        'id':Number,
+        'title':String,
+        'description':String,
+        'dueAt':Date,
+        'doneAt':Date,
 
-    props: [
-        'id',
-        'title',
-        'description',
-        'created_at',
-        'updated_at',
-        'status',
-    ],
+        'createdAt':Date,
+        'updatedAt':Date,
+    },
 
     computed:{
         last_edit(){
-            let date = this.updated_at || this.created_at;
+            let date = this.updatedAt || this.createdAt;
             if(!date) return date;
             console.log(date);
             let nowDate = new Date();
@@ -42,6 +32,11 @@ export default {
                     last_edit_out += `${diffMonth} month${diffMonth>1?'s':''} ago`;
                     break;
                 
+                case nowDate.getDate() != date.getDate():
+                    let diffDate = nowDate.getDate() - date.getDate();
+                    last_edit_out += `${diffDate} day${diffDate>1?'s':''} ago`;
+                    break;
+
                 case nowDate.getHours() != date.getHours():
                     let diffHour = nowDate.getHours() - date.getHours();
                     last_edit_out += `${diffHour} hour${diffHour>1?'s':''} ago`;
@@ -67,7 +62,7 @@ export default {
 
     methods:{
         toggleStatus(){
-            this.status = !this.status;
+            this.doneAt = this.doneAt? null: new Date();
         }
     },
 
