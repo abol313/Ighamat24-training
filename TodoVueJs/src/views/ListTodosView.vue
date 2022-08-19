@@ -18,13 +18,6 @@ export default {
 
     <Todo 
         v-for="todo in todos"
-        :id="todo.id"
-        :title="todo.title"
-        :description="todo.description"
-        :due-at="new Date(todo.due_at)"
-        :done-at="new Date(todo.done_at)"
-        
-        :created-at="new Date(todo.created_at)"
-        :updated-at="new Date(todo.updated_at)"
+        :todo="todo"
     />
 </template>
