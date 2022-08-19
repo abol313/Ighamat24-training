@@ -73,13 +73,13 @@ export default class TodoModel {
      * @param {object} newRecord new field values will be replaced
      * @returns {TodoModel}
      */
-    update(id, newRecord){
+    static update(id, newRecord){
         let tableModel = this.connect();
         tableModel.useTable()
             .update(id, newRecord);
         
         tableModel.getDB().storeStorage();
-        return tableModel;
+        return this;
 
     }
 
