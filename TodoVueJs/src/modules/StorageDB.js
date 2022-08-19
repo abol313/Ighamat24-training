@@ -156,7 +156,7 @@ export class StorageTable {
             else
                 filteredRecord[field] = record[field];
 
-        if(! this.keyName in filteredRecord)
+        if(filteredRecord[this.keyName]===undefined)
             filteredRecord[this.keyName] = this.key+1;
         
         if(filteredRecord[this.keyName] <= this.key)
