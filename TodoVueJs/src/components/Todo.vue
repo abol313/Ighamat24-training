@@ -1,20 +1,30 @@
 <script>
+import TodoModel from '../scripts/TodoModel';
+
 
 export default {
 
 
-    props: {
-        'id':Number,
-        'title':String,
-        'description':String,
-        'dueAt':Date,
-        'doneAt':Date,
+    props: ['todo']
+    ,
 
-        'createdAt':Date,
-        'updatedAt':Date,
+    data(){
+        return {
+            id:this.todo.id,
+            title:this.todo.title,
+            description:this.todo.description,
+            dueAt:this.todo.due_at && new Date(this.todo.due_at),
+            doneAt:this.todo.done_at && new Date(this.todo.done_at),
+
+            createdAt:this.todo.created_at && new Date(this.todo.created_at),
+            updatedAt:this.todo.updated_at && new Date(this.todo.updated_at),
+        }
     },
 
     computed:{
+        status(){
+            return !!this.doneAt;
+        },
         last_edit(){
             let date = this.updatedAt || this.createdAt;
             if(!date) return date;
@@ -63,6 +73,7 @@ export default {
     methods:{
         toggleStatus(){
             this.doneAt = this.doneAt? null: new Date();
+            TodoModel.update(this.id, {done_at: this.doneAt});
         }
     },
 
@@ -74,7 +85,7 @@ export default {
         <h3 class="title">{{title}}</h3>
         <p class="description">{{description}}</p>
         <p class="last-edit">{{last_edit}}</p>
-        <p class="status" @click="toggleStatus()">{{status}}</p>
+        <p :class="{'status':true, 'status-done':this.status}" @click="toggleStatus()"></p>
     </div>
 </template>
 
