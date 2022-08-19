@@ -57,7 +57,7 @@ export default class StorageDB {
             let jsonData = JSON.parse(rawJsonData);
             for(let jsonTableKey of Object.keys(jsonData.tables)){
                 let jsonTable = jsonData.tables[jsonTableKey];
-                let table = new StorageTable(jsonTable.name, jsonTable.fields, jsonTable.data, jsonTable.id);
+                let table = new StorageTable(jsonTable.name, jsonTable.fields, jsonTable.data, jsonTable.key);
 
                 this.tables[jsonTableKey]=table;
             }
@@ -129,9 +129,7 @@ export class StorageTable {
      * @returns {StorageTable} returns this
      */
     insert(record){
-        console.log('validating....')
         let filteredRecord = this.validateRecord(record);
-        console.log(filteredRecord)
         if(!filteredRecord)
             return false;
         this.key = filteredRecord[this.keyName];
