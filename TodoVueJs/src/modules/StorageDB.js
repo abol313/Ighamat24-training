@@ -101,7 +101,8 @@ export default class StorageDB {
 }
 
 export class StorageTable {
-    id;
+    key;
+    keyName;
     name;
     fields;
     data;
@@ -111,13 +112,15 @@ export class StorageTable {
      * @param {string} name 
      * @param {array} fieldNames 
      * @param {array} data
-     * @param {number} id the id of last created row
+     * @param {number} key the primary key  of last created row (auto increment)
      */
-    constructor(name, fieldNames, data=[], id=0){
+    constructor(name, fieldNames, data=[], key=0){
         this.name = name;
         this.fields = fieldNames;
         this.data = data;
-        this.id = id;
+        this.key = key;
+        this.keyName = 'id';
+
     }
 
     /**
@@ -126,12 +129,12 @@ export class StorageTable {
      * @returns {StorageTable} returns this
      */
     insert(record){
+        console.log('validating....')
         let filteredRecord = this.validateRecord(record);
+        console.log(filteredRecord)
         if(!filteredRecord)
             return false;
-    
-        filteredRecord.id = this.id+=1;
-
+        this.key = filteredRecord[this.keyName];
         this.data.push(filteredRecord);
 
         return this;
@@ -150,10 +153,16 @@ export class StorageTable {
         let filteredRecord = {};
 
         for(let field of this.fields)
-            if(! (field in record))
+            if(! (field in record) && field!=this.keyName)
                 return false;
             else
                 filteredRecord[field] = record[field];
+
+        if(! this.keyName in filteredRecord)
+            filteredRecord[this.keyName] = this.key+1;
+        
+        if(filteredRecord[this.keyName] <= this.key)
+            return false;
 
         return filteredRecord;
     }
