@@ -70,7 +70,8 @@ export default class StorageDB {
      * @returns {StorageDB}
      */
     storeStorage(){
-        this.storage.setItem(this.getSecretStorageKey(), JSON.stringify(this));
+        const {storage, storageKey, password, name, ...obj} = this;
+        this.storage.setItem(this.getSecretStorageKey(), JSON.stringify(obj));
         
         return this;
     }
