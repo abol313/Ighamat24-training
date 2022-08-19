@@ -139,13 +139,13 @@ export class StorageTable {
     }
 
     /**
-     * finds the record and updates that
+     * finds the record base of the primary key and updates that 
      * @param {number} id the id of the record to be updated
      * @param {object} newRecord new field values will be replaced
      * @returns 
      */
     update(id, newRecord){
-        let nowRecord = this.data.find(record=>record.id==id);
+        let nowRecord = this.data.find(record=>record[this.keyName]==id);
         if(!nowRecord)
             return false;
         
