@@ -68,6 +68,22 @@ export default class TodoModel {
     }
 
     /**
+     * finds the record base of the primary key and updates that 
+     * @param {number} id the id of the record to be updated
+     * @param {object} newRecord new field values will be replaced
+     * @returns {TodoModel}
+     */
+    update(id, newRecord){
+        let tableModel = this.connect();
+        tableModel.useTable()
+            .update(id, newRecord);
+        
+        tableModel.getDB().storeStorage();
+        return tableModel;
+
+    }
+
+    /**
      * returns query builder of the table
      * @returns {QueryBuilder} returns the query builder to pass queries conditions and etc.
      */
