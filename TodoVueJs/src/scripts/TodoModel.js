@@ -8,12 +8,12 @@ export default class TodoModel {
     static fields = [
         'id',
         'title',
-        // 'description',
-
-        // 'due_at',
-        // 'done_at',
-        // 'created_at',
-        // 'updated_at',
+        'description',
+        'due_at',
+        'done_at',
+        
+        'created_at',
+        'updated_at',
     ];
     
     /**
