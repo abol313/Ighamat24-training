@@ -142,7 +142,7 @@ export class StorageTable {
      * finds the record base of the primary key and updates that 
      * @param {number} id the id of the record to be updated
      * @param {object} newRecord new field values will be replaced
-     * @returns 
+     * @returns {StorageTable}
      */
     update(id, newRecord){
         let nowRecord = this.data.find(record=>record[this.keyName]==id);
@@ -151,7 +151,9 @@ export class StorageTable {
         
         for(let field of this.fields)
             if(newRecord[field]!==undefined)
-                nowRecord[field] = newRecord[field]
+                nowRecord[field] = newRecord[field];
+        
+        return this;
     }
 
     /**
