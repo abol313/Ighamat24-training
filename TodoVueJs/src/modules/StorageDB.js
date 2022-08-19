@@ -139,6 +139,22 @@ export class StorageTable {
     }
 
     /**
+     * finds the record and updates that
+     * @param {number} id the id of the record to be updated
+     * @param {object} newRecord new field values will be replaced
+     * @returns 
+     */
+    update(id, newRecord){
+        let nowRecord = this.data.find(record=>record.id==id);
+        if(!nowRecord)
+            return false;
+        
+        for(let field of this.fields)
+            if(newRecord[field]!==undefined)
+                nowRecord[field] = newRecord[field]
+    }
+
+    /**
      * validates records
      * @param {object} record gets object of keys as fields of table and relevant values
      * @returns {object} returns a sanitized object that matches all fields of table if all 
