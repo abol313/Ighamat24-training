@@ -45,6 +45,9 @@ export default {
             if(this.search == null)
                 return this.title;
             return this.styleSearchArea(this.title);
+        },
+        getEditLink(){
+            return `/edit/${this.id}`;
         }
     },
 
@@ -151,6 +154,9 @@ export default {
         <p class="description">{{description}}</p>
         <p class="due_at">Due at: {{dueAtStr}}</p>
         <p class="last-edit">Last edit: {{lastEdit}}</p>
+        <router-link :to="getEditLink">
+            <p class="edit">Edit</p>
+        </router-link>
 
         <p :class="{'status':true, 'status-done':!!this.doneAt}" @click="toggleStatus()">{{lastDoneAt}}</p>
     </div>
