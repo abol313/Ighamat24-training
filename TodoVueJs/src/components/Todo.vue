@@ -29,8 +29,22 @@ export default {
             console.log('status:',this.doneAt,!!this.doneAt);
             return !!this.doneAt;
         },
-        last_edit(){
-            let date = this.updatedAt || this.createdAt;
+        lastEdit(){
+            return this.dateToString(this.updatedAt || this.createdAt);
+        },
+        dueAtStr(){
+            return this.dateToString(this.dueAt);
+        }
+    },
+
+    methods:{
+        toggleStatus(){
+            this.doneAt = this.doneAt? null: new Date();
+            this.$emit('change-todo-status', this.todo, this.doneAt);
+            TodoModel.update(this.id, {done_at: this.doneAt});
+
+        },
+        dateToString(date){
             if(!date) return date;
             // console.log(date);
             let nowDate = new Date();
@@ -74,15 +88,6 @@ export default {
         }
     },
 
-    methods:{
-        toggleStatus(){
-            this.doneAt = this.doneAt? null: new Date();
-            this.$emit('change-todo-status', this.todo, this.doneAt);
-            TodoModel.update(this.id, {done_at: this.doneAt});
-
-        }
-    },
-
     watch:{
         todo(todo){
             this.id=todo.id;
@@ -104,7 +109,9 @@ export default {
     <div class="todo-item">
         <h3 class="title">{{title}}</h3>
         <p class="description">{{description}}</p>
-        <p class="last-edit">{{last_edit}}</p>
+        <p class="due_at">Due at: {{dueAtStr}}</p>
+        <p class="last-edit">Last edit: {{lastEdit}}</p>
+
         <p :class="{'status':true, 'status-done':!!this.doneAt}" @click="toggleStatus()">{{this.doneAt}}</p>
     </div>
 </template>
