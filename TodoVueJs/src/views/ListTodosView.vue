@@ -73,7 +73,7 @@ export default {
             this.filterSearch = title==''? null : title ;
         },
         search(){
-            let regex = new RegExp(this.filterSearch.split('').join('.*'));
+            let regex = new RegExp(this.filterSearch.replaceAll(/\s/g,'').split('').join('.*'),'i');
             return this.todos.filter(todo=> regex.test(todo.title));
         }
     },
@@ -120,10 +120,13 @@ export default {
     @search="setSearch"
     />
     
-    <Todo 
-        v-for="todo in getTodos"
-        :todo="todo"
-        @change-todo-status="onChangeTodoStatus"
-        :search="filterSearch"
-    />
+    <div class="todos">
+        <Todo 
+            v-for="todo in getTodos"
+            :todo="todo"
+            @change-todo-status="onChangeTodoStatus"
+            :search="filterSearch"
+        />
+    </div>
+
 </template>
