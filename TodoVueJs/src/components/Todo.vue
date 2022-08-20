@@ -7,6 +7,7 @@ export default {
 
     props: {
         'todo':Object,
+        'search':String,
     }
     ,
 
@@ -39,6 +40,11 @@ export default {
         },
         lastDoneAt(){
             return this.dateToString(this.doneAt);
+        },
+        getTitle(){
+            if(this.search == null)
+                return this.title;
+            return this.styleSearchArea(this.title);
         }
     },
 
@@ -93,7 +99,33 @@ export default {
             }
 
             return last_edit_out;
+        },
+
+        styleSearchArea(text){
+            if(!this.search)return text;
+            let regex = new RegExp('('+this.search.split('').join(').*(')+')','g');
+            let matches = text.matchAll(regex);
+
+            let styledText = '';
+            let pastIndex = 0;
+            for(const match of matches){
+                if(pastIndex===0){
+                    pastIndex=match.index;
+                    styledText=text.slice(0,pastIndex);
+                }
+                styledText += this.getStyleArea(text.slice(pastIndex, pastIndex+=match[0].length));
+
+            }
+            styledText+=text.slice(pastIndex)
+
+            console.log(styledText);
+            return styledText;
+        },
+        
+        getStyleArea(text){
+            return `<ins class="search-area">${text}</ins>`;
         }
+
     },
 
     watch:{
@@ -106,7 +138,7 @@ export default {
 
             this.createdAt=todo.created_at && new Date(todo.created_at);
             this.updatedAt=todo.updated_at && new Date(todo.updated_at);
-        }
+        },
     }
 
 
@@ -115,7 +147,7 @@ export default {
 
 <template>
     <div class="todo-item" @mouseover="this.shownExactTime=true" @mouseout="this.shownExactTime=false">
-        <h3 class="title">{{title}}</h3>
+        <h3 class="title" v-html="getTitle"></h3>
         <p class="description">{{description}}</p>
         <p class="due_at">Due at: {{dueAtStr}}</p>
         <p class="last-edit">Last edit: {{lastEdit}}</p>
