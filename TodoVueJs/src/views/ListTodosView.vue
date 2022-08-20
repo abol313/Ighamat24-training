@@ -9,6 +9,7 @@ export default {
             todos: this.orgTodos,
             filterMode: 'undones',
             filterOrderIsDesc: true,
+            filterSearch: null,
         };
     },
     mounted(){
@@ -32,6 +33,7 @@ export default {
             this.todos = this.orgTodos;
             this.filterMode = 'all';
         },
+
         onChangeTodoStatus(todo, isDone){
             todo.done_at = isDone? new Date(): null;
             if(this.filterMode=='all')return;
@@ -45,6 +47,7 @@ export default {
             }
 
         },
+
         reorderAsc(){
             this.filterOrderIsDesc = false;
             this.todos.sort(this.reorderFuncBaseOfLastEditTime);
@@ -62,6 +65,22 @@ export default {
             else
                 return todoADate.getTime() < todoBDate.getTime() ? -1:1;
 
+        },
+
+        setSearch(title){
+            title = title.trim();
+            this.filterSearch = title==''? null : title ;
+        },
+        search(){
+            let regex = new RegExp(this.filterSearch.split('').join('.*'));
+            return this.todos.filter(todo=> regex.test(todo.title));
+        }
+    },
+    computed:{
+        getTodos(){
+            if(this.filterSearch == null)
+                return this.todos;
+            return this.search();
         }
     },
     emits:[
@@ -71,6 +90,8 @@ export default {
 
         'reorder-desc',
         'reorder-asc',
+
+        'search',
 
         'change-todo-status',
     ],
@@ -86,10 +107,12 @@ export default {
 
     @reorder-desc="reorderDesc"
     @reorder-asc="reorderAsc"
+
+    @search="setSearch"
     />
     
     <Todo 
-        v-for="todo in todos"
+        v-for="todo in getTodos"
         :todo="todo"
         @change-todo-status="onChangeTodoStatus"
     />
