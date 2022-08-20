@@ -51,24 +51,24 @@ export default {
 <template>
     <div class="filter-box">
         <div class="block">
-            <p :class="{'status':true, 'status-done':this.noBlock}" @click="setBlock(0)">all</p>
-            <p :class="{'status':true, 'status-done':this.doneBlock}" @click="setBlock(1)">minus dones</p>
-            <p :class="{'status':true, 'status-done':this.undoneBlock}" @click="setBlock(2)">minus undones</p>
+            <p class="title">Show All Todos Except </p>
+
+            <p :class="{'status':true, 'status-done':this.noBlock}" @click="setBlock(0)">No todo (all)</p>
+            <p :class="{'status':true, 'status-done':this.doneBlock}" @click="setBlock(1)">Dones todo</p>
+            <p :class="{'status':true, 'status-done':this.undoneBlock}" @click="setBlock(2)">Undones todo</p>
         </div>
 
         <div class="order">
+            <p class="title">Sort Todos</p>
+
             <p :class="{'status':true, 'status-done':this.isDeskOrder}" @click="setOrder(true)">Latest</p>
             <p :class="{'status':true, 'status-done':!this.isDeskOrder}" @click="setOrder(false)">Oldest</p>
         </div>
 
         <div class="search">
+            <p class="title">Search Todos</p>
+
             <input :value="searchText" @keyup="event => searchText=event.target.value"/>
         </div>
     </div>
 </template>
-
-<style scoped>
-    .filter-box{
-        border: 1px solid cyan;
-    }
-</style>
