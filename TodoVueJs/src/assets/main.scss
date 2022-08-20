@@ -5,6 +5,7 @@ body{
   display: flex;
   flex-direction: column;
   background-color: $darkGrey;
+  color: $pink;
   align-items: center;
   min-height: 100vh;
   margin: 0;
@@ -36,6 +37,7 @@ body{
 
   .status-done{
     background-color: $pink;
+    color: $darkGrey;
   }
 }
 
@@ -47,4 +49,6 @@ body{
 
 .status-done{
   background-color: $pink;
+  color: $darkGrey;
+
 }
