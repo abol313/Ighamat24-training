@@ -5,6 +5,8 @@ export default {
             noBlock: false,
             doneBlock: true, 
             undoneBlock: false, 
+
+            isDeskOrder: true,
         };
     },
     methods:{
@@ -28,6 +30,13 @@ export default {
             }
 
             return mode;
+        },
+        setOrder(isDeskOrder){
+            this.isDeskOrder = isDeskOrder;
+            if(isDeskOrder)
+                this.$emit('reorder-desc');
+            else
+                this.$emit('reorder-asc');
         }
     }
 }
@@ -35,9 +44,16 @@ export default {
 
 <template>
     <div class="filter-box">
-        <p :class="{'status':true, 'status-done':this.noBlock}" @click="setBlock(0)">all</p>
-        <p :class="{'status':true, 'status-done':this.doneBlock}" @click="setBlock(1)">minus dones</p>
-        <p :class="{'status':true, 'status-done':this.undoneBlock}" @click="setBlock(2)">minus undones</p>
+        <div class="block">
+            <p :class="{'status':true, 'status-done':this.noBlock}" @click="setBlock(0)">all</p>
+            <p :class="{'status':true, 'status-done':this.doneBlock}" @click="setBlock(1)">minus dones</p>
+            <p :class="{'status':true, 'status-done':this.undoneBlock}" @click="setBlock(2)">minus undones</p>
+        </div>
+
+        <div class="order">
+            <p :class="{'status':true, 'status-done':this.isDeskOrder}" @click="setOrder(true)">Latest</p>
+            <p :class="{'status':true, 'status-done':!this.isDeskOrder}" @click="setOrder(false)">Oldest</p>
+        </div>
     </div>
 </template>
 
