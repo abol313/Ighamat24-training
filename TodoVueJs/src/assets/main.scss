@@ -1,10 +1,50 @@
+@import 'https://fonts.googleapis.com/css2?family=Quicksand&display=swap';
 @import "./base.css";
 @import "./colors.scss";
 body{
   display: flex;
   flex-direction: column;
+  background-color: $darkGrey;
   align-items: center;
   min-height: 100vh;
   margin: 0;
+}
 
+.todo-item{
+  padding: 10px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+
+  .title{
+
+  }
+
+  .description{
+
+  }
+
+  .last_edit{
+
+  }
+
+  .status{
+    // width:20px;
+    height:20px;
+    border:1px solid $pink;
+  }
+
+  .status-done{
+    background-color: $pink;
+  }
+}
+
+.status{
+  // width:20px;
+  height:20px;
+  border:1px solid $pink;
+}
+
+.status-done{
+  background-color: $pink;
 }
