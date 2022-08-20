@@ -2,11 +2,16 @@
 @import "./base.css";
 @import "./colors.scss";
 @import "./backgrounds.scss";
+
+@mixin rounded-bottom(){
+  border-bottom-left-radius:5px 10px;
+  border-bottom-right-radius:5px 10px;
+}
 body{
   display: flex;
   flex-direction: column;
   background-color: $darkGrey;
-  @include bg-texture-lines;
+  @include bg-texture-lines();
   color: $pink;
   // align-items: center;
   max-width:600px;
@@ -61,9 +66,7 @@ nav{
     flex-wrap:wrap;
   
     overflow: hidden;
-    border-bottom-left-radius:5px 10px;
-    border-bottom-right-radius:5px 10px;
-
+    @include rounded-bottom();
     &>*{
       transition: all 200ms;
     }
@@ -89,8 +92,7 @@ nav{
       background-color:rgba($pink, .1);
       border:none;
       font-size:2rem;
-      border-bottom-left-radius:5px 10px;
-      border-bottom-right-radius:5px 10px;
+      @include rounded-bottom();
       transition: all 200ms;
       color:inherit;
       &:focus{
@@ -120,33 +122,96 @@ nav{
   }
 }
 
-.todo-item{
-  padding: 10px;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
+.todos{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  .todo-item{
+    position:relative;
+    min-height:150px;
+    padding: 10px;
+    border-radius: 0px 0px 10px 10px;
+    @include rounded-bottom();
+    
+    border-top:1px solid $pink;
+  
+    display: flex;
+    flex-direction: column;
+  
+    background-color: rgba($pink, .1);
 
-  .title{
+    &:hover{
+      background-color: rgba($pink, .2);
 
+      .title{
+        
+      }
+
+      .last-edit{
+        background-color:rgba($pink, .8);
+  
+      }
+    }
+
+
+    .title{
+      font-weight:500;
+      // text-transform: capitalize;
+  
+      &::before{
+        font-weight:500;
+        content:'#';
+      }
+
+      .search-area{
+        font-weight:500;
+        // text-transform: capitalize;  
+        border-radius:3px;
+        padding:3px;
+        text-decoration:none;
+        background-color: rgba($pink, .6);
+        color: darken($pink, 57%);
+      }
+
+      .search-area-exact{
+        @extend .search-area;
+        background-color: rgba($green, .7);
+        color: darken($green, 57%);
+
+      }
+    }
+  
+    .description{
+      flex-grow:1;
+    }
+  
+    .last-edit{
+      padding:7px 10px;
+      border-radius:5px;
+      line-height: 1em;
+      // @include rounded-bottom();
+      background-color:rgba($pink, .4);
+      // background-color:$darkGrey;
+      color: $darkGrey;
+
+      position: absolute;
+      right:10px;
+      bottom:10px;
+      z-index:2;
+
+    }
+  
+    .status{
+      // width:20px;
+      height:20px;
+      // border:1px solid $pink;
+    }
+  
+    .status-done{
+      background-color: $pink;
+      color: $darkGrey;
+    }
   }
-
-  .description{
-
-  }
-
-  .last_edit{
-
-  }
-
-  .status{
-    // width:20px;
-    height:20px;
-    border:1px solid $pink;
-  }
-
-  .status-done{
-    background-color: $pink;
-    color: $darkGrey;
-  }
+  
 }
 
