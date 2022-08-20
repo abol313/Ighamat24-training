@@ -115,5 +115,6 @@ export default {
         v-for="todo in getTodos"
         :todo="todo"
         @change-todo-status="onChangeTodoStatus"
+        :search="filterSearch"
     />
 </template>
