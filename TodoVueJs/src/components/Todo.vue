@@ -77,8 +77,9 @@ export default {
     methods:{
         toggleStatus(){
             this.doneAt = this.doneAt? null: new Date();
-            this.$emit('change-todo-status');
+            this.$emit('change-todo-status', this.todo, this.doneAt);
             TodoModel.update(this.id, {done_at: this.doneAt});
+
         }
     },
 
