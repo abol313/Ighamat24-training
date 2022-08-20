@@ -11,6 +11,10 @@ export default{
     },
     methods:{
         createTodo(){
+            if(!this.isValidInputs){
+                alert('Inputs are wrong!');
+                return false;
+            }
             TodoModel.create({
                 title: this.title,
                 description: this.description,
@@ -26,6 +30,22 @@ export default{
             this.description = '';
             this.dueAt = null
         }
+    },
+    computed:{
+        isValidInputs(){
+            switch(true){
+                case this.title == '' || this.description == '' || this.dueAt==null:
+                    return false;
+                
+                case !this.isDueAtAfterNow:
+                    return false;
+            }
+            return true;
+        },
+        isDueAtAfterNow(){
+            return new Date().getTime()< new Date(this.dueAt).getTime();
+        },
+
     }
 }
 </script>
