@@ -20,6 +20,8 @@ export default {
 
             createdAt:this.$props.todo.created_at && new Date(this.$props.todo.created_at),
             updatedAt:this.$props.todo.updated_at && new Date(this.$props.todo.updated_at),
+
+            shownExactTime: false,
         }
     },
 
@@ -34,6 +36,9 @@ export default {
         },
         dueAtStr(){
             return this.dateToString(this.dueAt);
+        },
+        lastDoneAt(){
+            return this.dateToString(this.doneAt);
         }
     },
 
@@ -44,15 +49,18 @@ export default {
             TodoModel.update(this.id, {done_at: this.doneAt});
 
         },
-        dateToString(date){
+        dateToString(date, exact=false){
             if(!date) return date;
+            exact = this.shownExactTime;
             // console.log(date);
+            if(exact)
+                return `${date.getFullYear()}/${date.getMonth()+1}/${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
             let nowDate = new Date();
             
             let last_edit_out = '';
             switch(true){
                 case nowDate.getFullYear() != date.getFullYear():
-                    last_edit_out += `${date.getFullYear()}/${date.getMonth()}/${date.getDate()}`;
+                    last_edit_out += `${date.getFullYear()}/${date.getMonth()+1}/${date.getDate()}`;
                     break;
 
                 case nowDate.getMonth() != date.getMonth():
@@ -106,13 +114,13 @@ export default {
 </script>
 
 <template>
-    <div class="todo-item">
+    <div class="todo-item" @mouseover="this.shownExactTime=true" @mouseout="this.shownExactTime=false">
         <h3 class="title">{{title}}</h3>
         <p class="description">{{description}}</p>
         <p class="due_at">Due at: {{dueAtStr}}</p>
         <p class="last-edit">Last edit: {{lastEdit}}</p>
 
-        <p :class="{'status':true, 'status-done':!!this.doneAt}" @click="toggleStatus()">{{this.doneAt}}</p>
+        <p :class="{'status':true, 'status-done':!!this.doneAt}" @click="toggleStatus()">{{lastDoneAt}}</p>
     </div>
 </template>
 
