@@ -23,6 +23,7 @@ export default {
             updatedAt:this.$props.todo.updated_at && new Date(this.$props.todo.updated_at),
 
             shownExactTime: false,
+            searchText:this.search,
         }
     },
 
@@ -42,7 +43,9 @@ export default {
             return this.dateToString(this.doneAt);
         },
         getTitle(){
-            if(this.search == null)
+            if(this.title!='')
+                this.title = this.title.split(' ').map(word=>word[0].toUpperCase()+word.slice(1)).join(' ');
+            if(this.searchText == null)
                 return this.title;
             return this.styleSearchArea(this.title);
         },
@@ -105,8 +108,13 @@ export default {
         },
 
         styleSearchArea(text){
-            if(!this.search)return text;
-            let regex = new RegExp('('+this.search.split('').join(').*(')+')','g');
+            if(!this.searchText)return text;
+            if(this.searchText == text)return this.getStyleArea(text, true);
+
+            // this.searchText = this.searchText.toLowerCase();
+            let orgText = text;
+            
+            let regex = new RegExp('('+this.searchText.replaceAll(/\s/g,'').split('').join(').*(')+')','ig');
             let matches = text.matchAll(regex);
 
             let styledText = '';
@@ -114,19 +122,19 @@ export default {
             for(const match of matches){
                 if(pastIndex===0){
                     pastIndex=match.index;
-                    styledText=text.slice(0,pastIndex);
+                    styledText=orgText.slice(0,pastIndex);
                 }
-                styledText += this.getStyleArea(text.slice(pastIndex, pastIndex+=match[0].length));
+                styledText += this.getStyleArea(orgText.slice(pastIndex, pastIndex+=match[0].length));
 
             }
-            styledText+=text.slice(pastIndex)
-
-            console.log(styledText);
+            styledText+=orgText.slice(pastIndex)
+            console.log(regex);
+            console.log('#',this.searchText,':',this.title,'#','Style as search..',styledText);
             return styledText;
         },
         
-        getStyleArea(text){
-            return `<ins class="search-area">${text}</ins>`;
+        getStyleArea(text, isExact=false){
+            return `<ins class="search-area${isExact?'-exact':''}">${text}</ins>`;
         }
 
     },
@@ -142,6 +150,9 @@ export default {
             this.createdAt=todo.created_at && new Date(todo.created_at);
             this.updatedAt=todo.updated_at && new Date(todo.updated_at);
         },
+        search(newSearch){
+            this.searchText = newSearch;
+        }
     }
 
 
@@ -162,8 +173,3 @@ export default {
     </div>
 </template>
 
-<style scoped>
-    .todo-item {
-        border:1px solid black;
-    }
-</style>
