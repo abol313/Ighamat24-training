@@ -57,27 +57,27 @@ export default {
 
                 case nowDate.getMonth() != date.getMonth():
                     let diffMonth = nowDate.getMonth() - date.getMonth();
-                    last_edit_out += `${diffMonth} month${diffMonth>1?'s':''} ago`;
+                    last_edit_out += `${Math.abs(diffMonth)} month${diffMonth>1?'s':''} ${diffMonth<0? 'next':'ago'}`;
                     break;
                 
                 case nowDate.getDate() != date.getDate():
                     let diffDate = nowDate.getDate() - date.getDate();
-                    last_edit_out += `${diffDate} day${diffDate>1?'s':''} ago`;
+                    last_edit_out += `${Math.abs(diffDate)} day${diffDate>1?'s':''} ${diffDate<0? 'next':'ago'}`;
                     break;
 
                 case nowDate.getHours() != date.getHours():
                     let diffHour = nowDate.getHours() - date.getHours();
-                    last_edit_out += `${diffHour} hour${diffHour>1?'s':''} ago`;
+                    last_edit_out += `${Math.abs(diffHour)} hour${diffHour>1?'s':''} ${diffHour<0? 'next':'ago'}`;
                     break;
 
                 case nowDate.getMinutes() != date.getMinutes():
                     let diffMinute = nowDate.getMinutes() - date.getMinutes();
-                    last_edit_out += `${diffMinute} minute${diffMinute>1?'s':''} ago`;
+                    last_edit_out += `${Math.abs(diffMinute)} minute${diffMinute>1?'s':''} ${diffMinute<0? 'next':'ago'}`;
                     break;
                 
                 case nowDate.getSeconds() != date.getSeconds():
                     let diffSecond = nowDate.getSeconds() - date.getSeconds();
-                    last_edit_out += `${diffSecond} second${diffSecond>1?'s':''} ago`;
+                    last_edit_out += `${Math.abs(diffSecond)} second${diffSecond>1?'s':''} ${diffSecond<0? 'next':'ago'}`;
                     break;
                 
                 default:
