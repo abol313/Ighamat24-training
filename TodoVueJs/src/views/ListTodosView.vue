@@ -50,10 +50,11 @@ export default {
 
         reorderAsc(){
             this.filterOrderIsDesc = false;
-            this.todos.sort(this.reorderFuncBaseOfLastEditTime);
         },
         reorderDesc(){
             this.filterOrderIsDesc = true;
+        },
+        reorder(){
             this.todos.sort(this.reorderFuncBaseOfLastEditTime);
         },
         reorderFuncBaseOfLastEditTime(todoA, todoB, isDesc=this.filterOrderIsDesc){
@@ -74,6 +75,14 @@ export default {
         search(){
             let regex = new RegExp(this.filterSearch.split('').join('.*'));
             return this.todos.filter(todo=> regex.test(todo.title));
+        }
+    },
+    watch:{
+        filterOrderIsDesc(isDescNew){
+            this.reorder();
+        },
+        todos(){
+            this.reorder();
         }
     },
     computed:{
