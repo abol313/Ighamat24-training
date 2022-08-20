@@ -7,6 +7,7 @@ export default {
             undoneBlock: false, 
 
             isDeskOrder: true,
+            searchText: null,
         };
     },
     methods:{
@@ -38,6 +39,11 @@ export default {
             else
                 this.$emit('reorder-asc');
         }
+    },
+    watch:{
+        searchText(newText){
+            this.$emit('search',newText);
+        }
     }
 }
 </script>
@@ -53,6 +59,10 @@ export default {
         <div class="order">
             <p :class="{'status':true, 'status-done':this.isDeskOrder}" @click="setOrder(true)">Latest</p>
             <p :class="{'status':true, 'status-done':!this.isDeskOrder}" @click="setOrder(false)">Oldest</p>
+        </div>
+
+        <div class="search">
+            <input :value="searchText" @keyup="event => searchText=event.target.value"/>
         </div>
     </div>
 </template>
