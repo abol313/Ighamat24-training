@@ -69,6 +69,18 @@ export default {
         isDead() {
             return !this.doneAt && new Date(this.dueAt) < new Date();
         },
+        getStatusTitle(){
+            switch(true){
+                case this.isStarted:
+                    return "The todo is started";
+                case this.isExceededHalf:
+                    return "Exceeded half time until due!";
+                case this.isDone:
+                    return "Done todo";
+                case this.isDead:
+                    return "Dead todo";
+            }
+        }
 
     },
     methods: {
@@ -181,19 +193,21 @@ export default {
 
             <div class="settings">
 
-                <delete-logo class="delete-logo" title="delete the todo"/>
+                <div class="delete-logo" title="delete the todo">
+                    <delete-logo class="delete-logo"/>
+                </div>
                 
 
                 <router-link :to="getEditLink" title="edit the todo" :disabled="isDead">
                     <edit-logo class="edit-logo" />
                 </router-link>
 
-                <div class="status-logo">
-                    <status-start-logo v-if="isStarted" class="status-logo status-logo-started" />
-                    <status-half-logo v-if="isExceededHalf" class="status-logo status-logo-halfed" />
-                    <status-done-logo v-if="isDone" class="status-logo status-logo-done"/>
+                <div class="status-logo" :title="getStatusTitle">
+                    <status-start-logo v-if="isStarted" class="status-logo status-logo-started" title="The todo is started"/>
+                    <status-half-logo v-if="isExceededHalf" class="status-logo status-logo-halfed" title="Exceeded half time until due!"/>
+                    <status-done-logo v-if="isDone" class="status-logo status-logo-done" title="Done todo"/>
 
-                    <status-dead-logo v-if="isDead" class="status-logo status-logo-dead"/>
+                    <status-dead-logo v-if="isDead" class="status-logo status-logo-dead" title="Dead todo"/>
                     
 
                 </div>
