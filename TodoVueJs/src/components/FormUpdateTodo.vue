@@ -1,7 +1,13 @@
 <script>
 import TodoModel from '../scripts/TodoModel';
+import TodoFormUpdateSubmitLogo from './icons/pen-to-square-solid.vue';
+import TodoFormUpdateResetLogo from './icons/rotate.vue';
 
 export default{
+    components:{
+        TodoFormUpdateResetLogo,
+        TodoFormUpdateSubmitLogo,
+    },
     props:{
         todo:Object
     },
@@ -64,14 +70,24 @@ export default{
 
 <template>
     <form class="form-box">
-        <input class="title" v-model="title" required/>
-        <input class="description" v-model="description" required/>
-        <input type="datetime-local" class="due_at" v-model="dueAt" required/>
+        <p class="form-title">Edit The Todo !</p>
 
-        <p :class="{'status':true, 'status-done':!!this.doneAt}" @click="toggleStatus()">{{lastDoneAt}}</p>
+        <label for="title">Todo's Title</label>
+        <input id="title" class="title" v-model="title" required/>
 
+        <label for="description">Todo's Description</label>
+        <input id="description" class="description" v-model="description" required/>
 
-        <button @click="updateTodo()" type="button">Edit</button>
-        <button @click="resetData()" type="button">Reset</button>
+        <label for="due">Todo's Due Date & Time</label>
+        <input id="due" type="datetime-local" class="due_at" v-model="dueAt" required/>
+
+        <div @click="updateTodo" class="submit">
+            <p>Edit Todo</p>
+            <TodoFormUpdateSubmitLogo class="submit-logo"/>
+        </div>        
+        <div @click="resetData" class="submit">
+            <p>Reset Data</p>
+            <TodoFormUpdateResetLogo class="submit-logo"/>
+        </div>
     </form>
 </template>
