@@ -87,10 +87,7 @@ export default {
             let filteredTodos = [];
             let unfilteredTodos = [...orgTodos];
 
-            console.log('filtering....',orgTodos);
-            debugger;
             for(const filter of Object.values(this.filters)){
-                console.log('filter obj',filter, filter.enabled);
                 if(!filter.enabled)continue;
 
                 if(filter.pipeEach){
@@ -100,7 +97,6 @@ export default {
                         let unfilteredTodo = unfilteredTodos[i];
 
                         let piped = filter.pipeEach(unfilteredTodo);
-                        console.log('pipe',unfilteredTodo,piped,unfilteredTodo.done_at);
                         //if it is boolean handled existance of item else the returned value from piping will be passed
                         if(piped===true || piped===false){
                             if(piped===true){
@@ -121,7 +117,6 @@ export default {
                 }
             }
 
-            console.log('filtered',filteredTodos);
 
             return filteredTodos;
 
