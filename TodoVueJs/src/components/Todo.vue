@@ -9,6 +9,7 @@ import StatusDeadLogo from './icons/skull-solid.vue';
 
 import EditLogo from './icons/pen-to-square-solid.vue';
 import DeleteLogo from './icons/trash-can-solid.vue';
+import TodoBan from './icons/todo-ban.vue';
 
 
 export default {
@@ -44,8 +45,9 @@ export default {
             return this.dateToString(this.doneAt);
         },
         getTitle() {
-            if (this.title != "")
-                this.title = this.title.split(" ").map(word => word[0].toUpperCase() + word.slice(1)).join(" ");
+            console.log(this.title);
+            if (this.title)
+                this.title = this.title.split(" ").map(word => word.trim() && word[0].toUpperCase() + word.slice(1)).join(" ");
             if (this.searchText == null)
                 return this.title;
             return this.styleSearchArea(this.title);
@@ -119,14 +121,14 @@ export default {
                 return this.getStyleArea(text, true);
             // this.searchText = this.searchText.toLowerCase();
             let orgText = text;
-            let regex = new RegExp("(" + this.searchText.replaceAll(/\s/g, "").split("").join(").*(") + ")", "ig");
+            let regex = new RegExp("(" + this.searchText.replaceAll(/\s/g, "").split("").join(").*?(") + ")", "ig");
             let matches = text.matchAll(regex);
             let styledText = "";
             let pastIndex = 0;
             for (const match of matches) {
-                if (pastIndex === 0) {
-                    pastIndex = match.index;
-                    styledText = orgText.slice(0, pastIndex);
+                console.log('match:',match);
+                if (pastIndex !== match.index) {
+                    styledText += orgText.slice(pastIndex, pastIndex = match.index);
                 }
                 styledText += this.getStyleArea(orgText.slice(pastIndex, pastIndex += match[0].length));
             }
@@ -154,30 +156,34 @@ export default {
         }
     },
     components: {
-        StatusStartLogo,
-        StatusHalfLogo,
-        StatusEndLogo,
-        StatusDoneLogo,
-        StatusDeadLogo,
-
-        EditLogo,
-        DeleteLogo,
-    }
+    StatusStartLogo,
+    StatusHalfLogo,
+    StatusEndLogo,
+    StatusDoneLogo,
+    StatusDeadLogo,
+    EditLogo,
+    DeleteLogo,
+    TodoBan
+}
 }
 </script>
 
 <template>
-    <div class="todo-item" @mouseover="this.shownExactTime=true" @mouseout="this.shownExactTime=false">
+    <div class="todo-item" @mouseover="this.shownExactTime=true" @mouseout="this.shownExactTime=false" :disabled="isDead">
+        <div class="banned" v-if="isDead" title="This todo have been dead and banned, you can not access except delete!">
+            <TodoBan class="ban-logo"/>
+        </div>
+        
         <div class="nav">
             <h3 class="title" v-html="getTitle"></h3>
 
             <div class="settings">
-                <div class="delete-logo" title="delete the todo">
-                    <i class="fa-regular fa-trash-can fa-3x"></i>
-                </div>
 
-                <router-link :to="getEditLink" class="edit-logo" title="edit the todo">
-                    <i class="fa-solid fa-pen-to-square fa-3x"></i>
+                <delete-logo class="delete-logo" title="delete the todo"/>
+                
+
+                <router-link :to="getEditLink" title="edit the todo">
+                    <edit-logo class="edit-logo" />
                 </router-link>
 
                 <div class="status-logo">
@@ -197,7 +203,7 @@ export default {
         <p class="due-at">Due at: {{dueAtStr}}</p>
         <p class="last-edit">Last edit: {{lastEdit}}</p>
 
-        <p :class="{'done-at':true, 'status':true, 'status-done':!!this.doneAt}" @click="toggleStatus()">{{lastDoneAt? 'Done at: '+lastDoneAt:'Waiting to done...'}}</p>
+        <p :class="{'done-at':true, 'status':true, 'status-done':!!this.doneAt}" @click="toggleStatus()">{{lastDoneAt? 'Done at: '+lastDoneAt: isDead? 'Dead line, Dead todo can not to edit or done':'Waiting to done...'}}</p>
     </div>
 </template>
 
