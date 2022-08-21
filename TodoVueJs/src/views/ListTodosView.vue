@@ -75,6 +75,10 @@ export default {
         search(){
             let regex = new RegExp(this.filterSearch.replaceAll(/\s/g,'').split('').join('.*'),'i');
             return this.todos.filter(todo=> regex.test(todo.title));
+        },
+        filter(filterCallback){
+            console.log('filter...');
+            this.todos = filterCallback(this.orgTodos);
         }
     },
     watch:{
@@ -100,6 +104,7 @@ export default {
         'reorder-desc',
         'reorder-asc',
 
+        'filter',
         'search',
 
         'change-todo-status',
@@ -110,9 +115,8 @@ export default {
 
 <template>
 
-    <FilterTodo @no-block="setDataAll()"
-    @done-block="setDataUndones()"
-    @undone-block="setDataDones()"
+    <FilterTodo 
+    @filter="filter"
 
     @reorder-desc="reorderDesc"
     @reorder-asc="reorderAsc"
