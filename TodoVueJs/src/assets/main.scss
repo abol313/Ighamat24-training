@@ -8,6 +8,14 @@
   border-bottom-right-radius:5px 10px;
 }
 
+.custom-scroll::-webkit-scrollbar{
+  width:5px;
+}
+.custom-scroll::-webkit-scrollbar-thumb{
+  border-radius:10px;
+  background-color:$pink;
+}
+
 body{
   display: flex;
   flex-direction: column;
@@ -26,6 +34,17 @@ body{
   body{
     max-width:calc(100% - 10px);
     font-size:4.5vw;
+  }
+  .todo-item{
+    .nav{
+      .settings{
+        .status-logo, .delete-logo, .edit-logo{
+          max-width: 10vw;
+          max-height: 10vw;
+        }
+
+      }
+    }
   }
 }
 *{
@@ -54,6 +73,7 @@ nav{
     list-style:none;
     padding:0;
     li{
+      flex-grow:1;
       width: 200px;
       text-align:center;
       padding:10px;
@@ -140,12 +160,18 @@ nav{
 }
 
 .todos{
+  @extend .custom-scroll;
+  height: 600px;
+  overflow: auto;
   display:flex;
   flex-direction:column;
   gap:10px;
   .todo-item{
+    flex-shrink:0;
     position:relative;
-    min-height:150px;
+    min-height:250px;
+    height:fit-content;
+    position:relative;
     padding: 10px;
     border-radius: 0px 0px 10px 10px;
     @include rounded-bottom();
@@ -172,12 +198,48 @@ nav{
       }
     }
 
+    .banned{
+      position:absolute;
+      top:0;
+      left:0;
+      box-sizing: border-box;
+      width:100%;
+      height:100%;
+
+      display:flex;
+      justify-content: center;
+      align-items: center;
+      z-index:3;
+      padding:10px;
+      background-color: rgba($darkGrey, .3);
+      
+      &:hover{
+        backdrop-filter: blur(5px);
+
+        .ban-logo {
+          opacity:1;
+          svg {
+            transform:rotate(15deg);
+          }
+        }
+      }
+
+      .ban-logo{
+        box-sizing: border-box;
+        opacity:.2;
+        width:100%;
+        height:100%;
+        fill:$red;
+      }
+    }
+
     .nav{
       display:flex;
       flex-wrap:wrap;
       align-items:center;
 
       .title{
+        word-break: break-word;
         font-weight:500;
         font-size:2em;
         // text-transform: capitalize;
@@ -205,7 +267,8 @@ nav{
   
         }
       }
-      
+
+
       .settings{
         flex-grow:1;
         display:flex;
@@ -213,15 +276,20 @@ nav{
         gap:5px;
         align-items:center;
 
+        a{
+          line-height:0;
+        }
 
         .edit-logo{
           width:40px;
           height:40px;
           fill:currentColor;
           
+
         }
         .delete-logo{
           @extend .edit-logo;
+          color:$red;
         }
         .status-logo{
           @extend .edit-logo;
@@ -237,6 +305,7 @@ nav{
           }
           .status-logo-dead{
             color: $todo-status-dead;
+            z-index:3;
           }
           
         }
@@ -244,8 +313,10 @@ nav{
       }
     }
     .description{
-      flex-grow:1;
+      word-break: break-word;
+      flex-grow: 1; 
     }
+    
 
   
     .last-edit{
