@@ -1,161 +1,168 @@
 <script>
 import TodoModel from '../scripts/TodoModel';
 
+import StatusStartLogo from './icons/hourglass-start-solid.vue';
+import StatusHalfLogo from './icons/hourglass-half-solid.vue';
+import StatusEndLogo from './icons/hourglass-end-solid.vue';
+import StatusDoneLogo from './icons/todo-done.vue';
+import StatusDeadLogo from './icons/skull-solid.vue';
+
+import EditLogo from './icons/pen-to-square-solid.vue';
+import DeleteLogo from './icons/trash-can-solid.vue';
+
 
 export default {
-
-
     props: {
-        'todo':Object,
-        'search':String,
-    }
-    ,
-
-    data(){
-        return {
-            id:this.$props.todo.id,
-            title:this.$props.todo.title,
-            description:this.$props.todo.description,
-            dueAt:this.$props.todo.due_at && new Date(this.$props.todo.due_at),
-            doneAt:this.$props.todo.done_at && new Date(this.$props.todo.done_at),
-
-            createdAt:this.$props.todo.created_at && new Date(this.$props.todo.created_at),
-            updatedAt:this.$props.todo.updated_at && new Date(this.$props.todo.updated_at),
-
-            shownExactTime: false,
-            searchText:this.search,
-        }
+        "todo": Object,
+        "search": String,
     },
-
-    computed:{
-        status(){
-            
-            console.log('status:',this.doneAt,!!this.doneAt);
+    data() {
+        return {
+            id: this.$props.todo.id,
+            title: this.$props.todo.title,
+            description: this.$props.todo.description,
+            dueAt: this.$props.todo.due_at && new Date(this.$props.todo.due_at),
+            doneAt: this.$props.todo.done_at && new Date(this.$props.todo.done_at),
+            createdAt: this.$props.todo.created_at && new Date(this.$props.todo.created_at),
+            updatedAt: this.$props.todo.updated_at && new Date(this.$props.todo.updated_at),
+            shownExactTime: false,
+            searchText: this.search,
+        };
+    },
+    computed: {
+        status() {
+            console.log("status:", this.doneAt, !!this.doneAt);
             return !!this.doneAt;
         },
-        lastEdit(){
+        lastEdit() {
             return this.dateToString(this.updatedAt || this.createdAt);
         },
-        dueAtStr(){
+        dueAtStr() {
             return this.dateToString(this.dueAt);
         },
-        lastDoneAt(){
+        lastDoneAt() {
             return this.dateToString(this.doneAt);
         },
-        getTitle(){
-            if(this.title!='')
-                this.title = this.title.split(' ').map(word=>word[0].toUpperCase()+word.slice(1)).join(' ');
-            if(this.searchText == null)
+        getTitle() {
+            if (this.title != "")
+                this.title = this.title.split(" ").map(word => word[0].toUpperCase() + word.slice(1)).join(" ");
+            if (this.searchText == null)
                 return this.title;
             return this.styleSearchArea(this.title);
         },
-        getEditLink(){
+        getEditLink() {
             return `/edit/${this.id}`;
-        }
-    },
-
-    methods:{
-        toggleStatus(){
-            this.doneAt = this.doneAt? null: new Date();
-            this.$emit('change-todo-status', this.todo, this.doneAt);
-            TodoModel.update(this.id, {done_at: this.doneAt});
-
         },
-        dateToString(date, exact=false){
-            if(!date) return date;
+
+        isStarted(){
+            return !this.doneAt && !this.isDead && !this.isExceededHalf;
+        },
+        isExceededHalf(){
+            return !this.doneAt && !this.isDead && (new Date(this.createdAt).getTime() + new Date(this.dueAt).getTime())/2 <= new Date();
+        },
+        isDone(){
+            return !!this.doneAt;
+        },
+        isDead() {
+            return !this.doneAt && new Date(this.dueAt) < new Date();
+        },
+
+    },
+    methods: {
+        toggleStatus() {
+            this.doneAt = this.doneAt ? null : new Date();
+            this.$emit("change-todo-status", this.todo, this.doneAt);
+            TodoModel.update(this.id, { done_at: this.doneAt });
+        },
+        dateToString(date, exact = false) {
+            if (!date)
+                return date;
             exact = this.shownExactTime;
             // console.log(date);
-            if(exact)
-                return `${date.getFullYear()}/${date.getMonth()+1}/${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+            if (exact)
+                return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
             let nowDate = new Date();
-            
-            let last_edit_out = '';
-            switch(true){
+            let last_edit_out = "";
+            switch (true) {
                 case nowDate.getFullYear() != date.getFullYear():
-                    last_edit_out += `${date.getFullYear()}/${date.getMonth()+1}/${date.getDate()}`;
+                    last_edit_out += `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
                     break;
-
                 case nowDate.getMonth() != date.getMonth():
                     let diffMonth = nowDate.getMonth() - date.getMonth();
-                    last_edit_out += `${Math.abs(diffMonth)} month${Math.abs(diffMonth)>1?'s':''} ${diffMonth<0? 'next':'ago'}`;
+                    last_edit_out += `${Math.abs(diffMonth)} month${Math.abs(diffMonth) > 1 ? "s" : ""} ${diffMonth < 0 ? "next" : "ago"}`;
                     break;
-                
                 case nowDate.getDate() != date.getDate():
                     let diffDate = nowDate.getDate() - date.getDate();
-                    last_edit_out += `${Math.abs(diffDate)} day${Math.abs(diffDate)>1?'s':''} ${diffDate<0? 'next':'ago'}`;
+                    last_edit_out += `${Math.abs(diffDate)} day${Math.abs(diffDate) > 1 ? "s" : ""} ${diffDate < 0 ? "next" : "ago"}`;
                     break;
-
                 case nowDate.getHours() != date.getHours():
                     let diffHour = nowDate.getHours() - date.getHours();
-                    last_edit_out += `${Math.abs(diffHour)} hour${Math.abs(diffHour)>1?'s':''} ${diffHour<0? 'next':'ago'}`;
+                    last_edit_out += `${Math.abs(diffHour)} hour${Math.abs(diffHour) > 1 ? "s" : ""} ${diffHour < 0 ? "next" : "ago"}`;
                     break;
-
                 case nowDate.getMinutes() != date.getMinutes():
                     let diffMinute = nowDate.getMinutes() - date.getMinutes();
-                    last_edit_out += `${Math.abs(diffMinute)} minute${Math.abs(diffMinute)>1?'s':''} ${diffMinute<0? 'next':'ago'}`;
+                    last_edit_out += `${Math.abs(diffMinute)} minute${Math.abs(diffMinute) > 1 ? "s" : ""} ${diffMinute < 0 ? "next" : "ago"}`;
                     break;
-                
                 case nowDate.getSeconds() != date.getSeconds():
                     let diffSecond = nowDate.getSeconds() - date.getSeconds();
-                    last_edit_out += `${Math.abs(diffSecond)} second${Math.abs(diffSecond)>1?'s':''} ${diffSecond<0? 'next':'ago'}`;
+                    last_edit_out += `${Math.abs(diffSecond)} second${Math.abs(diffSecond) > 1 ? "s" : ""} ${diffSecond < 0 ? "next" : "ago"}`;
                     break;
-                
                 default:
-                    last_edit_out+= 'now';
+                    last_edit_out += "now";
             }
-
             return last_edit_out;
         },
-
-        styleSearchArea(text){
-            if(!this.searchText)return text;
-            if(this.searchText == text)return this.getStyleArea(text, true);
-
+        styleSearchArea(text) {
+            if (!this.searchText)
+                return text;
+            if (this.searchText == text)
+                return this.getStyleArea(text, true);
             // this.searchText = this.searchText.toLowerCase();
             let orgText = text;
-            
-            let regex = new RegExp('('+this.searchText.replaceAll(/\s/g,'').split('').join(').*(')+')','ig');
+            let regex = new RegExp("(" + this.searchText.replaceAll(/\s/g, "").split("").join(").*(") + ")", "ig");
             let matches = text.matchAll(regex);
-
-            let styledText = '';
+            let styledText = "";
             let pastIndex = 0;
-            for(const match of matches){
-                if(pastIndex===0){
-                    pastIndex=match.index;
-                    styledText=orgText.slice(0,pastIndex);
+            for (const match of matches) {
+                if (pastIndex === 0) {
+                    pastIndex = match.index;
+                    styledText = orgText.slice(0, pastIndex);
                 }
-                styledText += this.getStyleArea(orgText.slice(pastIndex, pastIndex+=match[0].length));
-
+                styledText += this.getStyleArea(orgText.slice(pastIndex, pastIndex += match[0].length));
             }
-            styledText+=orgText.slice(pastIndex)
+            styledText += orgText.slice(pastIndex);
             console.log(regex);
-            console.log('#',this.searchText,':',this.title,'#','Style as search..',styledText);
+            console.log("#", this.searchText, ":", this.title, "#", "Style as search..", styledText);
             return styledText;
         },
-        
-        getStyleArea(text, isExact=false){
-            return `<ins class="search-area${isExact?'-exact':''}">${text}</ins>`;
+        getStyleArea(text, isExact = false) {
+            return `<ins class="search-area${isExact ? "-exact" : ""}">${text}</ins>`;
         }
-
     },
-
-    watch:{
-        todo(todo){
-            this.id=todo.id;
-            this.title=todo.title;
-            this.description=todo.description;
-            this.dueAt=todo.due_at && new Date(todo.due_at);
-            this.doneAt=todo.done_at && new Date(todo.done_at);
-
-            this.createdAt=todo.created_at && new Date(todo.created_at);
-            this.updatedAt=todo.updated_at && new Date(todo.updated_at);
+    watch: {
+        todo(todo) {
+            this.id = todo.id;
+            this.title = todo.title;
+            this.description = todo.description;
+            this.dueAt = todo.due_at && new Date(todo.due_at);
+            this.doneAt = todo.done_at && new Date(todo.done_at);
+            this.createdAt = todo.created_at && new Date(todo.created_at);
+            this.updatedAt = todo.updated_at && new Date(todo.updated_at);
         },
-        search(newSearch){
+        search(newSearch) {
             this.searchText = newSearch;
         }
+    },
+    components: {
+        StatusStartLogo,
+        StatusHalfLogo,
+        StatusEndLogo,
+        StatusDoneLogo,
+        StatusDeadLogo,
+
+        EditLogo,
+        DeleteLogo,
     }
-
-
 }
 </script>
 
@@ -165,16 +172,22 @@ export default {
             <h3 class="title" v-html="getTitle"></h3>
 
             <div class="settings">
-                <div class="delete" title="delete the todo">
+                <div class="delete-logo" title="delete the todo">
                     <i class="fa-regular fa-trash-can fa-3x"></i>
                 </div>
 
-                <router-link :to="getEditLink" class="edit" title="edit the todo">
+                <router-link :to="getEditLink" class="edit-logo" title="edit the todo">
                     <i class="fa-solid fa-pen-to-square fa-3x"></i>
                 </router-link>
 
-                <div class="status">
-                    <i class="fa-solid fa-hourglass fa-3x"></i>
+                <div class="status-logo">
+                    <status-start-logo v-if="isStarted" class="status-logo status-logo-started" />
+                    <status-half-logo v-if="isExceededHalf" class="status-logo status-logo-halfed" />
+                    <status-done-logo v-if="isDone" class="status-logo status-logo-done"/>
+
+                    <status-dead-logo v-if="isDead" class="status-logo status-logo-dead"/>
+                    
+
                 </div>
             </div>
         </div>
