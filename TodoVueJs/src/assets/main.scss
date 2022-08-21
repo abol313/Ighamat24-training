@@ -1,4 +1,5 @@
 @import 'https://fonts.googleapis.com/css2?family=Quicksand&display=swap';
+@import "https://use.fontawesome.com/releases/v6.1.2/css/all.css";
 @import "./base.css";
 @import "./colors.scss";
 @import "./backgrounds.scss";
@@ -19,6 +20,16 @@ body{
   margin-left:auto;
   margin-right:auto;
   min-height: 100vh;
+}
+
+@media screen and (max-width:600px){
+  body{
+    max-width:calc(100% - 10px);
+    font-size:4.5vw;
+  }
+}
+*{
+  font-family: Quicksand, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 a{
@@ -54,6 +65,8 @@ nav{
 }
 
 .filter-box{
+  box-sizing: border-box;
+  max-width:100%;
   margin:20px 0px;
   display:flex;
   flex-direction:column;
@@ -72,6 +85,10 @@ nav{
     }
   }
 
+
+  & *{
+    max-width:100%;
+  }
   .title{
     font-size:1.3rem;
     border-bottom:1px solid $pink;
@@ -117,8 +134,8 @@ nav{
   
   .status-done{
     background-color: $pink;
-    color: $darkGrey;
-  
+    color: darken($pink, 57%);
+
   }
 }
 
@@ -138,10 +155,12 @@ nav{
     display: flex;
     flex-direction: column;
   
-    background-color: rgba($pink, .1);
+    background-color: rgba($pink, .2);
+    opacity:.8;
 
     &:hover{
       background-color: rgba($pink, .2);
+      opacity:1;
 
       .title{
         
@@ -153,39 +172,64 @@ nav{
       }
     }
 
+    .nav{
+      display:flex;
+      flex-wrap:wrap;
+      align-items:center;
 
-    .title{
-      font-weight:500;
-      // text-transform: capitalize;
+      .title{
+        font-weight:500;
+        font-size:2em;
+        // text-transform: capitalize;
+    
+        &::before{
+          font-weight:500;
+          content:'#';
+        }
   
-      &::before{
-        font-weight:500;
-        content:'#';
+        .search-area{
+          font-weight:500;
+          // text-transform: capitalize;  
+          border-radius:3px;
+          padding:3px;
+          margin:0 3px;
+          text-decoration:none;
+          background-color: rgba($pink, .6);
+          color: darken($pink, 57%);
+        }
+  
+        .search-area-exact{
+          @extend .search-area;
+          background-color: rgba($green, .7);
+          color: darken($green, 57%);
+  
+        }
       }
+      
+      .settings{
+        flex-grow:1;
+        display:flex;
+        justify-content:flex-end;
+        gap:5px;
+        align-items:center;
 
-      .search-area{
-        font-weight:500;
-        // text-transform: capitalize;  
-        border-radius:3px;
-        padding:3px;
-        text-decoration:none;
-        background-color: rgba($pink, .6);
-        color: darken($pink, 57%);
-      }
 
-      .search-area-exact{
-        @extend .search-area;
-        background-color: rgba($green, .7);
-        color: darken($green, 57%);
+        .edit{
 
+        }
+        .delete{
+          cursor:pointer;
+        }
       }
     }
-  
     .description{
       flex-grow:1;
     }
+
   
     .last-edit{
+      min-height: 30px;
+      margin-top:10px;
       padding:7px 10px;
       border-radius:5px;
       line-height: 1em;
@@ -194,13 +238,18 @@ nav{
       // background-color:$darkGrey;
       color: $darkGrey;
 
-      position: absolute;
-      right:10px;
-      bottom:10px;
-      z-index:2;
 
     }
-  
+
+    .due-at{
+      @extend .last-edit;
+    }
+    
+    .done-at{
+      @extend .last-edit;
+
+    }
+
     .status{
       // width:20px;
       height:20px;
@@ -209,7 +258,8 @@ nav{
   
     .status-done{
       background-color: $pink;
-      color: $darkGrey;
+      color: darken($pink, 57%);
+
     }
   }
   
