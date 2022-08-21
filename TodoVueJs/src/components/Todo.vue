@@ -161,15 +161,30 @@ export default {
 
 <template>
     <div class="todo-item" @mouseover="this.shownExactTime=true" @mouseout="this.shownExactTime=false">
-        <h3 class="title" v-html="getTitle"></h3>
-        <p class="description">{{description}}</p>
-        <p class="due_at">Due at: {{dueAtStr}}</p>
-        <p class="last-edit">Last edit: {{lastEdit}}</p>
-        <router-link :to="getEditLink">
-            <p class="edit">Edit</p>
-        </router-link>
+        <div class="nav">
+            <h3 class="title" v-html="getTitle"></h3>
 
-        <p :class="{'status':true, 'status-done':!!this.doneAt}" @click="toggleStatus()">{{lastDoneAt}}</p>
+            <div class="settings">
+                <div class="delete" title="delete the todo">
+                    <i class="fa-regular fa-trash-can fa-3x"></i>
+                </div>
+
+                <router-link :to="getEditLink" class="edit" title="edit the todo">
+                    <i class="fa-solid fa-pen-to-square fa-3x"></i>
+                </router-link>
+
+                <div class="status">
+                    <i class="fa-solid fa-hourglass fa-3x"></i>
+                </div>
+            </div>
+        </div>
+        
+        <p class="description">{{description}}</p>
+
+        <p class="due-at">Due at: {{dueAtStr}}</p>
+        <p class="last-edit">Last edit: {{lastEdit}}</p>
+
+        <p :class="{'done-at':true, 'status':true, 'status-done':!!this.doneAt}" @click="toggleStatus()">{{lastDoneAt? 'Done at: '+lastDoneAt:'Waiting to done...'}}</p>
     </div>
 </template>
 
