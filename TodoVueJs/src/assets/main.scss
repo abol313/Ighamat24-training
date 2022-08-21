@@ -101,6 +101,10 @@ nav{
   flex-wrap:wrap;
   gap:20px;
   
+  .check-logo{
+    height:20px;
+    fill:currentColor;
+  }
   &>*{
     display:flex;
     flex-direction:column;
@@ -110,6 +114,8 @@ nav{
     @include rounded-bottom();
     &>*{
       transition: all 200ms;
+      display:flex;
+      justify-content: space-between;
     }
   }
 
@@ -118,12 +124,21 @@ nav{
     max-width:100%;
   }
   .title{
+    padding:0px 10px;
     font-size:1.3rem;
     border-bottom:1px solid $pink;
+    position: relative;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    .filter-logo{
+      height:20px;
+      fill:currentColor;
+    }
   }
 
   .block{
-
+    
   }
 
   .order{
@@ -292,16 +307,20 @@ nav{
           width:40px;
           height:40px;
           fill:currentColor;
-          
+          cursor: pointer;
 
         }
+
         .delete-logo{
           @extend .edit-logo;
+          z-index:3;
+          cursor: pointer;
+          line-height: 0;
           color:$red;
         }
         .status-logo{
           @extend .edit-logo;
-          
+          cursor:auto;
           .status-logo-started{
             color: $todo-status-started;
           }
