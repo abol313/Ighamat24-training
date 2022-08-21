@@ -12,3 +12,8 @@ $warning: #ffa426;
 $danger: #fc544b;
 // Three colors suggestions
 // @Psycho : Robat Jazzi
+
+$todo-status-started: $pink;
+$todo-status-halfed: $warning;
+$todo-status-done: $success;
+$todo-status-dead: rgba(248, 248, 248, 0.918);
