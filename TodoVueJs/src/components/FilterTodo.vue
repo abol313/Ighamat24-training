@@ -52,7 +52,9 @@ export default {
         },
         toggleFilterUndone(){
             this.filters.undone.enabled = !this.filters.undone.enabled;
-
+        },
+        toggleFilterDead(){
+            this.filters.dead.enabled = !this.filters.dead.enabled;
         },
         setBlock(mode) {
             this.noBlock = false;
@@ -155,13 +157,17 @@ export default {
 
             <p :class="{'status':true}" @click="setBlock(0)">All</p>
             
+            <div :class="{'status':true, 'status-done':this.filters.undone.enabled}" @click="toggleFilterUndone">
+                <p>Undone todos</p>
+                <CheckLogo class="check-logo" v-if="this.filters.undone.enabled"/>
+            </div>
             <div :class="{'status':true, 'status-done':this.filters.done.enabled}" @click="toggleFilterDone">
                 <p>Done todos</p>
                 <CheckLogo class="check-logo" v-if="this.filters.done.enabled"/>
             </div>
-            <div :class="{'status':true, 'status-done':this.filters.undone.enabled}" @click="toggleFilterUndone">
-                <p>Undone todos</p>
-                <CheckLogo class="check-logo" v-if="this.filters.undone.enabled"/>
+            <div :class="{'status':true, 'status-done':this.filters.dead.enabled}" @click="toggleFilterDead">
+                <p>Dead todos</p>
+                <CheckLogo class="check-logo" v-if="this.filters.dead.enabled"/>
             </div>
         </div>
 
