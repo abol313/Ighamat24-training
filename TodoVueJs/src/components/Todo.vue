@@ -53,7 +53,8 @@ export default {
             return this.styleSearchArea(this.title);
         },
         getEditLink() {
-            return `/edit/${this.id}`;
+
+            return this.isDead? '#':`/edit/${this.id}`;
         },
 
         isStarted(){
@@ -72,6 +73,7 @@ export default {
     },
     methods: {
         toggleStatus() {
+            if(this.isDead)return;
             this.doneAt = this.doneAt ? null : new Date();
             this.$emit("change-todo-status", this.todo, this.doneAt);
             TodoModel.update(this.id, { done_at: this.doneAt });
@@ -182,7 +184,7 @@ export default {
                 <delete-logo class="delete-logo" title="delete the todo"/>
                 
 
-                <router-link :to="getEditLink" title="edit the todo">
+                <router-link :to="getEditLink" title="edit the todo" :disabled="isDead">
                     <edit-logo class="edit-logo" />
                 </router-link>
 
@@ -203,7 +205,7 @@ export default {
         <p class="due-at">Due at: {{dueAtStr}}</p>
         <p class="last-edit">Last edit: {{lastEdit}}</p>
 
-        <p :class="{'done-at':true, 'status':true, 'status-done':!!this.doneAt}" @click="toggleStatus()">{{lastDoneAt? 'Done at: '+lastDoneAt: isDead? 'Dead line, Dead todo can not to edit or done':'Waiting to done...'}}</p>
+        <p :class="{'done-at':true, 'status':true, 'status-done':!!this.doneAt}" @click="toggleStatus()" :disabled="isDead">{{lastDoneAt? 'Done at: '+lastDoneAt: isDead? 'Dead line, Dead todo can not to edit or done':'Waiting to done...'}}</p>
     </div>
 </template>
 
