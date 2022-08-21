@@ -1,5 +1,4 @@
 @import 'https://fonts.googleapis.com/css2?family=Quicksand&display=swap';
-@import "https://use.fontawesome.com/releases/v6.1.2/css/all.css";
 @import "./base.css";
 @import "./colors.scss";
 @import "./backgrounds.scss";
@@ -8,6 +7,11 @@
   border-bottom-left-radius:5px 10px;
   border-bottom-right-radius:5px 10px;
 }
+
+img{
+  color: white;
+}
+
 body{
   display: flex;
   flex-direction: column;
@@ -214,12 +218,33 @@ nav{
         align-items:center;
 
 
-        .edit{
+        .edit-logo{
+          width:40px;
+          height:40px;
+          fill:currentColor;
+          
+        }
+        .delete-logo{
+          @extend .edit-logo;
+        }
+        .status-logo{
+          @extend .edit-logo;
+          
+          .status-logo-started{
+            color: $todo-status-started;
+          }
+          .status-logo-halfed{
+            color: $todo-status-halfed;
+          }
+          .status-logo-done{
+            color: $todo-status-done;
+          }
+          .status-logo-dead{
+            color: $todo-status-dead;
+          }
+          
+        }
 
-        }
-        .delete{
-          cursor:pointer;
-        }
       }
     }
     .description{
