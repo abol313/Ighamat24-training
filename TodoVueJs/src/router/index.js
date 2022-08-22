@@ -5,6 +5,7 @@ import UpdateTodoView from '../views/UpdateTodoView.vue';
 import _404ErrorView from '../views/errors/404.vue';
 
 const router = createRouter({
+  // mode:'history',
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
@@ -26,9 +27,17 @@ const router = createRouter({
     },
 
     {
+      path: '/404',
+      name: 'error-404',
+      component: _404ErrorView
+    },
+
+    {
       path: '/:pathMatch(.*)*',
       name: 'error',
-      component: _404ErrorView
+      redirect: {
+        name:'error-404'
+      },
     }
     
   ]
