@@ -1,4 +1,5 @@
 <script>
+import '../../assets/error.scss';
 import ExclamationLogo from '../../components/icons/exclamation.vue';
 
 export default {
@@ -9,7 +10,7 @@ export default {
 </script>
 
 <template>
-    <div class="error-404">
+    <div class="error error-404">
         <h1>404</h1>
         <ExclamationLogo class="error-logo"/>
         <h1>Page Not Found</h1>
