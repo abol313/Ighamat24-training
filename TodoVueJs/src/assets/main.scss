@@ -1,7 +1,4 @@
-@import 'https://fonts.googleapis.com/css2?family=Quicksand&display=swap';
-@import "./base.css";
-@import "./colors.scss";
-@import "./backgrounds.scss";
+@import "./base";
 
 @mixin rounded-bottom(){
   border-bottom-left-radius:7px 10px;
@@ -16,19 +13,7 @@
   background-color:$pink;
 }
 
-body{
-  display: flex;
-  flex-direction: column;
-  background-color: $darkGrey;
-  @include bg-texture-lines();
-  color: $pink;
-  // align-items: center;
-  max-width:600px;
-  margin: 0;
-  margin-left:auto;
-  margin-right:auto;
-  min-height: 100vh;
-}
+
 
 @media screen and (max-width:600px){
   body{
@@ -47,15 +32,7 @@ body{
     }
   }
 }
-*{
-  font-family: Quicksand, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-}
 
-a{
-  text-decoration:none;
-  color:inherit;
-  font-weight:inherit;
-}
 
 header{
   margin-top:30px;
