@@ -88,7 +88,7 @@ export default class TodoModel {
      * @param {number} id The key
      * @returns {TodoModel} returns this
      */
-     delete(id){
+    static delete(id){
         let tableModel = this.connect();
         tableModel.useTable()
             .delete(id);
