@@ -159,6 +159,7 @@ export class StorageTable {
     /**
      * gets the key of record to delete that
      * @param {number} id The key
+     * @returns {StorageTable} returns this
      */
     delete(id){
         this.data = this.data.filter(record=>record[this.keyName]!==id);
