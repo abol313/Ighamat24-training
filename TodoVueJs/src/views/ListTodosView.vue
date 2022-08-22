@@ -8,6 +8,7 @@ export default {
             orgTodos: TodoModel.all(),
             todos: this.orgTodos,
             filterSearch: null,
+            filterCallback: null,
         };
     },
     mounted(){
@@ -37,11 +38,25 @@ export default {
 
 
         filter(filterCallback){
-            console.log('filter...');
-            this.todos = filterCallback(this.orgTodos);
+            this.filterCallback = filterCallback;
+            this.todos = this.filterCallback(this.orgTodos);
+        },
+        refilter(){
+            this.todos = this.filterCallback(this.orgTodos);
         },
         setSearch(searchText){
             this.filterSearch = searchText;
+        },
+
+        requery(){
+            console.log('requery');
+            this.orgTodos = TodoModel.all();
+            this.refilter();
+        },
+        rerender(){
+            console.log('rerender');
+            this.refilter();
+            this.$forceUpdate();
         }
     },
     watch:{
@@ -55,6 +70,9 @@ export default {
     emits:[
         'filter',
         'search',
+
+        'requery',
+        'rerender',
 
         'change-todo-status',
     ],
@@ -76,6 +94,8 @@ export default {
             :todo="todo"
             @change-todo-status="onChangeTodoStatus"
             :search="filterSearch"
+            @requery="this.requery()"
+            @rerender="this.rerender()"
         />
     </div>
 
