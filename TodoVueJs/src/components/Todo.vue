@@ -10,6 +10,7 @@ import StatusDeadLogo from './icons/skull-solid.vue';
 import EditLogo from './icons/pen-to-square-solid.vue';
 import DeleteLogo from './icons/trash-can-solid.vue';
 import TodoBan from './icons/todo-ban.vue';
+import Alert from '../modules/Alert/Alert';
 
 
 export default {
@@ -87,8 +88,8 @@ export default {
         toggleStatus() {
             if(this.isDead)return;
             this.doneAt = this.doneAt ? null : new Date();
-            this.$emit("change-todo-status", this.todo, this.doneAt);
             TodoModel.update(this.id, { done_at: this.doneAt });
+            this.$emit("requery");
         },
         dateToString(date, exact = false) {
             if (!date)
@@ -153,6 +154,16 @@ export default {
         },
         getStyleArea(text, isExact = false) {
             return `<ins class="search-area${isExact ? "-exact" : ""}">${text}</ins>`;
+        },
+        delete(){
+            TodoModel.delete(this.id);
+            new Alert(
+                'Delete Todo',
+                'The todo deleted successfully!',
+                'Ok',
+                'success'
+            ).make().show();
+            this.$emit('requery');
         }
     },
     watch: {
@@ -193,7 +204,7 @@ export default {
 
             <div class="settings">
 
-                <div class="delete-logo" title="delete the todo">
+                <div class="delete-logo" title="delete the todo" @click="this.delete()">
                     <delete-logo class="delete-logo"/>
                 </div>
                 
