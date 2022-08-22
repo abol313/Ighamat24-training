@@ -218,6 +218,9 @@ export default {
     components: {
         FilterLogo,
         CheckLogo,
+    },
+    mounted(){
+        this.filter();
     }
 }
 </script>
