@@ -4,10 +4,6 @@ import CheckLogo from './icons/check.vue';
 export default {
     data() {
         return {
-            noBlock: false,
-            doneBlock: true,
-            undoneBlock: false,
-            isDeskOrder: true,
             searchText: null,
 
             filters:{
@@ -22,6 +18,12 @@ export default {
                  *     isIncluded: true/false //use in pipeEach mode and include means in addition or plus others while exclude means just others
                  * }
                  */
+                all:{
+                    pipeEach: todo => true,
+                    isIncluded: true,
+                    enabled:false,
+                },
+
                 done:{
                     pipeEach: todo => todo.done_at!==null,
                     isIncluded: true,
@@ -40,6 +42,46 @@ export default {
                     isIncluded: true,
                     enabled:false,
                 },
+
+                search:{
+                    pipeAll: todos => this.passSearch(todos),
+                    enabled:false
+                },
+
+                sortAscLastEdit:{
+                    pipeAll: todos => todos.sort((a,b)=>this.sortLastEdit(a, b, false)),
+                    enabled: false,
+                },
+                
+                sortDescLastEdit:{
+                    pipeAll: todos => todos.sort((a,b)=>this.sortLastEdit(a, b, true)),
+                    enabled: true,
+                },
+
+
+                sortAscLastDue:{
+                    pipeAll: todos => todos.sort((a,b)=>this.sortLastDue(a, b, false)),
+                    enabled: false,
+                },
+                
+                sortDescLastDue:{
+                    pipeAll: todos => todos.sort((a,b)=>this.sortLastDue(a, b, true)),
+                    enabled: false,
+                },
+
+
+                sortAscLastDone:{
+                    pipeAll: todos => todos.sort((a,b)=>this.sortLastDone(a, b, false)),
+                    enabled: false,
+                },
+                
+                sortDescLastDone:{
+                    pipeAll: todos => todos.sort((a,b)=>this.sortLastDone(a, b, true)),
+                    enabled: false,
+                },
+
+
+                
             }
         };
     },
@@ -56,37 +98,65 @@ export default {
         toggleFilterDead(){
             this.filters.dead.enabled = !this.filters.dead.enabled;
         },
-        setBlock(mode) {
-            this.noBlock = false;
-            this.doneBlock = false;
-            this.undoneBlock = false;
-            switch (mode) {
-                case 0:
-                    this.noBlock = true;
-                    this.$emit("no-block");
-                    break;
-                case 1:
-                    this.doneBlock = true;
-                    this.$emit("done-block");
-                    break;
-                case 2:
-                    this.undoneBlock = true;
-                    this.$emit("undone-block");
-                    break;
+        toggleFilterAll(){
+            if(this.filters.all.enabled = !this.filters.all.enabled){
+                this.filters.done.enabled = false;
+                this.filters.undone.enabled = false;
+                this.filters.dead.enabled = false;
             }
-            return mode;
         },
-        setOrder(isDeskOrder) {
-            this.isDeskOrder = isDeskOrder;
-            if (isDeskOrder)
-                this.$emit("reorder-desc");
+
+        setSort(sort){
+            this.filters.sortAscLastDone.enabled = false;
+            this.filters.sortDescLastDone.enabled = false;
+
+            this.filters.sortAscLastDue.enabled = false;
+            this.filters.sortDescLastDue.enabled = false;
+
+            this.filters.sortAscLastEdit.enabled = false;
+            this.filters.sortDescLastEdit.enabled = false;
+
+            this.filters[sort].enabled = true
+        },
+        sortLastEdit(todoA, todoB, isDesc=true){
+            let todoADate = new Date(todoA.updated_at || todoA.created_at);
+            let todoBDate = new Date(todoB.updated_at || todoB.created_at);
+
+            if(isDesc)
+                return todoADate.getTime() > todoBDate.getTime() ? -1:1;
             else
-                this.$emit("reorder-asc");
+                return todoADate.getTime() < todoBDate.getTime() ? -1:1;
+
         },
+        sortLastDue(todoA, todoB, isDesc=true){
+            let todoADate = new Date(todoA.due_at);
+            let todoBDate = new Date(todoB.due_at);
+
+            if(isDesc)
+                return todoADate.getTime() > todoBDate.getTime() ? -1:1;
+            else
+                return todoADate.getTime() < todoBDate.getTime() ? -1:1;
+        },
+        sortLastDone(todoA, todoB, isDesc=true){
+            let todoADate = new Date(todoA.done_at);
+            let todoBDate = new Date(todoB.done_at);
+
+            if(isDesc)
+                return todoADate.getTime() > todoBDate.getTime() ? -1:1;
+            else
+                return todoADate.getTime() < todoBDate.getTime() ? -1:1;
+        },
+        passSearch(todos){
+            // debugger;
+            let regex = new RegExp(this.searchText.replaceAll(/\s/g,'').split('').join('.*'),'i');
+            return todos.filter(todo => regex.test(todo.title));
+        },
+
         filterCallback(orgTodos){
             let filteredTodos = [];
             let unfilteredTodos = [...orgTodos];
 
+            // debugger;
             for(const filter of Object.values(this.filters)){
                 if(!filter.enabled)continue;
 
@@ -113,7 +183,7 @@ export default {
 
                     
                 }else if(filter.pipeAll){
-                    unfilteredTodos = filter.pipeAll(unfilteredTodos);
+                    filteredTodos = filter.pipeAll(filteredTodos);
                 }
             }
 
@@ -124,12 +194,22 @@ export default {
  
     },
     watch: {
-        searchText(newText) {
-            this.$emit("search", newText);
+        searchText(newText, oldText) {
+            if(this.filters.search.enabled = !!newText.trim() || oldText.trim()){
+                this.$emit('search',this.searchText);
+                this.filter();
+            }
         },
 
         filters:{
             handler(){
+                if(
+                    this.filters.dead.enabled ||
+                    this.filters.done.enabled ||
+                    this.filters.undone.enabled 
+                ){
+                    this.filters.all.enabled = false;
+                }
                 this.filter();
             },
             deep:true
@@ -150,8 +230,10 @@ export default {
                 <FilterLogo class="filter-logo"/>
             </div>
 
-            <p :class="{'status':true}" @click="setBlock(0)">All</p>
-            
+            <div :class="{'status':true, 'status-done':this.filters.all.enabled}" @click="toggleFilterAll">
+                <p>All</p>
+                <CheckLogo class="check-logo" v-if="this.filters.all.enabled"/>
+            </div>
             <div :class="{'status':true, 'status-done':this.filters.undone.enabled}" @click="toggleFilterUndone">
                 <p>Undone todos</p>
                 <CheckLogo class="check-logo" v-if="this.filters.undone.enabled"/>
@@ -169,8 +251,8 @@ export default {
         <div class="order">
             <p class="title">Sort Todos</p>
 
-            <p :class="{'status':true, 'status-done':this.isDeskOrder}" @click="setOrder(true)">Latest</p>
-            <p :class="{'status':true, 'status-done':!this.isDeskOrder}" @click="setOrder(false)">Oldest</p>
+            <p :class="{'status':true, 'status-done':this.filters.sortDescLastEdit.enabled}" @click="setSort('sortDescLastEdit')">Latest</p>
+            <p :class="{'status':true, 'status-done':this.filters.sortAscLastEdit.enabled}" @click="setSort('sortAscLastEdit')">Oldest</p>
         </div>
 
         <div class="search">
