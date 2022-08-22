@@ -1,7 +1,7 @@
 <script>
 import TodoModel from '../scripts/TodoModel';
 import TodoFormCreateSubmitLogo from './icons/todo-form-create-submit-logo.vue';
-
+import Alert from '../modules/Alert/Alert.js';
 export default{
     data() {
         return {
@@ -13,7 +13,14 @@ export default{
     methods: {
         createTodo() {
             if (!this.isValidInputs) {
-                alert("Inputs are wrong!");
+                new Alert(
+                    "Wrong Inputs",
+                    "Your inputs are wrong, fill the inputs and a due after now !",
+                    "Ok",
+                    "danger"
+                )
+                    .make()
+                    .show();
                 return false;
             }
             TodoModel.create({
@@ -24,6 +31,14 @@ export default{
                 created_at: new Date().toISOString(),
                 updated_at: null,
             });
+            new Alert(
+                    "Success Create",
+                    "Created the todo",
+                    "Ok",
+                    "success"
+                )
+                    .make()
+                    .show();
         },
         resetData() {
             this.title = "";
