@@ -254,8 +254,18 @@ export default {
         <div class="order">
             <p class="title">Sort Todos</p>
 
-            <p :class="{'status':true, 'status-done':this.filters.sortDescLastEdit.enabled}" @click="setSort('sortDescLastEdit')">Latest</p>
-            <p :class="{'status':true, 'status-done':this.filters.sortAscLastEdit.enabled}" @click="setSort('sortAscLastEdit')">Oldest</p>
+            <p :class="{'status':true, 'status-done':this.filters.sortDescLastEdit.enabled}" @click="setSort('sortDescLastEdit')">Latest Edit</p>
+            <p :class="{'status':true, 'status-done':this.filters.sortAscLastEdit.enabled}" @click="setSort('sortAscLastEdit')">Oldest Edit</p>
+        
+
+            <p :class="{'status':true, 'status-done':this.filters.sortDescLastDue.enabled}" @click="setSort('sortDescLastDue')">Latest Due</p>
+            <p :class="{'status':true, 'status-done':this.filters.sortAscLastDue.enabled}" @click="setSort('sortAscLastDue')">Oldest Due</p>
+        
+
+            <p :class="{'status':true, 'status-done':this.filters.sortDescLastDone.enabled}" @click="setSort('sortDescLastDone')">Latest Done</p>
+            <p :class="{'status':true, 'status-done':this.filters.sortAscLastDone.enabled}" @click="setSort('sortAscLastDone')">Oldest Done</p>
+        
+        
         </div>
 
         <div class="search">
