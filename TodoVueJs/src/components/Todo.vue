@@ -36,6 +36,9 @@ export default {
             console.log("status:", this.doneAt, !!this.doneAt);
             return !!this.doneAt;
         },
+        isNowAfterDue(){
+            return new Date(this.dueAt) < new Date();
+        },
         lastEdit() {
             return this.dateToString(this.updatedAt || this.createdAt);
         },
@@ -85,8 +88,36 @@ export default {
 
     },
     methods: {
+        onClickEdit(){
+            if(this.isDead){
+                new Alert(
+                    'Dead limited access',
+                    'You can just delete the dead todo !',
+                    'Ok',
+                    'warning',
+                ).make().show();
+                return;
+            }
+        },
         toggleStatus() {
-            if(this.isDead)return;
+            if(this.isDead){
+                new Alert(
+                    'Dead limited access',
+                    'You can just delete the dead todo !',
+                    'Ok',
+                    'warning',
+                ).make().show();
+                return;
+            }
+            if(this.isNowAfterDue){
+                new Alert(
+                    'Done Limited access',
+                    'This todo is done, and the due time reached, you can not change status because of due ended',
+                    'Ok',
+                    'warning',
+                ).make().show();
+                return;
+            }
             this.doneAt = this.doneAt ? null : new Date();
             TodoModel.update(this.id, { done_at: this.doneAt });
             this.$emit("requery");
@@ -209,7 +240,7 @@ export default {
                 </div>
                 
 
-                <router-link :to="getEditLink" title="edit the todo" :disabled="isDead">
+                <router-link :to="getEditLink" title="edit the todo" :disabled="isDead" @click="onClickEdit">
                     <edit-logo class="edit-logo" />
                 </router-link>
 
