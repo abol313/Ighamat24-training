@@ -2,6 +2,7 @@
 import TodoModel from '../scripts/TodoModel';
 import TodoFormUpdateSubmitLogo from './icons/pen-to-square-solid.vue';
 import TodoFormUpdateResetLogo from './icons/rotate.vue';
+import Alert from '../modules/Alert/Alert.js';
 
 export default{
     components:{
@@ -52,8 +53,8 @@ export default{
                     "Ok",
                     "success"
                 )
-                .make()
-                .show();
+            .make()
+            .show();
 
         },
         resetData(){
