@@ -84,6 +84,21 @@ export default class TodoModel {
     }
 
     /**
+     * gets the key of record to delete that
+     * @param {number} id The key
+     * @returns {TodoModel} returns this
+     */
+     delete(id){
+        let tableModel = this.connect();
+        tableModel.useTable()
+            .delete(id);
+        
+        tableModel.getDB().storeStorage();
+
+        return this;
+    }
+
+    /**
      * returns query builder of the table
      * @returns {QueryBuilder} returns the query builder to pass queries conditions and etc.
      */
