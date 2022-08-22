@@ -14,7 +14,7 @@
 > js (dom)
 
 # Some Of Used Freamworks
-> Vue
+> Vue (front-end)
 
 # Some Of Used Build Tools
 > Vite
