@@ -27,7 +27,14 @@ export default{
     methods:{
         updateTodo(){
             if(!this.isValidInputs){
-                alert('Inputs are wrong!');
+                new Alert(
+                    "Wrong Inputs",
+                    "Your inputs are wrong, fill the inputs and a due after now !",
+                    "Ok",
+                    "danger"
+                )
+                    .make()
+                    .show();
                 return false;
             }
             this.updatedAt = new Date().toISOString();
@@ -39,6 +46,15 @@ export default{
                 
                 updated_at: this.updatedAt,
             });
+            new Alert(
+                    "Success Edit",
+                    "Edited the todo",
+                    "Ok",
+                    "success"
+                )
+                .make()
+                .show();
+
         },
         resetData(){
             this.title = this.todo.title;
