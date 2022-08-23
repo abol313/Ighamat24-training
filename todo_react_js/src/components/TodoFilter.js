@@ -27,8 +27,15 @@ export default class TodoFilter extends React.Component {
                     enabled:false,
                 },
 
+
+                done:{
+                    pipeEach: todo => todo.done_at!==null,
+                    isIncluded: true,
+                    enabled:false,
+                },
+
                 date:{
-                    pipeEach: todo=> {
+                    pipeAll: todos=> {
                         // console.log(
                         //     'pipeEach',
                         //     new Date(todo.due_at).toDateString(),
@@ -39,18 +46,11 @@ export default class TodoFilter extends React.Component {
                         //     todo.due_at,
                         //     new Date(todo.due_at).toDateString()
                         // );
-                        
-                        return new Date(todo.due_at).toDateString() !== this.getFilterDate().toDateString();
+                        return todos.filter(todo => new Date(todo.due_at).toDateString() === this.getFilterDate().toDateString());
                     },
-                    isIncluded: false,
                     enabled:true,
                 },
 
-                done:{
-                    pipeEach: todo => todo.done_at!==null,
-                    isIncluded: true,
-                    enabled:false,
-                },
   
 
                 
@@ -118,6 +118,14 @@ export default class TodoFilter extends React.Component {
 
     }
 
+    toggleFilterDone(isDone=null){
+        this.state.filters.done.enabled = isDone===null ? !this.state.filters.done.enabled : isDone;
+        this.setState({
+            filters: this.state.filters
+        });
+        this.filter();
+    }
+
     getFilterDate(){
         return this.state.filterDate;
     }
@@ -149,13 +157,18 @@ export default class TodoFilter extends React.Component {
         this.filter();
     }
 
+    onFilterDone(event){
+        // console.log('onFilterDone', event.target.checked);
+        this.toggleFilterDone(event.target.checked);
+    }
+
     render(){
         return (
             <div className="filter-box">
                 <h2>Filter</h2>
 
                 <label htmlFor="filter-dones">Dones</label>
-                <input id="filter-dones" type="checkbox" />
+                <input id="filter-dones" type="checkbox" onChange={this.onFilterDone.bind(this)}/>
 
                 <label htmlFor="filter-date">Date</label>
                 <input id="filter-date" type="date" value={this.state.filterDate.toLocaleDateString('swe')} onChange={this.onFilterDate.bind(this)}/>
