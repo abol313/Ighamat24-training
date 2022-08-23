@@ -5,6 +5,10 @@ export default class TodoFilter extends React.Component {
         super(props);
 
         this.state = {
+
+            filterDate: new Date(),
+
+
             filters:{
                 /**
                  * filter :
@@ -38,8 +42,9 @@ export default class TodoFilter extends React.Component {
         };
     }
 
+
     filter(){
-        this.props.filter(this.filterCallback);
+        this.props.filter(this.state.filterCallback);
     }
 
     toggleFilterDone(){
@@ -88,16 +93,30 @@ export default class TodoFilter extends React.Component {
 
     }
 
+    goNextDay(){
+        this.setState({
+            filterDate: new Date(this.state.filterDate.getTime() + 1e3 * 60 * 60 * 24),
+        });
+    }
+
+    goPrevDay(){
+        this.setState({
+            filterDate: new Date(this.state.filterDate.getTime() - 1e3 * 60 * 60 * 24),
+        });
+    }
+
     render(){
         return (
-            <div class="filter-box">
+            <div className="filter-box">
                 <h2>Filter</h2>
 
-                <label for="filter-dones">Dones</label>
+                <label htmlFor="filter-dones">Dones</label>
                 <input id="filter-dones" type="checkbox" />
 
-                <label>Date</label>
-                <input type="date" value={new Date()}/>
+                <label htmlFor="filter-date">Date</label>
+                <input id="filter-date" type="date" value={this.state.filterDate.toLocaleDateString('swe')}/>
+                <button onClick={this.goPrevDay.bind(this)}>-</button>
+                <button onClick={this.goNextDay.bind(this)}>+</button>
             </div>
         );
     }
