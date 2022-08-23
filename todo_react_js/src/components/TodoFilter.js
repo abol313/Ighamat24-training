@@ -27,6 +27,25 @@ export default class TodoFilter extends React.Component {
                     enabled:false,
                 },
 
+                date:{
+                    pipeEach: todo=> {
+                        // console.log(
+                        //     'pipeEach',
+                        //     new Date(todo.due_at).toDateString(),
+                        //     this.getFilterDate(),
+                        //     new Date(todo.due_at).toDateString() !== this.getFilterDate().toDateString()
+                        // );
+                        // console.log(
+                        //     todo.due_at,
+                        //     new Date(todo.due_at).toDateString()
+                        // );
+                        
+                        return new Date(todo.due_at).toDateString() !== this.getFilterDate().toDateString();
+                    },
+                    isIncluded: false,
+                    enabled:true,
+                },
+
                 done:{
                     pipeEach: todo => todo.done_at!==null,
                     isIncluded: true,
@@ -42,9 +61,13 @@ export default class TodoFilter extends React.Component {
         };
     }
 
+    componentDidMount(){
+        this.filter();
+    }
 
     filter(){
-        this.props.filter(this.state.filterCallback);
+        // let callback = this.state.filterCallback
+        this.props.filter(this.filterCallback.bind(this));
     }
 
     toggleFilterDone(){
@@ -74,6 +97,8 @@ export default class TodoFilter extends React.Component {
                             if(filter.isIncluded)
                                 filteredTodos.push(unfilteredTodo);
                             unfilteredTodos.splice(i--,1);
+                        }else if(!filter.isIncluded){
+                            filteredTodos.push(unfilteredTodo);
                         }
                     }else{
                         filteredTodos.push(piped);
@@ -93,16 +118,35 @@ export default class TodoFilter extends React.Component {
 
     }
 
+    getFilterDate(){
+        return this.state.filterDate;
+    }
+
     goNextDay(){
+        this.state.filterDate.setTime(this.state.filterDate.getTime() + 1e3 * 60 * 60 * 24);
         this.setState({
-            filterDate: new Date(this.state.filterDate.getTime() + 1e3 * 60 * 60 * 24),
+            filterDate: this.state.filterDate,
         });
+        this.filter();
     }
 
     goPrevDay(){
+        this.state.filterDate.setTime(this.state.filterDate.getTime() - 1e3 * 60 * 60 * 24);
         this.setState({
-            filterDate: new Date(this.state.filterDate.getTime() - 1e3 * 60 * 60 * 24),
+            filterDate: this.state.filterDate,
         });
+        this.filter();
+    }
+
+    onFilterDate(event){
+        const [year, month, day] = event.target.value.split('-');
+        this.state.filterDate.setFullYear(year);
+        this.state.filterDate.setMonth(month);
+        this.state.filterDate.setDate(day);
+        this.setState({
+            filterDate: this.state.filterDate
+        });
+        this.filter();
     }
 
     render(){
@@ -114,7 +158,7 @@ export default class TodoFilter extends React.Component {
                 <input id="filter-dones" type="checkbox" />
 
                 <label htmlFor="filter-date">Date</label>
-                <input id="filter-date" type="date" value={this.state.filterDate.toLocaleDateString('swe')}/>
+                <input id="filter-date" type="date" value={this.state.filterDate.toLocaleDateString('swe')} onChange={this.onFilterDate.bind(this)}/>
                 <button onClick={this.goPrevDay.bind(this)}>-</button>
                 <button onClick={this.goNextDay.bind(this)}>+</button>
             </div>
