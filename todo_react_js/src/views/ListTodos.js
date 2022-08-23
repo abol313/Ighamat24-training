@@ -49,8 +49,12 @@ export default class ListTodos extends React.Component {
         return this;
     }
 
+    requery(){
+        this.setState({
+            todos: TodoModel.all()
+        });
+    }
     getTodos(){
-
         // return this.state.todos;
         console.log( this.state.filterCallback(this.state.todos));
         return this.state.filterCallback(this.state.todos);
@@ -58,7 +62,7 @@ export default class ListTodos extends React.Component {
 
     getTodosElements(){
         return this.getTodos().map( todo => 
-            (<Todo key={todo.id} todo={todo}/>)
+            (<Todo key={todo.id} todo={todo} forceUpdate={this.forceUpdate.bind(this)}/>)
         );
     }
 
