@@ -1,5 +1,6 @@
 // import logo from './logo.svg';
 import './App.css';
+import ListTodos from './views/ListTodos';
 
 function App() {
   return (
@@ -23,7 +24,7 @@ function App() {
         </ul>
       </nav>
 
-
+      <ListTodos/>
     </div>
   );
 }
