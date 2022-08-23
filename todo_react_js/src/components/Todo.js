@@ -16,15 +16,18 @@ export default class Todo extends React.Component {
     }
 
 
+    toggleStatus(){
+
+    }
 
     render(){
         return (
-            <div class="todo-item">
-                <p class="title">{this.state.title}</p>
-                <p class="description">{this.state.description}</p>
-                <p class="due-at">Due at: {this.state.dueAt}</p>
-                <p class="done-at">Done at: {this.state.doneAt}</p>
-                <input type="checkbox" onClick=""/>
+            <div className="todo-item">
+                <p className="title">{this.state.title}</p>
+                <p className="description">{this.state.description}</p>
+                <p className="due-at">Due at: {this.state.dueAt}</p>
+                <p className="done-at">Done at: {this.state.doneAt}</p>
+                <input type="checkbox" onClick={this.toggleStatus.bind(this)}/>
             </div>
         );
     }
