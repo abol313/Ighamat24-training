@@ -21,10 +21,10 @@ export default class TodoFilter extends React.Component {
                  *     isIncluded: true/false //use in pipeEach mode and include means in addition or plus others while exclude means just others
                  * }
                  */
-                all:{
-                    pipeEach: todo => true,
+                undone:{
+                    pipeEach: todo => todo.done_at===null,
                     isIncluded: true,
-                    enabled:false,
+                    enabled:true,
                 },
 
 
