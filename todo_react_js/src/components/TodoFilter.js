@@ -21,12 +21,6 @@ export default class TodoFilter extends React.Component {
                  *     isIncluded: true/false //use in pipeEach mode and include means in addition or plus others while exclude means just others
                  * }
                  */
-                undone:{
-                    pipeEach: todo => todo.done_at===null,
-                    isIncluded: true,
-                    enabled:true,
-                },
-
 
                 done:{
                     pipeEach: todo => todo.done_at!==null,
@@ -34,21 +28,23 @@ export default class TodoFilter extends React.Component {
                     enabled:false,
                 },
 
+                undone:{
+                    pipeEach: todo => todo.done_at===null,
+                    isIncluded: true,
+                    enabled:true,
+                },
+
+
                 date:{
                     pipeAll: todos=> {
-                        // console.log(
-                        //     'pipeEach',
-                        //     new Date(todo.due_at).toDateString(),
-                        //     this.getFilterDate(),
-                        //     new Date(todo.due_at).toDateString() !== this.getFilterDate().toDateString()
-                        // );
-                        // console.log(
-                        //     todo.due_at,
-                        //     new Date(todo.due_at).toDateString()
-                        // );
                         return todos.filter(todo => new Date(todo.due_at).toDateString() === this.getFilterDate().toDateString());
                     },
                     enabled:true,
+                },
+
+                sort:{
+                    pipeAll: todos => todos.sort((a,b)=>this.sortLastCreate(a,b,true)),
+                    enabled: true,
                 },
 
   
@@ -68,6 +64,17 @@ export default class TodoFilter extends React.Component {
     filter(){
         // let callback = this.state.filterCallback
         this.props.filter(this.filterCallback.bind(this));
+    }
+
+    sortLastCreate(todoA, todoB, isDesc=true){
+        let todoADate = new Date( todoA.created_at );
+        let todoBDate = new Date( todoB.created_at );
+
+        if(isDesc)
+            return todoADate.getTime() > todoBDate.getTime() ? -1:1;
+        else
+            return todoADate.getTime() < todoBDate.getTime() ? -1:1;
+
     }
 
     toggleFilterDone(){
@@ -165,15 +172,23 @@ export default class TodoFilter extends React.Component {
     render(){
         return (
             <div className="filter-box">
-                <h2>Filter</h2>
+                <div className="block">
+                    <div className="title">
+                        <h2>Filter</h2>
+                    </div>
 
-                <label htmlFor="filter-dones">Dones</label>
-                <input id="filter-dones" type="checkbox" onChange={this.onFilterDone.bind(this)}/>
+                    <div className={'status '+ (this.state.filters.done.enabled && 'status-done')}>
+                        <label htmlFor="filter-dones">Dones</label>
+                        <input id="filter-dones" type="checkbox" onChange={this.onFilterDone.bind(this)}/>
+                    </div>
 
-                <label htmlFor="filter-date">Date</label>
-                <input id="filter-date" type="date" value={this.state.filterDate.toLocaleDateString('swe')} onChange={this.onFilterDate.bind(this)}/>
-                <button onClick={this.goPrevDay.bind(this)}>-</button>
-                <button onClick={this.goNextDay.bind(this)}>+</button>
+                    <div className="status">
+                        <label htmlFor="filter-date">Date</label>
+                        <button onClick={this.goPrevDay.bind(this)}>-</button>
+                        <input id="filter-date" type="date" value={this.state.filterDate.toLocaleDateString('swe')} onChange={this.onFilterDate.bind(this)}/>
+                        <button onClick={this.goNextDay.bind(this)}>+</button>
+                    </div>
+                </div>
             </div>
         );
     }
