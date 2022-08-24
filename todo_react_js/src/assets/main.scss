@@ -343,8 +343,19 @@ nav{
           color:$red;
         }
         .status-logo{
+          box-sizing: border-box;
+          width:40px;
+          height:40px;
+          padding:7px;
+          cursor: pointer;
+          border-radius:10px;
+          border:2px solid $pink;
           @extend .edit-logo;
-          cursor:auto;
+          cursor:pointer;
+          &:hover{
+            background-color: rgba($pink, .2);
+          }
+
           .status-logo-started{
             color: $todo-status-started;
           }
