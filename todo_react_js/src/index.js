@@ -8,6 +8,7 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import ListTodos from './views/ListTodos';
 import CreateTodo from './views/CreateTodo';
+import Error404View from './views/errors/404';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -19,6 +20,7 @@ root.render(
           <Route index element={<ListTodos />} />
           <Route path="new" element={<CreateTodo />} />
         </Route>
+        <Route path="*" element={<Error404View/>}/>
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
