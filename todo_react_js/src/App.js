@@ -1,5 +1,5 @@
 // import logo from './logo.svg';
-import './App.css';
+import './assets/main.scss';
 import ListTodos from './views/ListTodos';
 import  {BrowserRouter, Link, Routes, Route, Outlet} from 'react-router-dom';
 
