@@ -1,7 +1,9 @@
 import React from "react";
-
+import CaretLeft from "./icons/caret-left";
+import CaretRight from "./icons/caret-right";
+import CheckLogo from "./icons/check";
 export default class TodoFilter extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
 
         this.state = {
@@ -9,7 +11,7 @@ export default class TodoFilter extends React.Component {
             filterDate: new Date(),
 
 
-            filters:{
+            filters: {
                 /**
                  * filter :
                  * {
@@ -22,34 +24,34 @@ export default class TodoFilter extends React.Component {
                  * }
                  */
 
-                done:{
-                    pipeEach: todo => todo.done_at!==null,
+                done: {
+                    pipeEach: todo => todo.done_at !== null,
                     isIncluded: true,
-                    enabled:false,
+                    enabled: false,
                 },
 
-                undone:{
-                    pipeEach: todo => todo.done_at===null,
+                undone: {
+                    pipeEach: todo => todo.done_at === null,
                     isIncluded: true,
-                    enabled:true,
-                },
-
-
-                date:{
-                    pipeAll: todos=> {
-                        return todos.filter(todo => new Date(todo.due_at).toDateString() === this.getFilterDate().toDateString());
-                    },
-                    enabled:true,
-                },
-
-                sort:{
-                    pipeAll: todos => todos.sort((a,b)=>this.sortLastCreate(a,b,true)),
                     enabled: true,
                 },
 
-  
 
-                
+                date: {
+                    pipeAll: todos => {
+                        return todos.filter(todo => new Date(todo.due_at).toDateString() === this.getFilterDate().toDateString());
+                    },
+                    enabled: true,
+                },
+
+                sort: {
+                    pipeAll: todos => todos.sort((a, b) => this.sortLastCreate(a, b, true)),
+                    enabled: true,
+                },
+
+
+
+
             },
 
 
@@ -57,65 +59,62 @@ export default class TodoFilter extends React.Component {
         };
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.filter();
     }
 
-    filter(){
+    filter() {
         // let callback = this.state.filterCallback
         this.props.filter(this.filterCallback.bind(this));
     }
 
-    sortLastCreate(todoA, todoB, isDesc=true){
-        let todoADate = new Date( todoA.created_at );
-        let todoBDate = new Date( todoB.created_at );
+    sortLastCreate(todoA, todoB, isDesc = true) {
+        let todoADate = new Date(todoA.created_at);
+        let todoBDate = new Date(todoB.created_at);
 
-        if(isDesc)
-            return todoADate.getTime() > todoBDate.getTime() ? -1:1;
+        if (isDesc)
+            return todoADate.getTime() > todoBDate.getTime() ? -1 : 1;
         else
-            return todoADate.getTime() < todoBDate.getTime() ? -1:1;
+            return todoADate.getTime() < todoBDate.getTime() ? -1 : 1;
 
     }
 
-    toggleFilterDone(){
-        this.filters.done.enabled = !this.filters.done.enabled;
-        this.filter();
-    }
 
 
-    filterCallback(orgTodos){
+
+    filterCallback(orgTodos) {
         let filteredTodos = [];
         let unfilteredTodos = [...orgTodos];
 
         // debugger;
-        for(const filter of Object.values(this.state.filters)){
-            if(!filter.enabled)continue;
+        for (const filter of Object.values(this.state.filters)) {
+            if (!filter.enabled) continue;
 
-            if(filter.pipeEach){
+            if (filter.pipeEach) {
 
-                for(let i=0; i<unfilteredTodos.length ; i++){
+                for (let i = 0; i < unfilteredTodos.length; i++) {
 
                     let unfilteredTodo = unfilteredTodos[i];
 
                     let piped = filter.pipeEach(unfilteredTodo);
                     //if it is boolean handled existance of item else the returned value from piping will be passed
-                    if(piped===true || piped===false){
-                        if(piped===true){
-                            if(filter.isIncluded)
+                    if (piped === true || piped === false) {
+                        if (piped === true) {
+                            if (filter.isIncluded)
                                 filteredTodos.push(unfilteredTodo);
-                            unfilteredTodos.splice(i--,1);
-                        }else if(!filter.isIncluded){
+                            unfilteredTodos.splice(i--, 1);
+                        } else if (!filter.isIncluded) {
                             filteredTodos.push(unfilteredTodo);
                         }
-                    }else{
+                    } else {
                         filteredTodos.push(piped);
-                        unfilteredTodos.splice(i--,1);
+                        unfilteredTodos.splice(i--, 1);
                     }
 
                 }
 
-                
-            }else if(filter.pipeAll){
+
+            } else if (filter.pipeAll) {
                 filteredTodos = filter.pipeAll(filteredTodos);
             }
         }
@@ -125,19 +124,19 @@ export default class TodoFilter extends React.Component {
 
     }
 
-    toggleFilterDone(isDone=null){
-        this.state.filters.done.enabled = isDone===null ? !this.state.filters.done.enabled : isDone;
+    toggleFilterDone(isDone = null) {
+        this.state.filters.done.enabled = isDone === null ? !this.state.filters.done.enabled : isDone;
         this.setState({
             filters: this.state.filters
         });
         this.filter();
     }
 
-    getFilterDate(){
+    getFilterDate() {
         return this.state.filterDate;
     }
 
-    goNextDay(){
+    goNextDay() {
         this.state.filterDate.setTime(this.state.filterDate.getTime() + 1e3 * 60 * 60 * 24);
         this.setState({
             filterDate: this.state.filterDate,
@@ -145,7 +144,7 @@ export default class TodoFilter extends React.Component {
         this.filter();
     }
 
-    goPrevDay(){
+    goPrevDay() {
         this.state.filterDate.setTime(this.state.filterDate.getTime() - 1e3 * 60 * 60 * 24);
         this.setState({
             filterDate: this.state.filterDate,
@@ -153,7 +152,7 @@ export default class TodoFilter extends React.Component {
         this.filter();
     }
 
-    onFilterDate(event){
+    onFilterDate(event) {
         const [year, month, day] = event.target.value.split('-');
         this.state.filterDate.setFullYear(year);
         this.state.filterDate.setMonth(month);
@@ -164,12 +163,12 @@ export default class TodoFilter extends React.Component {
         this.filter();
     }
 
-    onFilterDone(event){
+    onFilterDone(event) {
         // console.log('onFilterDone', event.target.checked);
         this.toggleFilterDone(event.target.checked);
     }
 
-    render(){
+    render() {
         return (
             <div className="filter-box">
                 <div className="block">
@@ -177,19 +176,24 @@ export default class TodoFilter extends React.Component {
                         <h2>Filter</h2>
                     </div>
 
-                    <div className={'status '+ (this.state.filters.done.enabled && 'status-done')}>
+                    {/* <div className={'status ' + (this.state.filters.done.enabled && 'status-done')}>
                         <label htmlFor="filter-dones">Dones</label>
-                        <input id="filter-dones" type="checkbox" onChange={this.onFilterDone.bind(this)}/>
+                        <input id="filter-dones" type="checkbox" onChange={this.onFilterDone.bind(this)} />
+                    </div> */}
+
+                    <div className={'status ' + (this.state.filters.done.enabled && 'status-done')} onClick={this.toggleFilterDone.bind(this,null)}>
+                        <p>Undone todos</p>
+                        {this.state.filters.done.enabled && <CheckLogo class="check-logo" />}
                     </div>
 
-                    <div className="status">
+                    <div className="status status-done filter-date-picked">
                         <label htmlFor="filter-date">Date</label>
-                        <button onClick={this.goPrevDay.bind(this)}>-</button>
-                        <input id="filter-date" type="date" value={this.state.filterDate.toLocaleDateString('swe')} onChange={this.onFilterDate.bind(this)}/>
-                        <button onClick={this.goNextDay.bind(this)}>+</button>
+                        <button onClick={this.goPrevDay.bind(this)} className="prev-day"><CaretLeft /></button>
+                        <input id="filter-date" type="date" value={this.state.filterDate.toLocaleDateString('swe')} onChange={this.onFilterDate.bind(this)} />
+                        <button onClick={this.goNextDay.bind(this)} className="next-day"><CaretRight /></button>
                     </div>
-                </div>
             </div>
+            </div >
         );
     }
 }
