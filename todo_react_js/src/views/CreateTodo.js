@@ -55,7 +55,7 @@ export default class CreateTodo extends React.Component{
                 <label htmlFor="input-date">Todo's Due Date & Time</label>
                 <input id="input-date" type="datetime-local"/>
 
-                <button onClick={}>Add Todo</button>
+                <button onClick={this.createTodo.bind(this)}>Add Todo</button>
             </div>
         );
     }
