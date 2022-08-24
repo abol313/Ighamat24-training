@@ -3,7 +3,7 @@
 
 
 ## Todo
-It is a bit similar to (another project)[https://github.com/abol313/Ighamat24-training/tree/master/todo_react_js] in React, but the time spent is more on it and it has many more features such as dead and banned todos... and some less...
+It is a bit similar to [another project](https://github.com/abol313/Ighamat24-training/tree/master/todo_react_js) in React, but the time spent is more on it and it has many more features such as dead and banned todos... and some less...
 
 ## Vue
 The framework of Js that i used is Vue
