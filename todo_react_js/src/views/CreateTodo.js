@@ -1,6 +1,8 @@
 import React from 'react';
 import TodoModel from '../scripts/TodoModel';
 import Alert from '../modules/Alert/Alert';
+import TodoFormCreateSubmitLogo from '../components/icons/todo-form-create-submit-logo';
+
 
 export default class CreateTodo extends React.Component{
     constructor(props){
@@ -74,16 +76,19 @@ export default class CreateTodo extends React.Component{
         return (
             <div className="form-box">
                 
-                <label htmlFor="input-title">Todo's Title</label>
-                <input id="input-title" placeholder="Pass your title" value={this.state.title} onChange={this.onChangeTitle.bind(this)}/>
+                <label htmlFor="title">Todo's Title</label>
+                <input id="title" class="title" placeholder="Pass your title" value={this.state.title} onChange={this.onChangeTitle.bind(this)}/>
 
-                <label htmlFor="input-description">Todo's description</label>
-                <input id="input-description" placeholder="Pass your description" value={this.state.description} onChange={this.onChangeDescription.bind(this)}/>
+                <label htmlFor="description">Todo's description</label>
+                <input id="description" class="description" placeholder="Pass your description" value={this.state.description} onChange={this.onChangeDescription.bind(this)}/>
 
-                <label htmlFor="input-date">Todo's Due Date & Time</label>
-                <input id="input-date" type="datetime-local" value={this.getDateAsInputLocalDateTime(new Date(this.state.dueAt))} onChange={this.onChangeDue.bind(this)}/>
+                <label htmlFor="due">Todo's Due Date & Time</label>
+                <input id="due" type="datetime-local" class="due" value={this.getDateAsInputLocalDateTime(new Date(this.state.dueAt))} onChange={this.onChangeDue.bind(this)}/>
 
-                <button onClick={this.createTodo.bind(this)}>Add Todo</button>
+                <div class="submit" onClick={this.createTodo.bind(this)}>
+                    <p>Create Todo</p>
+                    <TodoFormCreateSubmitLogo class="submit-logo"/>
+                </div>
             </div>
         );
     }
