@@ -1,6 +1,6 @@
 import React from 'react';
 import TodoModel from '../scripts/TodoModel';
-
+import Check from './icons/check';
 export default class Todo extends React.Component {
     constructor(props){
         super(props);
@@ -18,8 +18,8 @@ export default class Todo extends React.Component {
     }
 
 
-    toggleStatus(event){
-        let newDoneAt = !event.target.checked || this.state.doneAt ? null : new Date().toISOString();
+    toggleStatus(){
+        let newDoneAt = this.state.doneAt ? null : new Date().toISOString();
         this.setState({
             doneAt: newDoneAt
         });
@@ -37,11 +37,17 @@ export default class Todo extends React.Component {
     render(){
         return (
             <div className="todo-item">
-                <p className="title">{this.state.title}</p>
+                <div className="nav">
+                    <p className="title">{this.state.title}</p>
+                    <div className="settings">
+                        <div className={"status-logo "+(this.state.doneAt && "todo-done")} onClick={this.toggleStatus.bind(this)}>
+                            {this.state.doneAt && <Check/>}
+                        </div>
+                    </div>
+                </div>
                 <p className="description">{this.state.description}</p>
                 <p className="due-at">Due at: {this.state.dueAt}</p>
                 <p className="done-at">Done at: {this.state.doneAt}</p>
-                <input type="checkbox" onChange={this.toggleStatus.bind(this)} checked={!!this.state.doneAt}/>
             </div>
         );
     }
