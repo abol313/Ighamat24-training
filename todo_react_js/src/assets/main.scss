@@ -117,6 +117,7 @@ nav{
       transition: all 200ms;
       display:flex;
       justify-content: space-between;
+
     }
   }
 
@@ -142,7 +143,16 @@ nav{
   }
 
   .block{
-    
+    .status{
+      &:hover{
+        background-color: rgba($pink, .2);
+      }
+    }
+    .status-done{
+      &:hover{
+        background-color: $pink;
+      }
+    }
   }
 
   .order{
