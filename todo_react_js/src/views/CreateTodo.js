@@ -7,8 +7,8 @@ export default class CreateTodo extends React.Component{
         super(props);
 
         this.state = {
-            title: null,
-            description: null,
+            title: '',
+            description: '',
             dueAt: new Date().toISOString(),
             doneAt: null,
 
@@ -27,11 +27,11 @@ export default class CreateTodo extends React.Component{
         TodoModel.create({
             title: this.state.title,
             description: this.state.description,
-            due_at: this.dueAt,
-            done_at: this.doneAt,
+            due_at: this.state.dueAt,
+            done_at: this.state.doneAt,
 
-            created_at: this.createdAt,
-            updated_at: this.updatedAt,
+            created_at: createdAt,
+            updated_at: this.state.updatedAt,
         });
 
         new Alert(
@@ -42,18 +42,46 @@ export default class CreateTodo extends React.Component{
         ).make().show();
     }
 
+    getDateTimeAsInputValue(date){
+        return date.toISOString();
+    }
+
+    onChangeTitle(e){
+        this.setState({
+            title: e.target.value
+        });
+    }
+
+    onChangeDescription(e){
+        this.setState({
+            description: e.target.value
+        });
+    }
+
+    onChangeDue(e){
+        let date = new Date();
+        date.setTime(new Date(e.target.value).getTime());
+        this.setState({
+            dueAt: date
+        });
+    }
+
+    getDateAsInputLocalDateTime(date){
+        return date.toLocaleString('swe');
+    }
+
     render(){
         return (
             <div className="form-box">
                 
                 <label htmlFor="input-title">Todo's Title</label>
-                <input id="input-title" placeholder="Pass your title"/>
+                <input id="input-title" placeholder="Pass your title" value={this.state.title} onChange={this.onChangeTitle.bind(this)}/>
 
                 <label htmlFor="input-description">Todo's description</label>
-                <input id="input-description" placeholder="Pass your description"/>
+                <input id="input-description" placeholder="Pass your description" value={this.state.description} onChange={this.onChangeDescription.bind(this)}/>
 
                 <label htmlFor="input-date">Todo's Due Date & Time</label>
-                <input id="input-date" type="datetime-local"/>
+                <input id="input-date" type="datetime-local" value={this.getDateAsInputLocalDateTime(new Date(this.state.dueAt))} onChange={this.onChangeDue.bind(this)}/>
 
                 <button onClick={this.createTodo.bind(this)}>Add Todo</button>
             </div>
