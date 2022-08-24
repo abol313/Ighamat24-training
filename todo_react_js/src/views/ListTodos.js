@@ -68,10 +68,12 @@ export default class ListTodos extends React.Component {
 
     render(){
         return (
-            <div className="todos">
-                <TodoFilter filter={this.setFilterCallback.bind(this)}/>
+            <div>
+                <TodoFilter className="filter-box" filter={this.setFilterCallback.bind(this)}/>
+                <div className="todos">
 
-                {this.getTodosElements()}
+                    {this.getTodosElements()}
+                </div>
             </div>
         );
     }
