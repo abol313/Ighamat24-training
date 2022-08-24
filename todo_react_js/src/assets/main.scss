@@ -31,8 +31,32 @@
       }
     }
   }
-}
 
+  * {
+    font-size: 6vw !important;
+  }
+
+  svg{
+    max-width: 10vw;
+    max-height: 10vw;
+
+  }
+
+  .filter-date-picked{
+    button{
+      max-width: 10vw;
+      max-height: 10vw;  
+    }
+  }
+  .form-box{
+    * {
+      font-size: 6vw !important;
+    }
+  }
+}
+svg{
+  fill:currentColor;
+}
 
 header{
   margin-top:30px;
@@ -128,6 +152,7 @@ nav{
   .filter-date-picked {
     display:flex;
     flex-wrap:wrap;
+    align-items: center;
 
     label{
       flex-grow:1;
@@ -422,6 +447,8 @@ nav{
 
 
 .form-box{
+
+
   font-size:2em;
   box-sizing: border-box;
   max-width:100%;
@@ -455,6 +482,9 @@ nav{
       background-color:rgba($pink, .2);
       box-shadow:inset 0 -5px 0px $pink;
     }
+    &::placeholder{
+      color: rgba($pink, .3);
+    }
     &:hover{
       background-color:rgba($pink, .2);
 
@@ -472,7 +502,10 @@ nav{
       transition: all 200ms;
     }
   }
-  
+  *{
+  max-width:100%;
+
+  }
   .submit{
     transition:all 50ms;
     text-align: center;
