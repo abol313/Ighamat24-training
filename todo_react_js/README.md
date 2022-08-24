@@ -22,8 +22,8 @@ Then you can use it on your browser as specified host and port
 ## Some Of Features
 + Filter todos :
 + + Done todos,
-+ + Undone Todos,
-+ + Matched Due Date
++ + Undone todos,
++ + Matched due date
 + Sort base of created_at time of any todo
 + You can create a new todo :)
 

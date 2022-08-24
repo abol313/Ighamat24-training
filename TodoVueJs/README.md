@@ -26,8 +26,8 @@ Then you can use it on your browser as specified host and port
 ## Some Of Features
 + Filter todos :
 + + Done todos,
-+ + Undone Todos,
-+ + Dead Todos (the due time exceeded but no doing in that todo)
++ + Undone todos,
++ + Dead todos (the due time exceeded but no doing in that todo)
 + Sort base of last edit time of any todo asc/desc
 + Sort base of due time of any todo asc/desc
 + Sort base of done time of any todo asc/desc
@@ -36,7 +36,7 @@ Then you can use it on your browser as specified host and port
 + You can delete a todo!
 + You can know about todos exceeded half time from created time of todo until due time (warning)
 + and etc...
-+ about search wil be surprised...!
++ about search will be surprised...!
 ![create todo vue](shots/create_todo.png)
 ## Some Of Usages
 ### Style
