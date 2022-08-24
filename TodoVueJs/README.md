@@ -29,7 +29,7 @@ Then you can use it on your browser as specified host and port
 + + Undone Todos,
 + + Dead Todos (the due time exceeded but no doing in that todo)
 + Sort base of last edit time of any todo asc/desc
-+ Sort base of due time time of any todo asc/desc
++ Sort base of due time of any todo asc/desc
 + Sort base of done time of any todo asc/desc
 + You can create a new todo :) + some validation over inputs 
 + You can edit the past todo :) +  some validation over inputs 
