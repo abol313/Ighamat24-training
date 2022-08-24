@@ -179,7 +179,7 @@ export default class TodoFilter extends React.Component {
                     </div>
 
                     <div className={'status ' + (this.state.filters.done.enabled && 'status-done')} onClick={this.toggleFilterDone.bind(this,null)}>
-                        <p>Undone todos</p>
+                        <p>Done todos</p>
                         {this.state.filters.done.enabled && <CheckLogo class="check-logo" />}
                     </div>
 
