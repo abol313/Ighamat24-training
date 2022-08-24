@@ -1,6 +1,7 @@
 // import logo from './logo.svg';
 import './App.css';
 import ListTodos from './views/ListTodos';
+import  {BrowserRouter, Link, Routes, Route, Outlet} from 'react-router-dom';
 
 function App() {
   return (
@@ -9,22 +10,24 @@ function App() {
         <h1>Welcome To Todo Proj !</h1>
       </header>
 
+      
       <nav v-if="!this.isNotFoundPage">
         <ul>
           <li>
-            <router-link to="/new">
+            <Link to="/new">
               <h2>Create A Todo</h2>
-            </router-link>
+            </Link>
           </li>
           <li>
-            <router-link to="/">
+            <Link to="/">
               <h2>List Todos</h2>
-            </router-link>
+            </Link>
           </li>
         </ul>
       </nav>
 
-      <ListTodos/>
+      <Outlet/>
+      {/* <ListTodos/> */}
     </div>
   );
 }
