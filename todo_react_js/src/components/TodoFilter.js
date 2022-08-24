@@ -2,6 +2,7 @@ import React from "react";
 import CaretLeft from "./icons/caret-left";
 import CaretRight from "./icons/caret-right";
 import CheckLogo from "./icons/check";
+import FilterLogo from "./icons/filter";
 export default class TodoFilter extends React.Component {
     constructor(props) {
         super(props);
@@ -174,12 +175,8 @@ export default class TodoFilter extends React.Component {
                 <div className="block">
                     <div className="title">
                         <h2>Filter</h2>
+                        <FilterLogo />
                     </div>
-
-                    {/* <div className={'status ' + (this.state.filters.done.enabled && 'status-done')}>
-                        <label htmlFor="filter-dones">Dones</label>
-                        <input id="filter-dones" type="checkbox" onChange={this.onFilterDone.bind(this)} />
-                    </div> */}
 
                     <div className={'status ' + (this.state.filters.done.enabled && 'status-done')} onClick={this.toggleFilterDone.bind(this,null)}>
                         <p>Undone todos</p>
