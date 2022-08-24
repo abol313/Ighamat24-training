@@ -5,11 +5,22 @@ import App from './App';
 import Icon from './components/icons/check';
 import IconEx from './components/icons/exclamation';
 import reportWebVitals from './reportWebVitals';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import ListTodos from './views/ListTodos';
+import CreateTodo from './views/CreateTodo';
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<App />}>
+          <Route index element={<ListTodos />} />
+          <Route path="new" element={<CreateTodo />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   </React.StrictMode>
 );
 
