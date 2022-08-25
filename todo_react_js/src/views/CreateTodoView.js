@@ -77,15 +77,15 @@ export default class CreateTodoView extends React.Component{
             <div className="form-box">
                 <p className="form-title">Create A Todo !</p>
                 <label htmlFor="title">Todo's Title</label>
-                <input id="title" class="title" placeholder="Pass your title" value={this.state.title} onChange={this.onChangeTitle.bind(this)}/>
+                <input id="title" className="title" placeholder="Pass your title" value={this.state.title} onChange={this.onChangeTitle.bind(this)}/>
 
                 <label htmlFor="description">Todo's description</label>
-                <input id="description" class="description" placeholder="Pass your description" value={this.state.description} onChange={this.onChangeDescription.bind(this)}/>
+                <input id="description" className="description" placeholder="Pass your description" value={this.state.description} onChange={this.onChangeDescription.bind(this)}/>
 
                 <label htmlFor="due">Todo's Due Date & Time</label>
-                <input id="due" type="datetime-local" class="due" value={this.getDateAsInputLocalDateTime(new Date(this.state.dueAt))} onChange={this.onChangeDue.bind(this)}/>
+                <input id="due" type="datetime-local" className="due" value={this.getDateAsInputLocalDateTime(new Date(this.state.dueAt))} onChange={this.onChangeDue.bind(this)}/>
 
-                <div class="submit" onClick={this.createTodo.bind(this)}>
+                <div className="submit" onClick={this.createTodo.bind(this)}>
                     <p>Create Todo</p>
                     <TodoFormCreateSubmitLogo class="submit-logo"/>
                 </div>
