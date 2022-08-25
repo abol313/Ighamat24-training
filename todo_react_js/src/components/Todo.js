@@ -1,6 +1,7 @@
 import React from 'react';
 import TodoModel from '../scripts/TodoModel';
 import Check from './icons/check';
+import DeleteLogo from './icons/trash-can-solid';
 export default class Todo extends React.Component {
     constructor(props){
         super(props);
@@ -130,12 +131,22 @@ export default class Todo extends React.Component {
         return this.styleSearchArea(this.state.title);
     }
 
+    deleteTodo(){
+        console.log(this.state.id);
+        TodoModel.delete(this.state.id);
+        this.props.onRequery();
+    }
+
     render(){
         return (
             <div className="todo-item" onMouseOver={this.showCloserTime.bind(this)} onMouseOut={this.showNearlyTime.bind(this)}>
                 <div className="nav">
                     <p className="title" dangerouslySetInnerHTML={{__html:this.getTitle()}}></p>
                     <div className="settings">
+                        <div className="delete-logo" title="delete the todo" onClick={this.deleteTodo.bind(this)}>
+                            <DeleteLogo class="delete-logo"/>
+                        </div>
+
                         <div className={"status-logo "+(this.state.doneAt && "todo-done")} onClick={this.toggleStatus.bind(this)}>
                             {this.state.doneAt && <Check/>}
                         </div>
