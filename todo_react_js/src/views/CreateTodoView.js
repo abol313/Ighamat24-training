@@ -4,7 +4,7 @@ import Alert from '../modules/Alert/Alert';
 import TodoFormCreateSubmitLogo from '../components/icons/todo-form-create-submit-logo';
 
 
-export default class CreateTodo extends React.Component{
+export default class CreateTodoView extends React.Component{
     constructor(props){
         super(props);
 

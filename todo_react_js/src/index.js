@@ -6,9 +6,9 @@ import Icon from './components/icons/check';
 import IconEx from './components/icons/exclamation';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import ListTodos from './views/ListTodos';
-import CreateTodo from './views/CreateTodo';
-import Error404View from './views/errors/404';
+import ListTodosView from './views/ListTodosView';
+import CreateTodoView from './views/CreateTodoView';
+import Error404View from './views/errors/404View';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -17,8 +17,8 @@ root.render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />}>
-          <Route index element={<ListTodos />} />
-          <Route path="new" element={<CreateTodo />} />
+          <Route index element={<ListTodosView />} />
+          <Route path="new" element={<CreateTodoView />} />
         </Route>
         <Route path="*" element={<Error404View/>}/>
       </Routes>
