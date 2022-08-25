@@ -10,6 +10,7 @@ export default class TodoFilter extends React.Component {
         this.state = {
 
             filterDate: new Date(),
+            searchText: '',
 
 
             filters: {
@@ -43,6 +44,13 @@ export default class TodoFilter extends React.Component {
                         return todos.filter(todo => new Date(todo.due_at).toDateString() === this.getFilterDate().toDateString());
                     },
                     enabled: true,
+                },
+
+
+
+                search:{
+                    pipeAll: todos => this.passSearch(todos),
+                    enabled:false
                 },
 
                 // sort: {
@@ -98,6 +106,28 @@ export default class TodoFilter extends React.Component {
         // let callback = this.state.filterCallback
         this.props.filter(this.filterCallback.bind(this));
     }
+
+    passSearch(todos){
+        console.log(this.state.searchText);
+        // debugger;
+        let regex = new RegExp(this.state.searchText.replaceAll(/\s/g,'').split('').join('.*'),'i');
+        return todos.filter(todo => regex.test(todo.title));
+    }
+
+    onSearchChange(event){
+        this.state.filters.search.enabled = !!(event.target.value + this.state.searchText).trim();
+        this.state.searchText = event.target.value;
+        this.setState({
+            searchText: this.state.searchText,
+            filters: this.state.filters,
+        });
+
+        if(!this.state.filters.search.enabled)
+            return;
+        
+        this.filter();
+    }
+
 
     setSort(sort){
         this.state.filters.sortAscLastDone.enabled = false;
@@ -280,6 +310,12 @@ export default class TodoFilter extends React.Component {
                     <p className={'status '+ (this.state.filters.sortAscLastDone.enabled && 'status-done')} onClick={this.setSort.bind(this,'sortAscLastDone')}>Oldest Due</p>
 
                 </div>
+
+                <div className="search">
+                    <p className="title">Search Todos</p>
+                    <input value={this.state.searchText} onChange={this.onSearchChange.bind(this)}/>
+                </div>
+
             </div>
         );
     }
