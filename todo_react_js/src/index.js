@@ -5,7 +5,7 @@ import App from './App';
 import Icon from './components/icons/check';
 import IconEx from './components/icons/exclamation';
 import reportWebVitals from './reportWebVitals';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import ListTodosView from './views/ListTodosView';
 import CreateTodoView from './views/CreateTodoView';
 import UpdateTodoView from './views/UpdateTodoView';
@@ -22,7 +22,8 @@ root.render(
           <Route path="new" element={<CreateTodoView />} />
           <Route path="edit/:id" element={<UpdateTodoView />}/>
         </Route>
-        <Route path="*" element={<Error404View/>}/>
+        <Route path="/404" element={<Error404View/>}/>
+        <Route path="*" element={<Navigate to="/404" replace={true}/>}/>
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
