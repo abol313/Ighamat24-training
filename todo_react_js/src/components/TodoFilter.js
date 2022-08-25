@@ -45,12 +45,20 @@ export default class TodoFilter extends React.Component {
                     enabled: true,
                 },
 
-                sort: {
-                    pipeAll: todos => todos.sort((a, b) => this.sortLastCreate(a, b, true)),
-                    enabled: true,
+                // sort: {
+                //     pipeAll: todos => todos.sort((a, b) => this.sortLastCreate(a, b, true)),
+                //     enabled: true,
+                // },
+
+                sortAscLastEdit:{
+                    pipeAll: todos => todos.sort((a,b)=>this.sortLastEdit(a, b, false)),
+                    enabled: false,
                 },
-
-
+                
+                sortDescLastEdit:{
+                    pipeAll: todos => todos.sort((a,b)=>this.sortLastEdit(a, b, true)),
+                    enabled: false,
+                },
 
 
             },
@@ -67,6 +75,32 @@ export default class TodoFilter extends React.Component {
     filter() {
         // let callback = this.state.filterCallback
         this.props.filter(this.filterCallback.bind(this));
+    }
+
+    setSort(sort){
+        // this.filters.sortAscLastDone.enabled = false;
+        // this.filters.sortDescLastDone.enabled = false;
+
+        // this.filters.sortAscLastDue.enabled = false;
+        // this.filters.sortDescLastDue.enabled = false;
+
+        this.state.filters.sortAscLastEdit.enabled = false;
+        this.state.filters.sortDescLastEdit.enabled = false;
+
+        this.state.filters[sort].enabled = true
+
+        this.filter();
+    }
+
+    sortLastEdit(todoA, todoB, isDesc=true){
+        let todoADate = new Date(todoA.updated_at || todoA.created_at);
+        let todoBDate = new Date(todoB.updated_at || todoB.created_at);
+
+        if(isDesc)
+            return todoADate.getTime() > todoBDate.getTime() ? -1:1;
+        else
+            return todoADate.getTime() < todoBDate.getTime() ? -1:1;
+
     }
 
     sortLastCreate(todoA, todoB, isDesc = true) {
@@ -189,8 +223,16 @@ export default class TodoFilter extends React.Component {
                         <input id="filter-date" type="date" value={this.state.filterDate.toLocaleDateString('swe')} onChange={this.onFilterDate.bind(this)} />
                         <button onClick={this.goNextDay.bind(this)} className="next-day"><CaretRight /></button>
                     </div>
+                </div>
+
+                <div className="order">
+                    <p className="title">Sort Todos</p>
+
+                    <p className={'status '+ (this.state.filters.sortDescLastEdit.enabled && 'status-done')} onClick={this.setSort.bind(this,'sortDescLastEdit')}>Latest Edit</p>
+                    <p className={'status '+ (this.state.filters.sortAscLastEdit.enabled && 'status-done')} onClick={this.setSort.bind(this,'sortAscLastEdit')}>Oldest Edit</p>
+
+                </div>
             </div>
-            </div >
         );
     }
 }
