@@ -4,7 +4,7 @@ import TodoFilter from '../components/TodoFilter';
 import TodoModel from "../scripts/TodoModel";
 window.TodoModel = TodoModel;
 
-// for(let i=0; i<100; i++){
+// for(let i=0; i<1000; i++){
 //     let dueDate = makeRandomlyDate(2022,7);
 //     TodoModel.create({
 //         title: 'title '+i,
@@ -71,7 +71,7 @@ export default class ListTodos extends React.Component {
 
     getTodosElements(){
         return this.getTodos().map( todo => 
-            (<Todo key={todo.id} todo={todo} searchText={this.state.searchText} forceUpdate={this.forceUpdate.bind(this)}/>)
+            (<Todo key={todo.id} todo={todo} searchText={this.state.searchText} forceUpdate={this.forceUpdate.bind(this)} onRequery={this.requery.bind(this)}/>)
         );
     }
 
