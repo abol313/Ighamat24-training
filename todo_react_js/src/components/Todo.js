@@ -1,7 +1,10 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import TodoModel from '../scripts/TodoModel';
 import Check from './icons/check';
 import DeleteLogo from './icons/trash-can-solid';
+import EditLogo from './icons/pen-to-square-solid';
+
 export default class Todo extends React.Component {
     constructor(props){
         super(props);
@@ -146,6 +149,14 @@ export default class Todo extends React.Component {
                         <div className="delete-logo" title="delete the todo" onClick={this.deleteTodo.bind(this)}>
                             <DeleteLogo class="delete-logo"/>
                         </div>
+
+                        {/* <router-link :to="getEditLink" title="edit the todo" :disabled="isDead" @click="onClickEdit">
+                            <edit-logo class="edit-logo" />
+                        </router-link> */}
+
+                        <Link className="edit-logo" title="edit the todo" to={`/edit/${this.state.id}`}>
+                            <EditLogo className="edit-logo"/>
+                        </Link>
 
                         <div className={"status-logo "+(this.state.doneAt && "todo-done")} onClick={this.toggleStatus.bind(this)}>
                             {this.state.doneAt && <Check/>}
