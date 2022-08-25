@@ -8,6 +8,7 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import ListTodosView from './views/ListTodosView';
 import CreateTodoView from './views/CreateTodoView';
+import UpdateTodoView from './views/UpdateTodoView';
 import Error404View from './views/errors/404View';
 
 
@@ -19,6 +20,7 @@ root.render(
         <Route path="/" element={<App />}>
           <Route index element={<ListTodosView />} />
           <Route path="new" element={<CreateTodoView />} />
+          <Route path="edit/:id" element={<UpdateTodoView />}/>
         </Route>
         <Route path="*" element={<Error404View/>}/>
       </Routes>
