@@ -57,8 +57,30 @@ export default class TodoFilter extends React.Component {
                 
                 sortDescLastEdit:{
                     pipeAll: todos => todos.sort((a,b)=>this.sortLastEdit(a, b, true)),
+                    enabled: true,
+                },
+
+                sortAscLastDue:{
+                    pipeAll: todos => todos.sort((a,b)=>this.sortLastDue(a, b, false)),
                     enabled: false,
                 },
+                
+                sortDescLastDue:{
+                    pipeAll: todos => todos.sort((a,b)=>this.sortLastDue(a, b, true)),
+                    enabled: false,
+                },
+
+
+                sortAscLastDone:{
+                    pipeAll: todos => todos.sort((a,b)=>this.sortLastDone(a, b, false)),
+                    enabled: false,
+                },
+                
+                sortDescLastDone:{
+                    pipeAll: todos => todos.sort((a,b)=>this.sortLastDone(a, b, true)),
+                    enabled: false,
+                },
+
 
 
             },
@@ -78,11 +100,11 @@ export default class TodoFilter extends React.Component {
     }
 
     setSort(sort){
-        // this.filters.sortAscLastDone.enabled = false;
-        // this.filters.sortDescLastDone.enabled = false;
+        this.state.filters.sortAscLastDone.enabled = false;
+        this.state.filters.sortDescLastDone.enabled = false;
 
-        // this.filters.sortAscLastDue.enabled = false;
-        // this.filters.sortDescLastDue.enabled = false;
+        this.state.filters.sortAscLastDue.enabled = false;
+        this.state.filters.sortDescLastDue.enabled = false;
 
         this.state.filters.sortAscLastEdit.enabled = false;
         this.state.filters.sortDescLastEdit.enabled = false;
@@ -101,6 +123,26 @@ export default class TodoFilter extends React.Component {
         else
             return todoADate.getTime() < todoBDate.getTime() ? -1:1;
 
+    }
+
+    sortLastDue(todoA, todoB, isDesc=true){
+        let todoADate = new Date(todoA.due_at);
+        let todoBDate = new Date(todoB.due_at);
+
+        if(isDesc)
+            return todoADate.getTime() > todoBDate.getTime() ? -1:1;
+        else
+            return todoADate.getTime() < todoBDate.getTime() ? -1:1;
+    }
+
+    sortLastDone(todoA, todoB, isDesc=true){
+        let todoADate = new Date(todoA.done_at);
+        let todoBDate = new Date(todoB.done_at);
+
+        if(isDesc)
+            return todoADate.getTime() > todoBDate.getTime() ? -1:1;
+        else
+            return todoADate.getTime() < todoBDate.getTime() ? -1:1;
     }
 
     sortLastCreate(todoA, todoB, isDesc = true) {
@@ -230,6 +272,12 @@ export default class TodoFilter extends React.Component {
 
                     <p className={'status '+ (this.state.filters.sortDescLastEdit.enabled && 'status-done')} onClick={this.setSort.bind(this,'sortDescLastEdit')}>Latest Edit</p>
                     <p className={'status '+ (this.state.filters.sortAscLastEdit.enabled && 'status-done')} onClick={this.setSort.bind(this,'sortAscLastEdit')}>Oldest Edit</p>
+
+                    <p className={'status '+ (this.state.filters.sortDescLastDue.enabled && 'status-done')} onClick={this.setSort.bind(this,'sortDescLastDue')}>Latest Due</p>
+                    <p className={'status '+ (this.state.filters.sortAscLastDue.enabled && 'status-done')} onClick={this.setSort.bind(this,'sortAscLastDue')}>Oldest Due</p>
+
+                    <p className={'status '+ (this.state.filters.sortDescLastDone.enabled && 'status-done')} onClick={this.setSort.bind(this,'sortDescLastDone')}>Latest Due</p>
+                    <p className={'status '+ (this.state.filters.sortAscLastDone.enabled && 'status-done')} onClick={this.setSort.bind(this,'sortAscLastDone')}>Oldest Due</p>
 
                 </div>
             </div>
