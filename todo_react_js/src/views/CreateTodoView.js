@@ -75,7 +75,7 @@ export default class CreateTodoView extends React.Component{
     render(){
         return (
             <div className="form-box">
-                
+                <p className="form-title">Create A Todo !</p>
                 <label htmlFor="title">Todo's Title</label>
                 <input id="title" class="title" placeholder="Pass your title" value={this.state.title} onChange={this.onChangeTitle.bind(this)}/>
 
