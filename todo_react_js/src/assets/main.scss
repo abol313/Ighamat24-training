@@ -360,6 +360,11 @@ nav{
         gap:5px;
         align-items:center;
 
+        svg{
+          max-height:100%;
+          max-width:100%;
+        }
+
         a{
           line-height:0;
         }
