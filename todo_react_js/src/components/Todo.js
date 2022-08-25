@@ -97,13 +97,44 @@ export default class Todo extends React.Component {
         return last_edit_out;
     }
 
-    showMore
+    styleSearchArea(text) {
+        if (!this.props.searchText)
+            return text;
+        if (this.props.searchText == text)
+            return this.getStyleArea(text, true);
+        // this.searchText = this.searchText.toLowerCase();
+        let orgText = text;
+        let regex = new RegExp("(" + this.props.searchText.replaceAll(/\s/g, "").split("").join(").*?(") + ")", "ig");
+        let matches = text.matchAll(regex);
+        let styledText = "";
+        let pastIndex = 0;
+        for (const match of matches) {
+            console.log('match:',match);
+            if (pastIndex !== match.index) {
+                styledText += orgText.slice(pastIndex, pastIndex = match.index);
+            }
+            styledText += this.getStyleArea(orgText.slice(pastIndex, pastIndex += match[0].length));
+        }
+        styledText += orgText.slice(pastIndex);
+        console.log(regex);
+        console.log("#", this.props.searchText, ":", this.title, "#", "Style as search..", styledText);
+        return styledText;
+    }
+    getStyleArea(text, isExact = false) {
+        return `<ins class="search-area${(isExact ?"-exact":"")}">${text}</ins>`;
+    }
+
+    getTitle(){
+        if(!this.props.searchText.trim())
+            return this.state.title;
+        return this.styleSearchArea(this.state.title);
+    }
 
     render(){
         return (
             <div className="todo-item" onMouseOver={this.showCloserTime.bind(this)} onMouseOut={this.showNearlyTime.bind(this)}>
                 <div className="nav">
-                    <p className="title">{this.state.title}</p>
+                    <p className="title" dangerouslySetInnerHTML={{__html:this.getTitle()}}></p>
                     <div className="settings">
                         <div className={"status-logo "+(this.state.doneAt && "todo-done")} onClick={this.toggleStatus.bind(this)}>
                             {this.state.doneAt && <Check/>}
