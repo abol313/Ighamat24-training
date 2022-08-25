@@ -3,14 +3,15 @@ import TodoModel from '../scripts/TodoModel';
 import Alert from '../modules/Alert/Alert';
 import TodoFormUpdateSubmitLogo from '../components/icons/pen-to-square-solid';
 import TodoFormUpdateResetLogo from '../components/icons/rotate';
-import {useParams} from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 
 
 function withRouteParams(Component){
     return function(props){
         const params = useParams();
+        const navigate = useNavigate();
         return (
-            <Component {...props} params={params}/>
+            <Component {...props} onError={()=>navigate('/404')}params={params}/>
         );
     };
 }
@@ -21,7 +22,9 @@ class UpdateTodoView extends React.Component{
 
         const id = this.props.params.id;
         const todo = TodoModel.query().where('id', id).get()[0];
-        console.log(id,todo,TodoModel.query().where('id', id).get());
+        
+        if(!todo)
+            window.history.pushState({},'','/404');
         this.state = {
             title: todo.title,
             description: todo.description,
@@ -93,15 +96,15 @@ class UpdateTodoView extends React.Component{
             <div className="form-box">
                 <p className="form-title">Edit the Todo !</p>
                 <label htmlFor="title">Todo's Title</label>
-                <input id="title" class="title" placeholder="Pass your title" value={this.state.title} onChange={this.onChangeTitle.bind(this)}/>
+                <input id="title" className="title" placeholder="Pass your title" value={this.state.title} onChange={this.onChangeTitle.bind(this)}/>
 
                 <label htmlFor="description">Todo's description</label>
-                <input id="description" class="description" placeholder="Pass your description" value={this.state.description} onChange={this.onChangeDescription.bind(this)}/>
+                <input id="description" className="description" placeholder="Pass your description" value={this.state.description} onChange={this.onChangeDescription.bind(this)}/>
 
                 <label htmlFor="due">Todo's Due Date & Time</label>
-                <input id="due" type="datetime-local" class="due" value={this.getDateAsInputLocalDateTime(new Date(this.state.dueAt))} onChange={this.onChangeDue.bind(this)}/>
+                <input id="due" type="datetime-local" className="due" value={this.getDateAsInputLocalDateTime(new Date(this.state.dueAt))} onChange={this.onChangeDue.bind(this)}/>
 
-                <div class="submit" onClick={this.updateTodo.bind(this)}>
+                <div className="submit" onClick={this.updateTodo.bind(this)}>
                     <p>Edit Todo</p>
                     <TodoFormUpdateSubmitLogo class="submit-logo"/>
                 </div>
