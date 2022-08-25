@@ -124,7 +124,7 @@ export default class TodoFilter extends React.Component {
 
         if(!this.state.filters.search.enabled)
             return;
-        
+        this.props.onSearch(this.state.searchText);
         this.filter();
     }
 
