@@ -31,6 +31,7 @@ export default class ListTodos extends React.Component {
         this.state = {
             todos : TodoModel.all(),
             filterCallback : (todos)=>todos,
+            searchText : '',
         };
     }
 
@@ -49,11 +50,19 @@ export default class ListTodos extends React.Component {
         return this;
     }
 
+    onSearch(searchText){
+        console.log('onSearch:', searchText);
+        this.setState({
+            searchText
+        });
+    }
+
     requery(){
         this.setState({
             todos: TodoModel.all()
         });
     }
+
     getTodos(){
         // return this.state.todos;
         console.log( this.state.filterCallback(this.state.todos));
@@ -62,14 +71,14 @@ export default class ListTodos extends React.Component {
 
     getTodosElements(){
         return this.getTodos().map( todo => 
-            (<Todo key={todo.id} todo={todo} forceUpdate={this.forceUpdate.bind(this)}/>)
+            (<Todo key={todo.id} todo={todo} searchText={this.state.searchText} forceUpdate={this.forceUpdate.bind(this)}/>)
         );
     }
 
     render(){
         return (
             <div>
-                <TodoFilter className="filter-box" filter={this.setFilterCallback.bind(this)}/>
+                <TodoFilter className="filter-box" filter={this.setFilterCallback.bind(this)} onSearch={this.onSearch.bind(this)}/>
                 <div className="todos">
 
                     {this.getTodosElements()}
