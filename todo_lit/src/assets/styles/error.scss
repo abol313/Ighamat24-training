@@ -1,0 +1,20 @@
+@import "./base";
+
+.error{
+    position:fixed;
+    left:0;
+    top:0;
+    width:100vw;
+    height:100vh;
+    color:$warning;
+    display:flex;
+    font-size:3vw;
+    gap:20px;
+    justify-content:center;
+    align-items:center;
+
+    .error-logo, svg{
+        height:5vw;
+        fill:currentColor;
+    }
+}
