@@ -30,6 +30,13 @@ export class TodoItem extends LitElement {
         this.updatedAt = this.todo.updated_at;
     }
 
+    forceUpdate(){
+        this.dispatchEvent(new CustomEvent('onForceUpdate', {
+            bubbles:true,
+            composed:true,
+        }));
+    }
+
     toggleStatus(){
         let newDoneAt = this.doneAt ? null : new Date().toISOString();
         
