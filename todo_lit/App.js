@@ -1,8 +1,10 @@
-import { LitElement } from "lit";
+import { css, html, LitElement, unsafeCSS } from "lit";
 import "./src/views/ListTodosView";
+import mainStyle from "./src/assets/styles/main.scss";
 export default class App extends LitElement {
+    static styles = css`${unsafeCSS(mainStyle)}`;
     constructor(){
-
+        super();
     }
 
     render(){
@@ -13,4 +15,4 @@ export default class App extends LitElement {
     }
 }
 
-customElements.define('app', App);
+customElements.define('app-root', App);
