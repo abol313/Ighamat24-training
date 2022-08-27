@@ -1,5 +1,5 @@
 import { LitElement } from "lit";
-import  ListTodosView  from "./src/views/ListTodosView";
+import "./src/views/ListTodosView";
 export default class App extends LitElement {
     constructor(){
 
@@ -7,7 +7,8 @@ export default class App extends LitElement {
 
     render(){
         return html`
-        
+            <list-todos-view>
+            </list-todos-view>
         `;
     }
 }
