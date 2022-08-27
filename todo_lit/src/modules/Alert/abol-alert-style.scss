@@ -1,0 +1,99 @@
+@import "./colors";
+
+.abol-alert-ground {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    left:0;
+    top:0;
+    background-color: rgba($darkGrey, .5);
+    backdrop-filter: blur(5px);
+    z-index: 100;
+
+    .abol-alert-box {
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        padding: 10px;
+        border-radius: 10px;
+
+        background-color: darken($success, 20%);
+        border: 1px solid $success;
+        box-shadow: 0 0 10px $success;
+        z-index: 3;
+
+        .title {
+            fill:currentColor;
+            height: 50px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+            font-size: 2em;
+            * {
+                height:100%;
+            }
+        }
+
+        .description {
+            padding: 10px 0px;
+            font-size: 1.3em;
+            font-weight: 400;
+        }
+
+        .cancel {
+            color: darken($success, 90%);
+            background-color: $success;
+
+            text-align: center;
+            border-radius: 5px;
+            padding: 10px;
+            cursor: pointer;
+        }
+    }
+
+    .abol-alert-box-success {
+        @extend .abol-alert-box;
+
+        background-color: darken($success, 40%);
+        border: 1px solid $success;
+        box-shadow: 0 0 100px $success;
+        box-shadow: 0 0 100px #a8f5b4;
+        color: $success;
+
+        .cancel {
+            color: darken($success, 90%);
+            background-color: $success;
+        }
+    }
+
+    .abol-alert-box-warning {
+        @extend .abol-alert-box;
+
+        background-color: darken($warning, 40%);
+        border: 1px solid $warning;
+        box-shadow: 0 0 100px $warning;
+        color: $warning;
+
+        .cancel {
+            color: darken($warning, 80%);
+            background-color: $warning;
+        }
+    }
+
+    .abol-alert-box-danger {
+        @extend .abol-alert-box;
+
+        background-color: darken($danger, 40%);
+        border: 1px solid $danger;
+        box-shadow: 0 0 100px $danger;
+        color: $danger;
+
+        .cancel {
+            color: darken($danger, 95%);
+            background-color: $danger;
+        }
+    }
+
+}
