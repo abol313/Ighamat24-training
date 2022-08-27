@@ -1,5 +1,5 @@
 import { LitElement } from "lit";
-import  ListTodos  from "./src/views/ListTodos";
+import  ListTodosView  from "./src/views/ListTodosView";
 export default class App extends LitElement {
     constructor(){
 
