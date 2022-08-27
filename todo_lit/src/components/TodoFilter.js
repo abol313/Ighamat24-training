@@ -1,9 +1,9 @@
-import React from "react";
-import CaretLeft from "./icons/caret-left";
-import CaretRight from "./icons/caret-right";
-import CheckLogo from "./icons/check";
-import FilterLogo from "./icons/filter";
-export default class TodoFilter extends React.Component {
+// import CaretLeft from "./icons/caret-left";
+// import CaretRight from "./icons/caret-right";
+// import CheckLogo from "./icons/check";
+// import FilterLogo from "./icons/filter";
+import { LitElement, html } from "lit";
+export default class TodoFilter extends LitElement {
     static properties = {
         filters:{state:true},
 
@@ -54,16 +54,16 @@ export default class TodoFilter extends React.Component {
             },
 
 
+            sort: {
+                pipeAll: todos => todos.sort((a, b) => this.sortLastCreate(a, b, true)),
+                enabled: true,
+            },
+
 
             search:{
                 pipeAll: todos => this.passSearch(todos),
                 enabled:false
             },
-
-            // sort: {
-            //     pipeAll: todos => todos.sort((a, b) => this.sortLastCreate(a, b, true)),
-            //     enabled: true,
-            // },
 
             sortAscLastEdit:{
                 pipeAll: todos => todos.sort((a,b)=>this.sortLastEdit(a, b, false)),
@@ -108,19 +108,23 @@ export default class TodoFilter extends React.Component {
 
 
     connectedCallback() {
+        super.connectedCallback();
         this.filter();
     }
 
     onFilter(){
-        this.dispatchEvent(new CustomEvent('onFilter',{
+        this.dispatchEvent(new CustomEvent('filter',{
             bubbles:true, 
             composed:true,
-            filterCallback:this.filterCallback.bind(this)
+            detail:{
+
+                filterCallback:this.filterCallback.bind(this)
+            }
         }));
     }
 
     onSearch(){
-        this.dispatchEvent(new CustomEvent('onSearch',{
+        this.dispatchEvent(new CustomEvent('search',{
             bubbles:true, 
             composed:true,
             searchText: this.searchText,
@@ -129,6 +133,7 @@ export default class TodoFilter extends React.Component {
 
     filter() {
         // let callback = this.filterCallback
+        console.log('done filter',this.filters.done);
         this.onFilter(this.filterCallback.bind(this));
     }
 
@@ -256,6 +261,8 @@ export default class TodoFilter extends React.Component {
     }
 
     toggleFilterDone() {
+        // debugger;
+        console.log('toggle done');
         this.filters.done.enabled = !this.filters.done.enabled;
         this.filters = this.filters;
         this.filter();
@@ -267,23 +274,26 @@ export default class TodoFilter extends React.Component {
 
     goNextDay() {
         this.filterDate.setTime(this.filterDate.getTime() + 1e3 * 60 * 60 * 24);
-        this.filterDate = this.filterDate;
+        this.filterDate = new Date(this.filterDate);
         this.filter();
+        this.requestUpdate();
     }
 
     goPrevDay() {
         this.filterDate.setTime(this.filterDate.getTime() - 1e3 * 60 * 60 * 24);
-        this.filterDate = this.filterDate;
+        this.filterDate = new Date(this.filterDate);
         this.filter();
     }
 
     onFilterDate(event) {
         const [year, month, day] = event.target.value.split('-');
-        this.filterDate.setFullYear(year);
-        this.filterDate.setMonth(month);
-        this.filterDate.setDate(day);
-        this.filterDate = this.filterDate;
+        console.log(event.target.value);
+        this.filterDate.setFullYear(+year);
+        this.filterDate.setMonth(+month-1);
+        this.filterDate.setDate(+day);
+        this.filterDate = new Date(this.filterDate);
         this.filter();
+        console.log(this.filterDate);
     }
 
     onFilterDone(event) {
@@ -300,16 +310,16 @@ export default class TodoFilter extends React.Component {
                         <FilterLogo />
                     </div>
 
-                    <div class="${'status ' + (this.filters.done.enabled && 'status-done')}" @click="${this.toggleFilterDone.bind(this,null)}">
+                    <div class="${'status ' + (this.filters.done.enabled && 'status-done')}">
                         <p>Done todos</p>
-                        ${this.filters.done.enabled && <CheckLogo class="check-logo" />}
+                        <input type="checkbox" ?checked=${console.log(this.filters.done) || this.filters.done.enabled} @click=${this.toggleFilterDone} />
                     </div>
 
                     <div class="status status-done filter-date-picked">
                         <label htmlFor="filter-date">Date</label>
-                        <button onClick="${this.goPrevDay.bind(this)}" class="prev-day"><CaretLeft /></button>
-                        <input id="filter-date" type="date" value="${this.filterDate.toLocaleDateString('swe')}" onChange="${this.onFilterDate.bind(this)}" />
-                        <button onClick="${this.goNextDay.bind(this)}" class="next-day"><CaretRight /></button>
+                        <button @click="${this.goPrevDay}" class="prev-day"><CaretLeft />-</button>
+                        <input id="filter-date" type="date" .value="${this.filterDate.toLocaleDateString('swe')}" @change=${this.onFilterDate}/>
+                        <button @click="${this.goNextDay}" class="next-day"><CaretRight />+</button>
                     </div>
                 </div>
 
