@@ -1,8 +1,10 @@
-import { css, html, LitElement } from "lit";
+import { css, html, LitElement, unsafeCSS } from "lit";
+import styleMain from "../assets/styles/main.scss";
 
 export class TodoItem extends LitElement {
+
     static properties = {
-        todo:{'type':Object},
+        todo:{type:Object},
         searchText:{},
 
         id:{state:true},
@@ -20,6 +22,20 @@ export class TodoItem extends LitElement {
     constructor(){
         super();
 
+        this.todo = {};
+        this.searchText = '';
+        this.id = this.todo.id;
+        this.title = this.todo.title;
+        this.description = this.todo.description;
+        this.dueAt = this.todo.due_at;
+        this.doneAt = this.todo.done_at;
+
+        this.createdAt = this.todo.created_at;
+        this.updatedAt = this.todo.updated_at;
+    }
+
+    connectedCallback(){
+        super.connectedCallback();
         this.id = this.todo.id;
         this.title = this.todo.title;
         this.description = this.todo.description;
@@ -31,7 +47,7 @@ export class TodoItem extends LitElement {
     }
 
     forceUpdate(){
-        this.dispatchEvent(new CustomEvent('onForceUpdate', {
+        this.dispatchEvent(new CustomEvent('force-update', {
             bubbles:true,
             composed:true,
         }));
@@ -47,18 +63,18 @@ export class TodoItem extends LitElement {
             done_at: newDoneAt
         });
 
-        this.todo.done_at = newDoneAt;
+        // this.todo.done_at = newDoneAt;
         
         this.forceUpdate();
     }
 
-    get dueAt(){
+    get dueAtTime(){
         return this.dateToString(new Date(this.dueAt));
     }
-    get doneAt(){
+    get doneAtTime(){
         return this.dateToString(new Date(this.doneAt));
     }
-    get lastEditAt(){
+    get lastEditAtTime(){
         return this.dateToString(new Date(this.updatedAt || this.createdAt));
     }
     
@@ -152,24 +168,22 @@ export class TodoItem extends LitElement {
 
     render(){
         return html`
-        <div class="todo-item" @mouseOver=${this.showCloserTime} @mouseOut=${this.showNearlyTime}>
-        <div class="nav">
-            <p class="title">${this.getTitle()}</p>
-            <div class="settings">
-                <div class="delete-logo" title="delete the todo" @click=${this.deleteTodo}>
-                    <DeleteLogo class="delete-logo"/>
-                </div>
+        <div class="todo-item" @mouse-over="${this.showCloserTime}" @mouse-out="${this.showNearlyTime}">
+            <div class="nav">
+                <p class="title">${this.getTitle()}</p>
+                <div class="settings">
+                    <div class="${"status-logo "+(this.doneAt && "todo-done")}" @click="${this.toggleStatus}">
+                        ${this.doneAt && html`<Check/>`}
+                    </div>
 
-                <div class="${"status-logo "+(this.state.doneAt && "todo-done")}" @click=${this.toggleStatus}>
-                    ${this.state.doneAt && <Check/>}
+                    <input type="checkbox" ?checked=${this.doneAt} @change=${this.toggleStatus}/>
                 </div>
             </div>
+            <p class="description">${this.description}</p>
+            <p class="due-at">Due at: ${this.dueAtTime}</p>
+            <p class="last-edit">Last edit at: ${this.lastEditAtTime}</p>
+            <p class="done-at">${this.doneAt? `Done at: ${this.doneAtTime}`: 'Todo is not done yet!'}</p>
         </div>
-        <p class="description">${this.description}</p>
-        <p class="due-at">Due at: ${this.dueAt}</p>
-        <p class="last-edit">Last edit at: ${this.lastEditAt}</p>
-        <p class="done-at">${this.doneAt? `Done at: ${this.doneAt}`: 'Todo is not done yet!'}</p>
-
         `;
     }
 }
