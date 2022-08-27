@@ -12,8 +12,8 @@ export default class TodoFilter extends React.Component {
 
 
     };
-    constructor(props) {
-        super(props);
+    constructor() {
+        super();
 
 
         this.filterDate = new Date();
@@ -112,7 +112,7 @@ export default class TodoFilter extends React.Component {
     }
 
     onFilter(){
-        this.dispatchEvent(new CustomEvent('filter',{
+        this.dispatchEvent(new CustomEvent('onFilter',{
             bubbles:true, 
             composed:true,
             filterCallback:this.filterCallback.bind(this)
@@ -120,7 +120,7 @@ export default class TodoFilter extends React.Component {
     }
 
     onSearch(){
-        this.dispatchEvent(new CustomEvent('search',{
+        this.dispatchEvent(new CustomEvent('onSearch',{
             bubbles:true, 
             composed:true,
             searchText: this.searchText,
@@ -317,3 +317,5 @@ export default class TodoFilter extends React.Component {
         `;
     }
 }
+
+customElements.define('todo-filter', TodoFilter);
