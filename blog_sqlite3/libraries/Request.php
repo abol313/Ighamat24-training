@@ -9,7 +9,7 @@ class Request {
     public function __construct($uri = null, $inputs = null, $params = null){
         $this->uri = $uri ?? $_SERVER['REQUEST_URI'];
         $this->inputs = $inputs ?? $_REQUEST;
-        $this->params = $params;
+        $this->params = $params ?? [];
     }
 
     public function setParams($params){
