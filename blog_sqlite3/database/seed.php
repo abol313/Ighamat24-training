@@ -1,4 +1,5 @@
 <?php
+require_once(__DIR__."/../public/auto_reload.php");
 
 echo "running seeding...\n";
 foreach(glob(__DIR__."/seeders/*.php") as $migration){
