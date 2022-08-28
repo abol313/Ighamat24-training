@@ -1,6 +1,6 @@
 <?php
 namespace App\Models;
-use App\Models\Model;
+use Abol\Database\Model;
 class Post extends Model {
     protected $table = "posts";
 }

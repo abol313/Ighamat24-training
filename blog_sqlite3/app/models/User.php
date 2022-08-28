@@ -1,6 +1,8 @@
 <?php
 namespace App\Models;
-use App\Models\Model;
+
+use Abol\Database\Model;
+
 class User extends Model {
     protected $table = "users";
 }
