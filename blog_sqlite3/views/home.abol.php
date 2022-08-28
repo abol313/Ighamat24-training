@@ -1,14 +1,10 @@
+<?php view("header");?>
+
 <?php
 use App\Models\Post;
 
 $postModel = new Post();
 
-function strLimitLength(string $str,int $max,string $exceed="..."){
-    $out = mb_substr($str, 0, $max);
-    if(mb_strlen($str)>$max)
-        $out = mb_substr($out, 0, -mb_strlen($exceed)) . $exceed;
-    return $out;
-}
 ?>
 
 <ul>
@@ -19,3 +15,5 @@ function strLimitLength(string $str,int $max,string $exceed="..."){
         </li>
     <?php } ?>
 </ul>
+
+<?php view("footer");?>
