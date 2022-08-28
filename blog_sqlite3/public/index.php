@@ -1,10 +1,6 @@
 <?php
 require_once("./auto_reload.php");
 
-$page = $_GET["page"] ?? "main.php";
+use Abol\Router\Router;
 
-require_once("./header.php");
-
-require_once("./".$page);
-
-require_once("./footer.php");
+echo Router::getContent(Router::getUri());
