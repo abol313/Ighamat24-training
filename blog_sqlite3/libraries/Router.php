@@ -8,18 +8,49 @@ class Router {
         return trim(trim($uri), '/');
     }
 
-    static function addRoute($uri, $closure){
-        $uri = self::purneUri($uri);
+    static function addRoute($routeUri, $closure){
+        $routeUri = self::purneUri($routeUri);
         if(is_array($closure)){
-            $closure = fn()=>(new $closure[0])->{$closure[1]}();
+            $closure = fn(...$params)=>(new $closure[0])->{$closure[1]}(...$params);
         }
-        self::$routes[$uri] = $closure;
+        self::$routes[$routeUri] = $closure;
     }
 
     static function getContent($uri, $fallbackClosure=null){
         $uri = self::purneUri($uri);
-        $closure = self::$routes[$uri] ?? $fallbackClosure ?? fn()=>"404 | Not Found";
-        return $closure();
+
+        foreach(self::$routes as $routeUri => $closure){
+            $params = self::extractInputs($uri, $routeUri);
+            if( $params !== false ){
+                return $closure(...$params);
+            }
+        }
+
+        if($fallbackClosure===null){
+            $fallbackClosure = fn()=>"404 | Not Found";
+        }
+        // $closure = self::$routes[$uri] ?? $fallbackClosure ?? fn()=>"404 | Not Found";
+        return $fallbackClosure();
+    }
+
+    // print_r(extractInputs('/posts/123', '/posts/{id}/{a}'));
+    private static function extractInputs($uri, $routeUri){
+        $uri = self::purneUri($uri);
+        $routeUri = self::purneUri($routeUri);
+        $pattern = preg_replace("/{([\w]+)}/", "(?<$1>[^/]*)", $routeUri);
+        $pattern = str_replace('/', '\\/', $pattern);
+        $pattern = "^$pattern$";
+        $matches = null;
+        $inputs = [];
+        // echo "/$pattern/"."\n";
+        if(preg_match_all("/".$pattern."/", $uri, $matches) === 0)
+            return false;
+        // print_r($matches);
+        foreach($matches as $key => $value)
+            if(is_string($key))
+                $inputs[$key] = $value[0];
+        // var_dump($inputs);
+        return $inputs;
     }
 
     static function getUri(){
