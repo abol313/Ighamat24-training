@@ -2,24 +2,24 @@
 namespace Abol\Router;
 
 class Router {
-    public $routes=[];
+    static $routes=[];
 
-    function purneUri($uri){
+    static function purneUri($uri){
         return trim(trim($uri), '/');
     }
 
-    function addRoute($uri, $closure){
-        $uri = $this->purneUri($uri);
-        $this->routes[$uri] = $closure;
+    static function addRoute($uri, $closure){
+        $uri = self::purneUri($uri);
+        self::$routes[$uri] = $closure;
     }
 
-    function getContent($uri, $fallbackClosure=(fn()=>"404 |Not Found")){
-        $uri = $this->purneUri($uri);
-        $closure = $this->routes[$uri] ?? $fallbackClosure;
+    static function getContent($uri, $fallbackClosure=null){
+        $uri = self::purneUri($uri);
+        $closure = self::$routes[$uri] ?? $fallbackClosure ?? fn()=>"404 | Not Found";
         return $closure();
     }
 
-    function getUri(){
+    static function getUri(){
         return $_SERVER['REQUEST_URI'];
     }
 }
