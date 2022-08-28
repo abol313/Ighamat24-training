@@ -1,5 +1,7 @@
 <?php
-$sqlite = new SQLite3("../blog.db");
+echo "creating posts table...\n";
+
+$sqlite = new SQLite3(__DIR__."/../blog.db");
 $sqlite->exec("
 
 CREATE TABLE posts (
@@ -9,3 +11,5 @@ CREATE TABLE posts (
 )
 
 ");
+
+echo "created.\n";

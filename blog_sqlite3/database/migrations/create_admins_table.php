@@ -1,5 +1,8 @@
 <?php
-$sqlite = new SQLite3("../blog.db");
+
+echo "creating admins table...\n";
+
+$sqlite = new SQLite3(__DIR__."/../blog.db");
 $sqlite->exec("
 
 CREATE TABLE admins (
@@ -9,3 +12,4 @@ CREATE TABLE admins (
 )
 
 ");
+echo "created.\n";

@@ -1,5 +1,8 @@
 <?php
-$sqlite = new SQLite3("../blog.db");
+
+echo "creating users table...\n";
+
+$sqlite = new SQLite3(__DIR__."/../blog.db");
 $sqlite->exec("
 
 CREATE TABLE users (
@@ -9,3 +12,5 @@ CREATE TABLE users (
 )
 
 ");
+
+echo "created.\n";
