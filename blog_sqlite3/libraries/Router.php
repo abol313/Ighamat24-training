@@ -1,6 +1,8 @@
 <?php
 namespace Abol\Router;
 
+use Abol\Http\Request\Request;
+
 class Router {
     static $routes=[];
 
@@ -18,11 +20,12 @@ class Router {
 
     static function getContent($uri, $fallbackClosure=null){
         $uri = self::purneUri($uri);
-
+        $request = new Request($uri, null, null);
         foreach(self::$routes as $routeUri => $closure){
             $params = self::extractInputs($uri, $routeUri);
             if( $params !== false ){
-                return $closure(...$params);
+                $request->setParams($params);
+                return $closure($request, ...$params);
             }
         }
 
@@ -30,7 +33,7 @@ class Router {
             $fallbackClosure = fn()=>"404 | Not Found";
         }
         // $closure = self::$routes[$uri] ?? $fallbackClosure ?? fn()=>"404 | Not Found";
-        return $fallbackClosure();
+        return $fallbackClosure($request);
     }
 
     // print_r(extractInputs('/posts/123', '/posts/{id}/{a}'));
