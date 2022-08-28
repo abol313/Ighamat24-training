@@ -40,7 +40,7 @@ class Router {
     private static function extractInputs($uri, $routeUri){
         $uri = self::purneUri($uri);
         $routeUri = self::purneUri($routeUri);
-        $pattern = preg_replace("/{([\w]+)}/", "(?<$1>[^/]*)", $routeUri);
+        $pattern = preg_replace("/{([\w]+)}/", "(?<$1>[^/?]*)", $routeUri);
         $pattern = str_replace('/', '\\/', $pattern);
         $pattern = "^$pattern$";
         $matches = null;
@@ -57,6 +57,6 @@ class Router {
     }
 
     static function getUri(){
-        return $_SERVER['REQUEST_URI'];
+        return $_SERVER['PATH_INFO'];
     }
 }
