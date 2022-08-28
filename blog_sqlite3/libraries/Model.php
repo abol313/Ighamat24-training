@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Models;
+namespace Abol\Database;
 
-use PDO;
+use \PDO;
 
 class Model extends PDO {
     protected $keyName = 'id';
