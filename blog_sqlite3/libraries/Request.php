@@ -12,6 +12,9 @@ class Request {
         $this->params = $params;
     }
 
+    public function setParams($params){
+        $this->params = $params;
+    }
 
     public function input($name, $default=null){
         return $this->inputs[$name] ?? $default;
