@@ -11,7 +11,7 @@ class Model extends PDO {
     protected $db = "blog";
 
     function __construct(){
-        parent::__construct("sqlite:".__DIR__."/../../database/$this->db.db");
+        parent::__construct("sqlite:".__DIR__."/../database/$this->db.db");
     }
 
     function all($columns = ['*'], $mode=PDO::FETCH_BOTH){
