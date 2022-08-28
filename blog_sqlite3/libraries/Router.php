@@ -10,6 +10,9 @@ class Router {
 
     static function addRoute($uri, $closure){
         $uri = self::purneUri($uri);
+        if(is_array($closure)){
+            $closure = fn()=>(new $closure[0])->{$closure[1]}();
+        }
         self::$routes[$uri] = $closure;
     }
 
