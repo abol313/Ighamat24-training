@@ -10,7 +10,7 @@ Router::addRoute('/owner/posts',[PostController::class,'adminIndex'])->name('adm
 Router::addRoute('/owner/posts/create',[PostController::class,'create'])->name('admin.posts.create');
 Router::addRoute('/owner/posts/store',[PostController::class,'store'])->name('admin.posts.store');
 
-Router::addRoute('/owner/posts/edit',[PostController::class,'edit'])->name('admin.posts.edit');
+Router::addRoute('/owner/posts/edit/{id}',[PostController::class,'edit'])->name('admin.posts.edit');
 Router::addRoute('/owner/posts/update',[PostController::class,'update'])->name('admin.posts.update');
 
 Router::addRoute('/posts/{id}',[PostController::class,'show'])->name('posts.show');
