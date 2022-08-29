@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use Abol\Http\Request\Request;
 use App\Models\Post;
 
 class PostController {
@@ -51,4 +52,11 @@ class PostController {
         back();
     }
 
+    public function destroy($request, $id){
+        $post = new Post();
+    
+        $post->delete($id);
+
+        back();
+    }
 }
