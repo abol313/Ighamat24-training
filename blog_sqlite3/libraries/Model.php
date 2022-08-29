@@ -14,6 +14,13 @@ class Model extends PDO {
         parent::__construct("sqlite:".__DIR__."/../database/$this->db.db");
     }
 
+    function find($key){
+        $statement = $this->prepare("SELECT * FROM $this->table WHERE $this->keyName = :pk");
+        $statement->bindValue(':pk', $key);
+        $statement->execute();
+        return $statement->fetch();
+    }
+
     function all($columns = ['*'], $mode=PDO::FETCH_BOTH){
         $columnsQuery = implode(',',$columns);
         return $this->query("SELECT $columnsQuery FROM $this->table")->fetchAll($mode);
@@ -30,8 +37,7 @@ class Model extends PDO {
 
     function update($key, $record){
         $wildcards = implode(', ',array_map(fn($field)=>"$field = :$field", array_keys($record)));
-        $statement = $this->prepare("UPDATE $this->table SET $wildcards WHERE :pk_name = :pk");
-        $statement->bindValue(':pk_name', $this->keyName);
+        $statement = $this->prepare("UPDATE $this->table SET $wildcards WHERE $this->keyName = :pk");
         $statement->bindValue(':pk', $key);
         foreach($record as $field => $value)
             $statement->bindValue(":$field", $value);
