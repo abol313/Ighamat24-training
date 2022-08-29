@@ -8,7 +8,7 @@ function view($viewName, $data=[]){
 
     foreach($data as $key => $value)
         $$key = $value;
-
+    
     return require_once($viewsDir."/".str_replace('.', '/', $viewName).".abol.php");
 }
 
@@ -32,7 +32,6 @@ function redirectTo($uri, $query=null){
 function route($name, $params=[]){
     $closure = Router::getRouteOfName($name);
     
-    $uri = $closure($params);
-
-    redirectTo($uri);
+    $uri = '/'.$closure($params);
+    return $uri;
 }
