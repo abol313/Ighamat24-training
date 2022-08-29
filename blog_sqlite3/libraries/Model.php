@@ -15,7 +15,7 @@ class Model extends PDO {
     }
 
     function find($key){
-        $statement = $this->prepare("SELECT * FROM $this->table WHERE $this->keyName = :pk");
+        $statement = $this->prepare("SELECT * FROM `$this->table` WHERE `$this->keyName` = :pk");
         $statement->bindValue(':pk', $key);
         $statement->execute();
         return $statement->fetch();
