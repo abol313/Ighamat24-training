@@ -21,12 +21,16 @@ function strLimitLength(string $str,int $max,string $exceed="..."){
 }
 
 function redirectTo($uri, $query=null){
-    $uri = trim($uri, '/');
+    // $uri = trim($uri, '/');
     $queryRaw = $query ? "?".http_build_query($query) : null;
     $host = $_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT'];
     $location = $uri.$queryRaw;
     header("Location: $location");
     die();
+}
+
+function back(){
+    redirectTo($_SERVER['HTTP_REFERER']);
 }
 
 function route($name, $params=[]){
