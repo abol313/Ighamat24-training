@@ -1,10 +1,12 @@
 # In the name of kindly generous ALLAH
 # Thanks ALLAH
+</br>
 
 ## Blog
 ### Project
-You can show and list post
-You (as admin) can to show, list, delete, edit posts
+You can show and list post</br>
+You (as admin) can to show, list, delete, edit posts</br>
+</br>
 
 ## How to serve this bit framework 
 You can go to the root dir
@@ -36,7 +38,7 @@ Sqlite used to this app
 
 ## Awesome Features
 ### Bit Framework
-Made in interests, this framework functionality or logically, tried to be same to Laravel framework...
+Made in interests, this framework functionality or logically, tried to be same to Laravel framework...</br>
 Libraries made in iterests, and own logical not copied, but tried to be similarly to Laravel structure and syntaxes and ... to use more comfortable
 
 ## php
@@ -45,7 +47,7 @@ The main language used in this project is php
 ## php - Sqlite
 The pdo interface used to connect to sqlite in [resource file db](./database/blog.db)
 ### Sqlit - pdo - driver
-The pdo driver of Sqlite must be installed in php
+The pdo driver of Sqlite must be installed in php</br>
 You can in linux, use
 ```shell
 sudo apt install php8.1-sqlite3 #php 8.1 choose another related version
