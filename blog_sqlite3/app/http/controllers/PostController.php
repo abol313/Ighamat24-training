@@ -33,7 +33,7 @@ class PostController {
             'description' => $request->input('description'),
         ]);
 
-        var_dump($_SERVER);
+        back();
     }
 
     public function edit($request, $id){
@@ -48,7 +48,7 @@ class PostController {
             'description' => $request->input('description'),
         ]);
 
-        var_dump($_SERVER);
+        back();
     }
 
 }
