@@ -45,8 +45,7 @@ class Model extends PDO {
     }
 
     function delete($key){
-        $statement = $this->prepare("DELETE FROM $this->table WHERE :pk_name = :pk");
-        $statement->bindValue(':pk_name', $this->keyName);
+        $statement = $this->prepare("DELETE FROM $this->table WHERE $this->keyName = :pk");
         $statement->bindValue(':pk', $key);
         return $statement->execute();
     }
