@@ -1,0 +1,36 @@
+@import "colors";
+
+body{
+    display:flex;
+    flex-direction:column;
+    background-color:#151515;
+    color:cyan;
+}
+
+a{
+    line-height: 0;
+}
+
+.info-item{
+    border: 1px solid cyan;
+    padding:20px;
+    .desc{
+        display: none;
+    }
+}
+
+.info-item-clicked{
+    .desc{
+        display: block;
+    }
+}
+
+.ok{
+    color: $ok;
+}
+.warning{
+    color: $warning;
+}
+.border-warning{
+    border-color: $warning;
+}
