@@ -17,6 +17,7 @@ class SEOController extends Controller
         $infos = [];
         
         $url = $request->input('url');
+        $baseUrl = $url;
         
         $guzzle = new Client();
         
@@ -24,8 +25,32 @@ class SEOController extends Controller
         $response = $guzzle->request("GET", $url);
         
         // var_dump($request);
-        
-        $infos[] = $this->crawl($response->getBody(), $response->getStatusCode(), $url);
+        $urls = [$url];
+        $checkedUrls = [];
+        $requestMethod = "GET";
+
+        $i = 100;
+        while($i-->0){
+
+            $popedUrl = array_pop($urls);
+
+            if($popedUrl === null) break;
+
+            if($checkedUrls[$popedUrl] ?? null)
+                continue;
+            
+            $checkedUrls[$popedUrl] = true;
+            $info = [];
+            $response = $guzzle->request("GET", $popedUrl);
+            $infos[] = $info = $this->crawl($response->getBody(), $response->getStatusCode(), $popedUrl);
+            
+            foreach($info['links'] as $link){
+                if( $this->matchDomain($link, $baseUrl) )
+                    array_push($urls, $link);
+            }
+            
+        }
+
 
         return view('seo', ['infos' => $infos]);
     }
@@ -67,5 +92,15 @@ class SEOController extends Controller
         // echo "</pre>";
 
         return $urlInfo;
+    }
+
+    function matchDomain($url, $baseUrl){
+        return $this->getDomain($url) === $this->getDomain($baseUrl);
+    }
+
+    function getDomain($url){
+        $matches = null;
+        preg_match("/^.*\.([^.]*\.[^.\/]*)/", '.'.$url, $matches);
+        return $matches[1];
     }
 }
