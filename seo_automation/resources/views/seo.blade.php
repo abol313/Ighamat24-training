@@ -73,7 +73,7 @@
                 <hr/>
 
                 
-            </pre>
+            </div>
         </div>
     @endforeach
 
