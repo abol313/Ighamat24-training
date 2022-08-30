@@ -14,7 +14,7 @@ class SEOController extends Controller
     function check(Request $request){
         // var_dump($request);die();
         
-        $info = [];
+        $infos = [];
         
         $url = $request->input('url');
         
@@ -24,20 +24,19 @@ class SEOController extends Controller
         $response = $guzzle->request("GET", $url);
         
         // var_dump($request);
-        $urlInfo = $info[$url] = [];
+        
+        $infos[] = $this->crawl($response->getBody(), $response->getStatusCode(), $url);
 
-        $this->crawl($response->getBody(), $response->getStatusCode(), $urlInfo, $url);
-
-        return view('seo', compact('info'));
+        return view('seo', ['infos' => $infos]);
     }
 
-    function crawl($body, $status, &$urlInfo, $url){
-        echo "<pre>";
+    function crawl($body, $status, $url){
+        $urlInfo = [];
 
         $crawl = new Crawler($body, $url);
-        
 
-        $urlInfo['added'] = 'aded';
+        $urlInfo['url'] = $url;
+        
         $urlInfo['status'] = $status;
         
         $urlInfo['links'] = [];
@@ -62,12 +61,11 @@ class SEOController extends Controller
         $urlInfo['meta-description'] = $crawl->filter('head > meta[name="description"]')->extract(['content'])[0] ?? null;
         $urlInfo['canonical'] = $crawl->filter('head link[rel="canonical"]')->extract(['href'])[0] ?? null;
 
-        $urlInfo['has-importants'] = $urlInfo['title'] && $urlInfo['meta-description'] && $urlInfo['canonical']
-            ? 'yes'
-            : 'no';
+        $urlInfo['has-importants'] = $urlInfo['title'] && $urlInfo['meta-description'] && $urlInfo['canonical'];
         
-        print_r($urlInfo);
-        echo "</pre>";
+        // print_r($urlInfo);
+        // echo "</pre>";
 
+        return $urlInfo;
     }
 }
