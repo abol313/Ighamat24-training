@@ -4,12 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    @vite('resources/css/app.scss')
     <title>Seo Check</title>
 </head>
 <body>
 
     @foreach($infos as $info)
-        <div class="info-item" onclick="this.classList.toggle('info-item-clicked')">
+        <div @class(['info-item', 'border-warning' => !$info['has-importants']]) onclick="this.classList.toggle('info-item-clicked')">
             <h2 class="url">{{$info['url']}}</h2>
             <div class="desc">
                 @if($info['has-importants'])
