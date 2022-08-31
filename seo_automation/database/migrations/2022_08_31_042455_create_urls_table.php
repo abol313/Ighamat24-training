@@ -15,7 +15,14 @@ return new class extends Migration
     {
         Schema::create('urls', function (Blueprint $table) {
             $table->id();
+            
             $table->string('path');
+            $table->string('title')->nullable();
+            $table->string('meta_description')->nullable();
+            $table->string('canonical')->nullable();
+            $table->string('has_importants');
+            $table->string('status');
+
             $table->timestamps();
         });
     }
