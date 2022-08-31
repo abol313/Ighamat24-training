@@ -10,9 +10,17 @@
 </head>
 <body>
 
+    <h1>Number Of Urls Checked : {{count($infos)}}</h1>
     @foreach($infos as $info)
         <div @class(['info-item', 'border-warning' => !$info['has-importants']]) onclick="this.classList.toggle('info-item-clicked')">
-            <h2 class="url">{{$info['url']}}</h2>
+            <h2 @class([
+                "url", 
+                "success"=>str_starts_with($info['status'], '2'), 
+                "warning"=>str_starts_with($info['status'], '3'), 
+                "danger"=>str_starts_with($info['status'], '4'), 
+                "danger"=>str_starts_with($info['status'], '5'), 
+                ])>{{$info['status']}} | {{$info['url']}}</h2>
+
             <div class="desc">
                 @if($info['has-importants'])
                     <h2 class="ok">It has title, meta description, and canonical</h2>
