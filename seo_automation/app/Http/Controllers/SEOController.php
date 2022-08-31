@@ -35,17 +35,16 @@ class SEOController extends Controller
             $popedUrl = array_pop($urls);
 
             if($popedUrl === null) break;
-
-            if($checkedUrls[$popedUrl] ?? null)
-                continue;
             
+            // echo "<p>$popedUrl</p>";
+
             $checkedUrls[$popedUrl] = true;
             $info = [];
             $response = $guzzle->request("GET", $popedUrl);
             $infos[] = $info = $this->crawl($response->getBody(), $response->getStatusCode(), $popedUrl);
             
             foreach($info['links'] as $link){
-                if( $this->matchDomain($link, $baseUrl) )
+                if( $this->matchDomain($link, $baseUrl) && !($checkedUrls[$link] ?? null))
                     array_push($urls, $link);
             }
             
@@ -99,8 +98,14 @@ class SEOController extends Controller
     }
 
     function getDomain($url){
+        // echo "getDomain : $url";
         $matches = null;
-        preg_match("/^.*\.([^.]*\.[^.\/]*)/", '.'.$url, $matches);
+        $url = str_replace("https://", "", $url);
+        $url = str_replace("http://", "", $url);
+        preg_match("/^.*\.([^.]*\.[^.\/]*)/", '.'.$url.'/', $matches);
+        
+        
+        // logger("url:$url");
         return $matches[1];
     }
 }
