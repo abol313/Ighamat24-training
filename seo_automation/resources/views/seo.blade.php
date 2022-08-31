@@ -12,6 +12,13 @@
 
     <h1>Number Of Urls Checked : {{count($infos)}}</h1>
     @foreach($infos as $info)
+        @php
+            $titleLength = mb_strlen($info['title']);
+            $hasSeoTitleLength = 50 <= $titleLength && $titleLength <= 60;
+
+            $metaDescriptionLength = mb_strlen($info['meta-description']);
+            $hasSeoMetaDescriptionLength = 155 <= $metaDescriptionLength && $metaDescriptionLength <= 160;
+        @endphp
         <div @class(['info-item', 'border-warning' => !$info['has-importants']]) onclick="this.classList.toggle('info-item-clicked')">
             <h2 @class([
                 "url", 
@@ -29,14 +36,14 @@
                 @endif
 
                 @if($info['title'])
-                    <h3 class="title ok">Title : {{$info['title']}}</h3>
+                    <h3 class="title ok">Title {!!$hasSeoTitleLength?"":'<span class="warning">[ should be in size range of 50-60 ] </span>'!!}: {{$info['title']}}</h3>
                 @else
                     <h3 class="title warning">No Title !</h3>
                 @endif
 
                 
                 @if($info['meta-description'])
-                    <h3 class="meta-description ok">Meta Description : {{$info['meta-description']}}</h3>
+                    <h3 class="meta-description ok">Meta Description {!!$hasSeoMetaDescriptionLength?"":'<span class="warning">[ should be in size range of 155-160 ] </span>'!!}: {{$info['meta-description']}}</h3>
                 @else
                     <h3 class="meta-description warning">No Meta Description !</h3>
                 @endif
