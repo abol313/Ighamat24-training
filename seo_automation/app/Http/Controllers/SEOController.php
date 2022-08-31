@@ -15,7 +15,7 @@ class SEOController extends Controller
     //
     function check(Request $request){
         // var_dump($request);die();
-        
+        set_time_limit(200);
         $infos = [];
         
         $url = $request->input('url');
@@ -32,9 +32,8 @@ class SEOController extends Controller
         // $lastUrl->delete();
         $checkedUrls = [];
         $requestMethod = "GET";
-
-        $i = 100;
-        while($i-->0){
+        $i = 0;
+        while($i++<50){
             if($i%2===0)
                 info('count',['index'=>$i]);
             $popedUrl = array_pop($urls);
@@ -62,12 +61,14 @@ class SEOController extends Controller
                 // print_r($info);
                 // echo "</pre>";
             }else{
-                continue;
+                // continue;
                 try{
                     $response = $guzzle->request("GET", $popedUrl);
                 }catch(ClientException $e){
                     logger('response', [$response]);
                 }
+                // logger('response', [$response->getBody()->getContents(),$response]);
+
                 $infos[] = $info = $this->crawl($response->getBody(), $response->getStatusCode(), $popedUrl);
                 Url::createFromInfo($info);
             }
@@ -99,7 +100,7 @@ class SEOController extends Controller
         $urlInfo['status'] = $status;
         
         $urlInfo['links'] = [];
-        foreach($crawl->filter('body a')->links() as $link){
+        foreach($crawl->filter('body a, head link')->links() as $link){
             $urlInfo['links'][] = $link->getUri();
         }
 
@@ -115,8 +116,10 @@ class SEOController extends Controller
             $urlInfo['videos'][] = $videoSrc;
         }
 
-        
-        $urlInfo['title'] = $crawl->filter('head > title')->first()->innerText() ?? null;
+        $title = $crawl->filter('head > title')->getNode(0) ?? null;
+        // $title = $titles ? $titles : null ;
+        // logger('$title', [$title]);
+        $urlInfo['title'] = $title ? $title->textContent : null;
         $urlInfo['meta-description'] = $crawl->filter('head > meta[name="description"]')->extract(['content'])[0] ?? null;
         $urlInfo['canonical'] = $crawl->filter('head link[rel="canonical"]')->extract(['href'])[0] ?? null;
 
