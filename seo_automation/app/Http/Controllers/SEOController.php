@@ -34,9 +34,8 @@ class SEOController extends Controller
         $requestMethod = "GET";
         $i = 0;
         while($i++<50){
-            if($i%2===0)
-                info('count',['index'=>$i]);
             $popedUrl = array_pop($urls);
+            info('count',['index'=>$i,'url'=>$popedUrl]);
 
             if($popedUrl === null) break;
 
@@ -65,9 +64,11 @@ class SEOController extends Controller
                 try{
                     $response = $guzzle->request("GET", $popedUrl);
                 }catch(ClientException $e){
-                    logger('response', [$response]);
+                    // logger('response', [$response]);
                 }
                 // logger('response', [$response->getBody()->getContents(),$response]);
+                if(!($response ?? null))
+                    continue;
 
                 $infos[] = $info = $this->crawl($response->getBody(), $response->getStatusCode(), $popedUrl);
                 Url::createFromInfo($info);
@@ -138,17 +139,17 @@ class SEOController extends Controller
     function getDomain($url){
         // echo "getDomain : $url";
         $matches = null;
-        $url = str_replace("https://", "", $url);
-        $url = str_replace("http://", "", $url);
-        preg_match("/^.*\.([^.]*\.[^.\/]*)/", '.'.$url.'/', $matches);
+        $url = preg_replace("/^https:\/\//", "", $url);
+        $url = preg_replace("/^http:\/\//", "", $url);
+        preg_match("/^[^\/]*\.([^\/.]*\.[^.\/]*)/", '.'.$url.'/', $matches);
         
         
         // logger("url:$url");
         if(count($matches)<2){
-            logger('matches', [
-                'matches' => $matches,
-                'url' => $url,
-            ]);
+            // logger('matches', [
+            //     'matches' => $matches,
+            //     'url' => $url,
+            // ]);
             return false;
         }
         return $matches[1];
