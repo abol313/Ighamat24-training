@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Url;
 use Illuminate\Http\Request;
 use \GuzzleHttp\Client;
 use \Symfony\Component\DomCrawler\Crawler;
@@ -22,7 +23,7 @@ class SEOController extends Controller
         $guzzle = new Client();
         
         // var_dump($request);die();
-        $response = $guzzle->request("GET", $url);
+        // $response = $guzzle->request("GET", $url);
         
         // var_dump($request);
         $urls = [$url];
@@ -35,14 +36,32 @@ class SEOController extends Controller
             $popedUrl = array_pop($urls);
 
             if($popedUrl === null) break;
-            
-            // echo "<p>$popedUrl</p>";
+
+
+            $info = [];
+
+            if($url = Url::where('path', $popedUrl)->first()){
+                
+                $infos[] = $info = [
+                    'url' => $url->path,
+                    'title' => $url->title,
+                    'status' => $url->status,
+                    'meta-description' => $url->meta_description,
+                    'canonical' => $url->canonical,
+                    'has-importants' => $url->has_importants,
+                    'images' => $url->images->pluck('path')->all(),
+                    'videos' => $url->videos->pluck('path')->all(),
+                    'links' => $url->links->pluck('path')->all(),
+                ];
+
+            }else{
+                $response = $guzzle->request("GET", $popedUrl);
+                $infos[] = $info = $this->crawl($response->getBody(), $response->getStatusCode(), $popedUrl);
+                Url::createFromInfo($info);
+            }
 
             $checkedUrls[$popedUrl] = true;
-            $info = [];
-            $response = $guzzle->request("GET", $popedUrl);
-            $infos[] = $info = $this->crawl($response->getBody(), $response->getStatusCode(), $popedUrl);
-            
+
             foreach($info['links'] as $link){
                 if( $this->matchDomain($link, $baseUrl) && !($checkedUrls[$link] ?? null))
                     array_push($urls, $link);
