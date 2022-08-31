@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Url;
 use Illuminate\Http\Request;
 use \GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
 use \Symfony\Component\DomCrawler\Crawler;
 use \Symfony\Component\DomCrawler\Link;
 use \Symfony\Component\DomCrawler\Image;
@@ -26,13 +27,16 @@ class SEOController extends Controller
         // $response = $guzzle->request("GET", $url);
         
         // var_dump($request);
+        // $lastUrl = Url::query()->latest('id')->get()->first();
         $urls = [$url];
+        // $lastUrl->delete();
         $checkedUrls = [];
         $requestMethod = "GET";
 
         $i = 100;
         while($i-->0){
-
+            if($i%2===0)
+                info('count',['index'=>$i]);
             $popedUrl = array_pop($urls);
 
             if($popedUrl === null) break;
@@ -40,22 +44,30 @@ class SEOController extends Controller
 
             $info = [];
 
-            if($url = Url::where('path', $popedUrl)->first()){
+            if($urlRecord = Url::where('path', $popedUrl)->first()){
                 
                 $infos[] = $info = [
-                    'url' => $url->path,
-                    'title' => $url->title,
-                    'status' => $url->status,
-                    'meta-description' => $url->meta_description,
-                    'canonical' => $url->canonical,
-                    'has-importants' => $url->has_importants,
-                    'images' => $url->images->pluck('path')->all(),
-                    'videos' => $url->videos->pluck('path')->all(),
-                    'links' => $url->links->pluck('path')->all(),
+                    'url' => $urlRecord->path,
+                    'title' => $urlRecord->title,
+                    'status' => $urlRecord->status,
+                    'meta-description' => $urlRecord->meta_description,
+                    'canonical' => $urlRecord->canonical,
+                    'has-importants' => $urlRecord->has_importants,
+                    'images' => $urlRecord->images->pluck('path')->all(),
+                    'videos' => $urlRecord->videos->pluck('path')->all(),
+                    'links' => $urlRecord->links->pluck('path')->all(),
                 ];
 
+                // echo "<pre>";
+                // print_r($info);
+                // echo "</pre>";
             }else{
-                $response = $guzzle->request("GET", $popedUrl);
+                continue;
+                try{
+                    $response = $guzzle->request("GET", $popedUrl);
+                }catch(ClientException $e){
+                    logger('response', [$response]);
+                }
                 $infos[] = $info = $this->crawl($response->getBody(), $response->getStatusCode(), $popedUrl);
                 Url::createFromInfo($info);
             }
@@ -63,10 +75,14 @@ class SEOController extends Controller
             $checkedUrls[$popedUrl] = true;
 
             foreach($info['links'] as $link){
+                // echo "<p>$link</p>";
                 if( $this->matchDomain($link, $baseUrl) && !($checkedUrls[$link] ?? null))
                     array_push($urls, $link);
             }
-            
+
+            // echo "<pre>";
+            // print_r($urls);
+            // echo "</pre>";
         }
 
 
@@ -125,6 +141,13 @@ class SEOController extends Controller
         
         
         // logger("url:$url");
+        if(count($matches)<2){
+            logger('matches', [
+                'matches' => $matches,
+                'url' => $url,
+            ]);
+            return false;
+        }
         return $matches[1];
     }
 }
