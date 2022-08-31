@@ -17,7 +17,7 @@
             $hasSeoTitleLength = 50 <= $titleLength && $titleLength <= 60;
 
             $metaDescriptionLength = mb_strlen($info['meta-description']);
-            $hasSeoMetaDescriptionLength = 155 <= $metaDescriptionLength && $metaDescriptionLength <= 160;
+            $hasSeoMetaDescriptionLength = 50 <= $metaDescriptionLength && $metaDescriptionLength <= 160;
         @endphp
         <div @class(['info-item', 'border-warning' => !$info['has-importants']]) onclick="this.classList.toggle('info-item-clicked')">
             <h2 @class([
@@ -43,7 +43,7 @@
 
                 
                 @if($info['meta-description'])
-                    <h3 class="meta-description ok">Meta Description {!!$hasSeoMetaDescriptionLength?"":'<span class="warning">[ should be in size range of 155-160 ] </span>'!!}: {{$info['meta-description']}}</h3>
+                    <h3 class="meta-description ok">Meta Description {!!$hasSeoMetaDescriptionLength?"":'<span class="warning">[ should be in size range of 50-160 ] </span>'!!}: {{$info['meta-description']}}</h3>
                 @else
                     <h3 class="meta-description warning">No Meta Description !</h3>
                 @endif
