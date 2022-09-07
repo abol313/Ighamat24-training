@@ -13,7 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('installments', function (Blueprint $table) {
+            $table->id();
+
+            $table->unsignedBigInteger('price');
+            $table->unsignedBigInteger('cart_id');
+
+            $table->timestamps();
+        });
     }
 
     /**
@@ -23,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('installments');
     }
 };

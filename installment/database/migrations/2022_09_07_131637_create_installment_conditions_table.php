@@ -13,7 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('installment_conditions', function (Blueprint $table) {
+            $table->id();
+
+            $table->unsignedBigInteger('maximum');
+            $table->integer("installments_count");
+
+            $table->timestamps();
+        });
     }
 
     /**
@@ -23,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('installment_conditions');
     }
 };
