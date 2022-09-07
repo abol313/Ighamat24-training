@@ -9,10 +9,11 @@
 <body>
     <header>
         @auth('customers')
-            Hey [{{auth('customers')->user()->username}}], you are a Customer
+            <h2>Hey [{{auth('customers')->user()->username}}], you are a Customer</h2>
         @endauth
+
         @auth('servers')
-            Hey {{auth('servers')->user()->username}}], you are a Server
+            <h2>Hey [{{auth('servers')->user()->username}}], you are a Server</h2>
         @endauth
     </header>
 
