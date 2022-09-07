@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Installment extends Model
 {
     use HasFactory;
+    protected $table = "installments";
+    protected $fillable = [
+        'price',
+        'cart_id',
+    ];
 }
