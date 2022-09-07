@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ServerController;
+use App\Http\Controllers\ServiceController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,3 +32,6 @@ Route::get('/servers/register', [ServerController::class, 'register']);
 Route::post('/servers/register', [ServerController::class, 'signUp'])->name('servers.sign_up');
 Route::get('/servers/login', [ServerController::class, 'login']);
 Route::post('/servers/login', [ServerController::class, 'signIn'])->name('servers.sign_in');
+
+// service resoure routes
+Route::resource('services', ServiceController::class);
