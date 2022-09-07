@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+    <p>customer register</p>
     <form action="{{route('customers.sign_up')}}" method="post">
         @csrf
         
