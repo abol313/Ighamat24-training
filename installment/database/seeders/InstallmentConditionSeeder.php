@@ -16,12 +16,6 @@ class InstallmentConditionSeeder extends Seeder
     public function run()
     {
         //
-        for($i=0 ; $i<20 ; $i++){
-
-            InstallmentCondition::create([
-                'maximum' => random_int(1e6,1e10),
-                'installments_count' => random_int(1,20),
-            ]);
-        }
+        InstallmentCondition::factory(30)->create();
     }
 }
