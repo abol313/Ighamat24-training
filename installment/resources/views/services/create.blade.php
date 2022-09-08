@@ -16,8 +16,8 @@
         </select>
         <input name="server_id" type="hidden" value="{{auth('servers')->id()}}"/>
         <input name="unit" placeholder="unit" required/>
-        <input name="price_per_unit" type="number" placeholder="" required/>
+        <input name="price_per_unit" type="number" placeholder="the price er every unit" required/>
 
-        <input type="submit" value="create" />
+        <input type="submit" value="create service" />
     </form>
 @endsection
