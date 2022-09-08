@@ -11,6 +11,7 @@ class InstallmentCondition extends Model
     protected $table = "installment_conditions";
     protected $fillable = [
         'maximum',
-        'installment_count',
+        'installments_count',
+        'service_id',
     ];
 }
