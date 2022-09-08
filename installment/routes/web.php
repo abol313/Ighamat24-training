@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CustomerCartController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\ServerCartController;
 use App\Http\Controllers\ServerController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\ServiceInstallmentConditionController;
@@ -48,3 +49,9 @@ Route::resource('services.installment_conditions', ServiceInstallmentConditionCo
 
 // customer carts
 Route::resource('customers.carts', CustomerCartController::class);
+
+// server carts
+Route::get('/servers/{server}/carts/', [ServerCartController::class, 'index'])->name('servers.carts.index');
+Route::get('/servers/{server}/carts/{cart}', [ServerCartController::class, 'show'])->name('servers.carts.show');
+Route::post('/servers/{server}/carts/{cart}/accept', [ServerCartController::class, 'accept'])->name('servers.carts.accept');
+Route::post('/servers/{server}/carts/{cart}/reject', [ServerCartController::class, 'reject'])->name('servers.carts.reject');
