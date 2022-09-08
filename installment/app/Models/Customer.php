@@ -14,4 +14,8 @@ class Customer extends Authenticatable
         'username',
         'password',
     ];
+
+    public function carts(){
+        return $this->hasMany(Cart::class);
+    }
 }
