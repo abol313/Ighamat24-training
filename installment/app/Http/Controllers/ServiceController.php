@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Server;
 use App\Models\Service;
 use App\Models\ServiceCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ServiceController extends Controller
 {
+
+  
+
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +21,21 @@ class ServiceController extends Controller
     public function index()
     {
         //
+        return view('services.index', ['services'=>Service::all()]);
+    }
 
+    /**
+     * Display a listing of the resource of now authenticated server.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexMyServices()
+    {
+        //
+        if(! $server = auth('servers')->user() )
+            abort(403);
+
+        return view('services.index', ['services'=>Service::where('server_id', $server->id)]);
     }
 
     /**
@@ -27,6 +46,9 @@ class ServiceController extends Controller
     public function create()
     {
         //
+        if(!( auth('servers')->user() && auth('servers')->user()->can('create', Service::class) ))
+            abort(403);
+        
         return view('services.create', ['categories'=>ServiceCategory::all()]);
     }
 
@@ -38,6 +60,9 @@ class ServiceController extends Controller
      */
     public function store(Request $request)
     {
+        if(!( auth('servers')->user() && auth('servers')->user()->can('create', Service::class) ))
+            abort(403);
+
         //
         Service::create(
             $request->only([
@@ -62,6 +87,7 @@ class ServiceController extends Controller
     public function show(Service $service)
     {
         //
+        return view('services.show', ['service'=>$service]);
     }
 
     /**
@@ -72,7 +98,11 @@ class ServiceController extends Controller
      */
     public function edit(Service $service)
     {
+        if(!( auth('servers')->user() && auth('servers')->user()->can('update', $service) ))
+            abort(403);
+
         //
+        return view('services.edit', ['service'=>$service, 'categories'=>ServiceCategory::all()]);
     }
 
     /**
@@ -84,7 +114,25 @@ class ServiceController extends Controller
      */
     public function update(Request $request, Service $service)
     {
+        if(!( auth('servers')->user() && auth('servers')->user()->can('update', $service) ))
+            abort(403);
+
+
         //
+        $service->fill(
+            $request->only([
+                'title',
+                'description',
+                'category_id',
+                'server_id',
+                'unit',
+                'price_per_unit',
+            ])
+        );
+
+        $service->save();
+
+        return back();
     }
 
     /**
@@ -95,6 +143,12 @@ class ServiceController extends Controller
      */
     public function destroy(Service $service)
     {
+        if(!( auth('servers')->user() && auth('servers')->user()->can('delete', $service) ))
+            abort(403);
+
+        $service->delete();
+        return back();
+
         //
     }
 }
