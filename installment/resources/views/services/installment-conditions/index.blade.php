@@ -7,6 +7,12 @@
         </a>
     </h2>
 
+    <h2>
+        <a href="{{route('services.installment_conditions.create', [$service])}}">
+            Create Installment Condition
+        </a>
+    </h2>
+
     <h2>Service Installment Conditions</h2>
 
     @forelse($installmentConditions as $installmentCondition)
