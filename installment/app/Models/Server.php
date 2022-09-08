@@ -15,4 +15,8 @@ class Server extends Authenticatable
         'username',
         'password',
     ];
+
+    public function services(){
+        return $this->hasMany(Service::class);
+    }
 }
