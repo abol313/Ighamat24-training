@@ -25,7 +25,7 @@ class ServiceFactory extends Factory
             'category_id' => ServiceCategory::all()->random()['id'],
             'server_id' => Server::all()->random()['id'],
             'unit' => $this->faker->randomElement(['cm','mm','nm','um','tooth','m2','km','lit','kg','g']),
-            'price_per_unit' => $this->faker->numberBetween(1e5),
+            'price_per_unit' => $this->faker->numberBetween(1e2, 1e3),
         ];
     }
 }

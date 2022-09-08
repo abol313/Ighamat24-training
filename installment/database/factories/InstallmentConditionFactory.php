@@ -19,7 +19,7 @@ class InstallmentConditionFactory extends Factory
     {
         return [
             //
-            'maximum' => $this->faker->numberBetween(1e6, 1e9),
+            'maximum' => $this->faker->numberBetween(1e2, 1e5),
             'installments_count' => $this->faker->numberBetween(2, 20),
             'service_id' => Service::all()->random()['id'],
         ];
