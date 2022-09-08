@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CustomerCartController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ServerController;
 use App\Http\Controllers\ServiceController;
@@ -45,3 +46,5 @@ Route::resource('services', ServiceController::class);
 // service installment conditions resource routes
 Route::resource('services.installment_conditions', ServiceInstallmentConditionController::class);
 
+// customer carts
+Route::resource('customers.carts', CustomerCartController::class);
