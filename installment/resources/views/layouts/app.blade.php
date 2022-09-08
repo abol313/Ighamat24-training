@@ -46,6 +46,10 @@
                 <p>
                     <a href="{{route('services.create')}}">Create Services</a>
                 </p>
+                <p>
+                    <a href="{{route('servers.carts.index', [auth('servers')->user()])}}">List Server's Pending Carts</a>
+                </p>
+            
             @endif
         </div>
     </header>
