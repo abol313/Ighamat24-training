@@ -18,6 +18,8 @@ return new class extends Migration
 
             $table->unsignedBigInteger('price');
             $table->unsignedBigInteger('cart_id');
+            $table->timestamp('paid_at')->nullable();
+            $table->timestamp('server_accepted_at')->nullable();
 
             $table->timestamps();
         });
