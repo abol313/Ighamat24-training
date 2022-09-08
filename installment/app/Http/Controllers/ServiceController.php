@@ -35,7 +35,7 @@ class ServiceController extends Controller
         if(! $server = auth('servers')->user() )
             abort(403);
 
-        return view('services.index', ['services'=>Service::where('server_id', $server->id)]);
+        return view('services.index', ['services'=>Service::where('server_id', $server->id)->get()]);
     }
 
     /**
