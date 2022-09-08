@@ -3,6 +3,7 @@
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ServerController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\ServiceInstallmentConditionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -38,5 +39,9 @@ Route::get('/servers/logout', [ServerController::class, 'logout'])->name('server
 
 
 // service resoure routes
-Route::get('/services/me', [ServiceController::class, 'indexMyServices']);
+Route::get('/services/me', [ServiceController::class, 'indexMyServices'])->name('services.index_my_services');
 Route::resource('services', ServiceController::class);
+
+// service installment conditions resource routes
+Route::resource('services.installment_conditions', ServiceInstallmentConditionController::class);
+
