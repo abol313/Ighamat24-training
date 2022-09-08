@@ -41,4 +41,8 @@ class ServerController extends Controller
     }
 
     
+    public function logout(){
+        Auth::guard('servers')->logout();
+        return back();
+    }
 }
