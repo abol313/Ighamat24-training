@@ -21,6 +21,7 @@ return new class extends Migration
             $table->unsignedInteger('amount');
             $table->enum('status', ['pending', 'accepted', 'rejected', 'paid']);
             $table->unsignedBigInteger('service_id');
+            $table->unsignedBigInteger('installment_condition_id');
             $table->unsignedBigInteger('customer_id');
 
 
