@@ -18,6 +18,7 @@ return new class extends Migration
 
             $table->unsignedBigInteger('maximum');
             $table->integer("installments_count");
+            $table->unsignedBigInteger('service_id');
 
             $table->timestamps();
         });

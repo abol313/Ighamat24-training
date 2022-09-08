@@ -22,8 +22,7 @@ return new class extends Migration
             $table->unsignedBigInteger('category_id');
             $table->unsignedBigInteger('server_id');
             $table->unsignedBigInteger('price_per_unit');
-            $table->unsignedBigInteger('installment_condition_id')->nullable();
-
+            
             $table->timestamps();
         });
     }

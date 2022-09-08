@@ -17,7 +17,6 @@ return new class extends Migration
         Schema::table('services', function(Blueprint $table){
             $table->foreign('server_id')->references('id')->on('servers');
             $table->foreign('category_id')->references('id')->on('service_categories');
-            $table->foreign('installment_condition_id')->references('id')->on('installment_conditions');
 
         });
         
@@ -30,6 +29,11 @@ return new class extends Migration
         Schema::table('installments', function(Blueprint $table){
             $table->foreign('cart_id')->references('id')->on('carts');
 
+        });
+
+        Schema::table('installment_conditions', function(Blueprint $table){
+            $table->foreign('service_id')->references('id')->on('services');
+         
         });
 
         
