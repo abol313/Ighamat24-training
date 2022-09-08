@@ -23,6 +23,10 @@ class Cart extends Model
         return $this->belongsTo(Service::class);
     }
 
+    public function customer(){
+        return $this->belongsTo(Customer::class);
+    }
+
     public function installmentCondition(){
         return $this->belongsTo(InstallmentCondition::class, 'installment_condition_id', 'id');
     }
