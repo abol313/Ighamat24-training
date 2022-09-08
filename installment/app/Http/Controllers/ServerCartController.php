@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 
 class ServerCartController extends Controller
 {
+
+
     /**
      * Display a listing of the resource.
      *
@@ -16,30 +18,14 @@ class ServerCartController extends Controller
      */
     public function index(Server $server)
     {
-        //
-    }
+        if(auth('servers')->id() !== $server->id)
+            abort(403);
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @param  \App\Models\Server  $server
-     * @return \Illuminate\Http\Response
-     */
-    public function create(Server $server)
-    {
         //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Server  $server
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request, Server $server)
-    {
-        //
+        return view('servers.carts.index', [
+            'server' => $server,
+            'carts' => Cart::where('status', 'pending')->whereIn('service_id', $server->services->pluck('id'))->get(),
+        ]);
     }
 
     /**
@@ -52,42 +38,52 @@ class ServerCartController extends Controller
     public function show(Server $server, Cart $cart)
     {
         //
+        if(auth('servers')->id() !== $server->id)
+            abort(403);
+        
+
+        if(! $server->services->contains('id', $cart->service_id))
+            abort(403);
+        if($cart->status !== 'pending')
+            abort(403);
+
+        return view('servers.carts.show', [
+            'server' => $server,
+            'cart' => $cart,
+        ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Server  $server
-     * @param  \App\Models\Cart  $cart
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Server $server, Cart $cart)
-    {
-        //
+
+    public function accept(Server $server, Cart $cart){
+        if(auth('servers')->id() !== $server->id)
+            abort(403);
+        
+
+        if(! $server->services->contains('id', $cart->service_id))
+            abort(403);
+        if($cart->status !== 'pending')
+            abort(403);
+
+        $cart->status = "accepted";
+        $cart->save();
+
+        return back();
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Server  $server
-     * @param  \App\Models\Cart  $cart
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Server $server, Cart $cart)
-    {
-        //
-    }
+    public function reject(Server $server, Cart $cart){
+        if(auth('servers')->id() !== $server->id)
+            abort(403);
+        
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Server  $server
-     * @param  \App\Models\Cart  $cart
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Server $server, Cart $cart)
-    {
-        //
+        if(! $server->services->contains('id', $cart->service_id))
+            abort(403);
+        if($cart->status !== 'pending')
+            abort(403);
+        
+        $cart->status = "rejected";
+        $cart->save();
+
+        return back();
+
     }
 }
