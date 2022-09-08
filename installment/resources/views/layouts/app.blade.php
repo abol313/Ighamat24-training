@@ -15,12 +15,34 @@
     </style>
     <header>
         @auth('customers')
-            <h2>Hey [{{auth('customers')->user()->username}}], you are a Customer</h2>
+            <h2>Hey [{{auth('customers')->user()->username}}], you are a Customer, <a href="{{route('customers.logout')}}">logout customer</a></h2>
+        @else
+            <div>
+                <a href="{{route('customers.login')}}">Login Customer</a>
+                <a href="{{route('customers.register')}}">Signup Customer</a>
+            </div>
         @endauth
 
         @auth('servers')
-            <h2>Hey [{{auth('servers')->user()->username}}], you are a Server</h2>
+            <h2>Hey [{{auth('servers')->user()->username}}], you are a Server, <a href="{{route('servers.logout')}}">logout server</a></h2>
+        @else
+            <div>
+                <a href="{{route('servers.login')}}">Login Server</a>
+                <a href="{{route('servers.register')}}">Signup Server</a>
+            </div>
         @endauth
+
+        <div class="box">
+            <h2>Services</h2>
+            <p>
+                <a href="{{route('services.index')}}">List Services</a>
+            </p>
+            @if(auth('servers')->user()?->can('create', \App\Models\Service::class))
+                <p>
+                    <a href="{{route('services.create')}}">Create Services</a>
+                </p>
+            @endif
+        </div>
     </header>
 
     <main>
