@@ -41,5 +41,10 @@ class CustomerController extends Controller
         return back();
     }
 
-    
+
+    public function logout(){
+        Auth::guard('customers')->logout();
+        return back();
+
+    }
 }
