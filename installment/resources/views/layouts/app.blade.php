@@ -37,6 +37,11 @@
             <p>
                 <a href="{{route('services.index')}}">List Services</a>
             </p>
+            @auth('servers')
+                <p>
+                    <a href="{{route('services.index_my_services')}}">List My Services</a>
+                </p>
+            @endauth
             @if(auth('servers')->user()?->can('create', \App\Models\Service::class))
                 <p>
                     <a href="{{route('services.create')}}">Create Services</a>
