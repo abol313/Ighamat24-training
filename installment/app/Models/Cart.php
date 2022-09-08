@@ -12,7 +12,18 @@ class Cart extends Model
     protected $fillable = [
         'installments_no',
         'price',
+        'amount',
+        'status',
         'service_id',
         'customer_id',
+        'installment_condition_id',
     ];
+
+    public function service(){
+        return $this->belongsTo(Service::class);
+    }
+
+    public function installmentCondition(){
+        return $this->belongsTo(InstallmentCondition::class, 'installment_condition_id', 'id');
+    }
 }
