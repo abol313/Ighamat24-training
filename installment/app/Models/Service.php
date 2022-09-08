@@ -26,5 +26,7 @@ class Service extends Model
         return $this->belongsTo(Server::class, 'server_id', 'id');
     }
 
-    
+    public function installmentConditions(){
+        return $this->hasMany(InstallmentCondition::class);
+    }
 }
