@@ -7,6 +7,12 @@
     <title>Installment</title>
 </head>
 <body>
+    <style>
+        .box{
+            padding: 10px;
+            border: 1px solid black;
+        }
+    </style>
     <header>
         @auth('customers')
             <h2>Hey [{{auth('customers')->user()->username}}], you are a Customer</h2>
