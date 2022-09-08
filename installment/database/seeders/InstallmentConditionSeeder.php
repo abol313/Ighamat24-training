@@ -16,6 +16,6 @@ class InstallmentConditionSeeder extends Seeder
     public function run()
     {
         //
-        InstallmentCondition::factory(30)->create();
+        InstallmentCondition::factory(80)->create();
     }
 }
