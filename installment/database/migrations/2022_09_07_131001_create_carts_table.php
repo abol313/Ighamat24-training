@@ -18,8 +18,11 @@ return new class extends Migration
 
             $table->integer('installments_no')->default(0);
             $table->unsignedBigInteger('price');
+            $table->unsignedInteger('amount');
+            $table->enum('status', ['pending', 'accepted', 'rejected', 'paid']);
             $table->unsignedBigInteger('service_id');
             $table->unsignedBigInteger('customer_id');
+
 
             $table->timestamps();
         });
