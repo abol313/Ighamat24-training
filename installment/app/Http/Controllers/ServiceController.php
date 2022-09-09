@@ -18,9 +18,12 @@ class ServiceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
+        if($request->has('category_id')){
+            return view('services.index', ['services'=>Service::where('category_id', $request->input('category_id'))->get()]);
+        }
         return view('services.index', ['services'=>Service::all()]);
     }
 
