@@ -19,4 +19,12 @@ class Server extends Authenticatable
     public function services(){
         return $this->hasMany(Service::class);
     }
+
+    public function carts(){
+        return Cart::whereIn('service_id', $this->services->pluck('id'))->get();
+    }
+
+    public function installments(){
+        return Installment::whereIn('cart_id', $this->carts()->pluck('id'))->get();
+    }
 }
