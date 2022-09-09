@@ -53,7 +53,8 @@ class ServerInstallmentController extends Controller
             abort(403);
         if($authServer->id !== $server->id)
             abort(403);
-
+        if(! $server->services->contains('id', $installment->cart->service->id))
+            abort(403);
 
         return view('servers.carts.installments.show', [
             'installment' => $installment,
