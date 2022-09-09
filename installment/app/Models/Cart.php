@@ -30,4 +30,8 @@ class Cart extends Model
     public function installmentCondition(){
         return $this->belongsTo(InstallmentCondition::class, 'installment_condition_id', 'id');
     }
+
+    public function installments(){
+        return $this->hasMany(Installment::class);
+    }
 }
