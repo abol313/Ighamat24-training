@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\CartInstallmentController;
 use App\Http\Controllers\CustomerCartController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ServerCartController;
 use App\Http\Controllers\ServerController;
+use App\Http\Controllers\ServerInstallmentController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\ServiceInstallmentConditionController;
 use Illuminate\Support\Facades\Route;
@@ -51,7 +53,18 @@ Route::resource('services.installment_conditions', ServiceInstallmentConditionCo
 Route::resource('customers.carts', CustomerCartController::class);
 
 // server carts
-Route::get('/servers/{server}/carts/', [ServerCartController::class, 'index'])->name('servers.carts.index');
+Route::get('/servers/{server}/carts', [ServerCartController::class, 'index'])->name('servers.carts.index');
 Route::get('/servers/{server}/carts/{cart}', [ServerCartController::class, 'show'])->name('servers.carts.show');
 Route::post('/servers/{server}/carts/{cart}/accept', [ServerCartController::class, 'accept'])->name('servers.carts.accept');
 Route::post('/servers/{server}/carts/{cart}/reject', [ServerCartController::class, 'reject'])->name('servers.carts.reject');
+
+// customer cart installments
+Route::get('/carts/{cart}/installments', [CartInstallmentController::class, 'index'])->name('carts.installments.index');
+Route::get('/carts/{cart}/installments/{installment}', [CartInstallmentController::class, 'show'])->name('carts.installments.show');
+Route::post('/carts/{cart}/installments/{installment}/pay', [CartInstallmentController::class, 'pay'])->name('carts.installments.pay');
+Route::post('/carts/{cart}/installments/{installment}/unpay', [CartInstallmentController::class, 'unpay'])->name('carts.installments.unpay');
+
+// server cart pending installments
+Route::get('/servers/{server}/installments', [ServerInstallmentController::class, 'index'])->name('servers.installments.index');
+Route::get('/servers/{server}/installments/{installment}', [ServerInstallmentController::class, 'show'])->name('servers.installments.show');
+Route::post('/servers/{server}/installments/{installment}/accept', [ServerInstallmentController::class, 'accept'])->name('servers.installments.accept');
