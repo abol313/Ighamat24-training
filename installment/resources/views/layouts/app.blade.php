@@ -72,6 +72,16 @@
         @show
     </main>
 
-
+    <footer class="box">
+        <h2>Footer</h2>
+        <h3>Category</h3>
+        @foreach(\App\Models\ServiceCategory::all() as $category)
+            <p>
+                <a href="{{route('services.index', ['category_id'=>$category->id])}}">
+                    {{$category->name}}
+                </a>
+            </p>
+        @endforeach
+    </footer>
 </body>
 </html>
