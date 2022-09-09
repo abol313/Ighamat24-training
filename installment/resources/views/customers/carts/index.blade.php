@@ -10,6 +10,9 @@
             <p> amount : {{$cart->amount.$cart->service->unit}}</p>
             <p> price : {{$cart->price}}</p>
             <p> status : {{$cart->status}}</p>
+            <p>
+                <a href="{{route('carts.installments.index', [$cart])}}">installments</a>
+            </p>
 
             <p><a href="{{route('customers.carts.show', [$customer, $cart])}}">Show </a></p>
             <p><a href="{{route('customers.carts.edit', [$customer, $cart])}}">Edit </a></p>
