@@ -18,6 +18,12 @@ class ServerInstallmentController extends Controller
     public function index(Request $request, Server $server)
     {
         //
+        if(! $authServer = auth('servers')->user())
+            abort(403);
+        if($authServer->id !== $server->id)
+            abort(403);
+
+
         if($request->has('cart_id')){
             $cart = Cart::find($request->input('cart_id'));
             return view('servers.carts.installments.index', [
@@ -27,7 +33,7 @@ class ServerInstallmentController extends Controller
             ]);
         }
         return view('servers.carts.installments.index', [
-            'installments' => Installment::all(),
+            'installments' => $server->installments(),
             'server' => $server,
         ]);
     }
@@ -43,6 +49,12 @@ class ServerInstallmentController extends Controller
     public function show(Server $server, Installment $installment)
     {
         //
+        if(! $authServer = auth('servers')->user())
+            abort(403);
+        if($authServer->id !== $server->id)
+            abort(403);
+
+
         return view('servers.carts.installments.show', [
             'installment' => $installment,
             'server' => $server,
