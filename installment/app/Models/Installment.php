@@ -13,4 +13,8 @@ class Installment extends Model
         'price',
         'cart_id',
     ];
+
+    public function cart(){
+        return $this->belongsTo(Cart::class);
+    }
 }
